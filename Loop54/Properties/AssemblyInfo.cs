@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 //[assembly: AssemblyVersion("2.0.16.*")] //escape på Url, Referer och UserAgent
 //[assembly: AssemblyVersion("2.0.17.*")] //Case 113 + 153 + 165
 //[assembly: AssemblyVersion("2.0.18.*")] //Ändrat till 5000 ConnectionLimit
-[assembly: AssemblyVersion("2.0.19.*")] //ReadDataTime på response
+[assembly: AssemblyVersion("2.0.20.*")] //ReadDataTime på response
 
 
 
