@@ -2,6 +2,10 @@
 
 namespace Loop54.Model.CollectionItems
 {
+    /// <summary>
+    /// Type for collections returned from Engine.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Item<T>
     {
         public virtual T Key { get; private set; }
@@ -18,6 +22,9 @@ namespace Loop54.Model.CollectionItems
         } 
     }
 
+    /// <summary>
+    /// Compatibility type to be used when deserializing responses from V2.2 or older engines.
+    /// </summary>
     public class V22EntityItem: Item<Entity>
     {
         public Entity Entity { get; private set; }
@@ -33,6 +40,9 @@ namespace Loop54.Model.CollectionItems
         }
     }
 
+    /// <summary>
+    /// Compatibility type to be used when deserializing responses from V2.2 or older engines.
+    /// </summary>
     public class V22StringItem : Item<String>
     {
         public String String { get; private set; }
