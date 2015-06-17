@@ -133,36 +133,11 @@ namespace Loop54.Utils
             return context.Request.ServerVariables["REMOTE_ADDR"];
         }
 
+
+
         
-        private static int _consecutiveFailures = 0;
-        private static DateTime _fallbackDate = DateTime.MinValue;
 
-        private static bool IsOnFallBack(int numFailures, int minutesOnFallBack)
-        {
-            
-            //has already fallen back before
-            if (_fallbackDate > DateTime.UtcNow.AddMinutes(-minutesOnFallBack))
-            {
-                _consecutiveFailures = 0; //reset this when fallen back
-                return true;
-            }
-
-            //first fallback request
-            if (_consecutiveFailures >= numFailures)
-            {
-                _fallbackDate = DateTime.UtcNow;
-                _consecutiveFailures = 0; //reset this when fallen back
-
-                return true;
-            }
-
-            //no fallback
-            _fallbackDate = DateTime.MinValue;
-            return false;
-
-        }
-
-        internal static HttpResponse GetEngineResponse(string url, string verb, string data, int timeout,bool measureTime, int numFailuresToFallBack,int minutesOnFallBack)
+        internal static HttpResponse GetEngineResponse(string url, string verb, string data, int timeout,bool measureTime)
         {
             Stopwatch watch=null;
             if (measureTime)
@@ -172,37 +147,14 @@ namespace Loop54.Utils
             }
 
 
-            //on fallback? switch to 108proxy
-            if (IsOnFallBack(numFailuresToFallBack, minutesOnFallBack))
-            {
-                url = url.ToLower(); //for safetys sake
-
-                if (url.Contains(".54proxy."))
-                {
-                    url = url.Replace(".54proxy.", ".108proxy.");
-                }
-            }
-
             HttpResponse httpResponse;
             try
             {
-                httpResponse = GetResponseData2(url, verb, data, timeout,measureTime:measureTime);
-
-                //reset failures on each successful request
-                _consecutiveFailures = 0;
+                httpResponse = GetResponseData2(url, verb, data, timeout, measureTime: measureTime);
             }
-            catch (Exception ex)
+            catch (WebException ex)
             {
-                _consecutiveFailures++;
-
-                if (ex.Message.StartsWith("The remote name could not be resolved:"))
-                    throw new EngineNotFoundException(url, ex);
-                if (ex.Message.StartsWith("The operation has timed out"))
-                    throw new EngineNotFoundException(url, ex);
-                if (ex.Message.StartsWith("The remote server returned an error"))
-                    throw new EngineErrorException(url, ex);
-
-                throw;
+                throw new EngineNotFoundException(url, ex);
             }
 
             if (measureTime)

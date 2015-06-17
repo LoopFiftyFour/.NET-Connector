@@ -5,8 +5,24 @@ using Newtonsoft.Json;
 
 namespace Loop54
 {
+    public class RequestOptions
+    {
+        public int Timeout { get; set; }
+        public bool V22Collections { get; set; }
+        public bool V25Url { get; set; }
+        public bool MeasureTime { get; set; }
+
+        public RequestOptions()
+        {
+            Timeout = 5000;
+        }
+    }
+
     public class Request
     {
+
+        internal RequestOptions Options;
+
         private string _userId;
         public string UserId
         {
@@ -72,11 +88,17 @@ namespace Loop54
             set { _url = value; }
         }
 
-        public string Name { get; private set; }
+        public string QuestName { get; private set; }
 
-        public Request(string requestName)
+        public Request(string requestName,RequestOptions options)
         {
-            Name = requestName.ToLower().Trim();
+            QuestName = requestName;
+            Options = options;
+        }
+
+        public Request(string requestName) : this(requestName, new RequestOptions())
+        {
+            
         }
 
         private Dictionary<string, object> Data = new Dictionary<string, object>();
@@ -109,7 +131,10 @@ namespace Loop54
         {
             get
             {
-                var ret = JsonConvert.SerializeObject(Name) + ":{";
+                var ret = "{";
+                
+                if(Options.V25Url)
+                    ret += JsonConvert.SerializeObject(QuestName) + ":{";
 
                 if(UserId==null)
                     throw new ArgumentNullException("UserId", "UserId cannot be null.");
@@ -143,6 +168,10 @@ namespace Loop54
                 }
 
                 ret = ret.Trim(',');
+
+                if (Options.V25Url)
+                    ret += "}";
+
 
                 ret += "}";
 

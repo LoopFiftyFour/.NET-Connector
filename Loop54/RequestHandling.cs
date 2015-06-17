@@ -14,29 +14,13 @@ namespace Loop54
     public static class RequestHandling
     {
 
-        #region Overloads
+        
+
         public static Response GetResponse(string url, Request request)
-        {
-            return GetResponse(url,  request ,5000);
-        }
-
-        public static Response GetResponse(string url, Request request, int timeout)
-        {
-            return GetResponse(url, request, timeout,false);
-        }
-
-        public static Response GetResponse(string url, Request request, int timeout, bool measureResponse)
-        {
-            return GetResponse(url, request, timeout,measureResponse,5,5);
-        }
-        #endregion
-
-
-        private static Response GetResponse(string url, Request request, int timeout, bool measureResponseTime, int numFailuresToFallBack, int minutesOnFallBack)
         {
             Stopwatch watch=null;
             long serializationTime=0;
-            if (measureResponseTime)
+            if (request.Options.MeasureTime)
             {
                 watch=new Stopwatch();
                 watch.Start();
@@ -44,21 +28,20 @@ namespace Loop54
 
             url = Utils.Strings.FixEngineUrl(url);
 
+            if (!request.Options.V25Url)
+                url += request.QuestName;
             
-            var requestData = "{";
-            requestData += request.Serialized + ",";
-            requestData = requestData.Trim(',') + "}";
+            var requestData = request.Serialized;
 
-            
-            if (measureResponseTime)
+            if (request.Options.MeasureTime)
             {
                 watch.Stop();
                 serializationTime = watch.ElapsedMilliseconds;
             }
 
-            var httpResponse = Utils.Http.GetEngineResponse(url, "POST", requestData, timeout, measureResponseTime, numFailuresToFallBack,minutesOnFallBack);
+            var httpResponse = Utils.Http.GetEngineResponse(url, "POST", requestData, request.Options.Timeout, request.Options.MeasureTime);
 
-            if (measureResponseTime)
+            if (request.Options.MeasureTime)
             {
                 watch.Reset();
                 watch.Start();
@@ -74,9 +57,10 @@ namespace Loop54
 
             var data = json["Data"].Value<JObject>();
 
-            //If data is wrapped in quest name, use the data within
-            if (data[request.Name] != null)
-                data = data[request.Name].Value<JObject>();
+
+
+            if (request.Options.V25Url)
+                data = data[request.QuestName].Value<JObject>();
 
 
 
@@ -91,9 +75,9 @@ namespace Loop54
 
             response.ContentLength = httpResponse.ContentLength;
 
-            
 
-            if (measureResponseTime)
+
+            if (request.Options.MeasureTime)
             {
                 watch.Stop();
                 
