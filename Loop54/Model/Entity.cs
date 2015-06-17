@@ -17,7 +17,10 @@ namespace Loop54.Model
             Attributes = new Dictionary<string, List<object>>();
         }
 
-
+        public override string ToString()
+        {
+            return "{" + EntityType + ":" + ExternalId + "}";
+        }
     }
 
 }
