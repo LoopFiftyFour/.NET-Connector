@@ -5,16 +5,34 @@ using Newtonsoft.Json;
 
 namespace Loop54
 {
+    /// <summary>
+    /// This class is used to set custom options when sending a request to an engine.
+    /// </summary>
     public class RequestOptions
     {
+        /// <summary>
+        /// The HTTP timeout of the request, measured in milliseconds. Defaults to 10000.
+        /// </summary>
         public int Timeout { get; set; }
+
+        /// <summary>
+        /// If set to true, the response will be parsed assuming collections have V2.2-style [Entity and/or String, Value], instead of the newer [Key, Value]. Defaults to false.
+        /// </summary>
         public bool V22Collections { get; set; }
+
+        /// <summary>
+        /// If set to true, the request will serialize with the quest name inside the POST body, instead of in the Url. Additionally, the response will be parsed assuming the data is wrapped in a property with the quest name as key. Defaults to false.
+        /// </summary>
         public bool V25Url { get; set; }
+
+        /// <summary>
+        /// If set to true, the request will time the time it takes to serialize request, send request, recieve response and deserialize response. The values will be returned on the Response object. Note, this may decrease performande. Defaults to false.
+        /// </summary>
         public bool MeasureTime { get; set; }
 
         public RequestOptions()
         {
-            Timeout = 5000;
+            Timeout = 10000;
         }
     }
 
