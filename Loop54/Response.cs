@@ -4,23 +4,22 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Loop54.Exceptions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Loop54
 {
 
     public class Response
     {
-
+        #region JsonData
         public bool Success { get; private set; }
 
-
         public int Error_Code { get; private set; }
-
-
         public string Error_Message { get; private set; }
-
-
         public string RequestId { get; private set; }
+        internal Dictionary<string, JObject> Data = new Dictionary<string, JObject>();
+        #endregion
+
 
         public long ContentLength { get; internal set; }
 
@@ -31,11 +30,12 @@ namespace Loop54
         public long EngineTime { get; internal set; }
         public long ResponseTime { get; internal set; }
         public long ReadDataTime { get; internal set; }
-
-        internal Dictionary<string,string> Data = new Dictionary<string, string>();
         public long AddHeadersTime;
         public long CreateRequestTime;
         public long SetUpSPMTime;
+
+        
+        
 
         internal Response()
         {
@@ -68,7 +68,7 @@ namespace Loop54
 
                 try
                 {
-                    return JsonConvert.DeserializeObject<T>(Data[key]);
+                    return Data[key].ToObject<T>();
                 }
                 catch (Exception ex)
                 {

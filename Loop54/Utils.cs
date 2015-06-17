@@ -60,9 +60,8 @@ namespace Loop54.Utils
             public long ResponseTime;
             public long ReadDataTime;
 
-            public long SetUpSPMTime; //2.0.8
-            public long CreateRequestTime; //2.0.8
-            public long AddHeadersTime; //2.0.8
+            public long CreateRequestTime;
+            public long AddHeadersTime;
         }
 
         internal static string GetUser()
@@ -218,20 +217,6 @@ namespace Loop54.Utils
             return httpResponse;
         }
 
-        //private static bool _setUpSPM = false;
-        //private static void SetUpSPM()
-        //{
-        //    if (_setUpSPM)
-        //        return;
-
-        //    ServicePointManager.UseNagleAlgorithm = false;
-
-        //    ServicePointManager.Expect100Continue = false; //2.0.8
-
-        //    ServicePointManager.DefaultConnectionLimit = 48; //2.0.8 (var 24 innan)
-
-        //    _setUpSPM = true;
-        //}
 
         private static HttpResponse GetResponseData2(string url, string verb = "GET", string stringData = null,
                                               int timeout = 5000, Encoding dataEncoding = null,
@@ -251,30 +236,21 @@ namespace Loop54.Utils
                 watch.Start();
             }
 
-            //borttaget i 2.0.14
-            //SetUpSPM(); //2.0.8
 
-            //if (measureTime)
-            //{
-            //    watch.Stop();
-            //    ret.SetUpSPMTime = watch.ElapsedMilliseconds;
-            //    watch.Reset();
-            //    watch.Start();
-            //}
 
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = verb;
             request.Timeout = timeout;
             request.AutomaticDecompression = DecompressionMethods.GZip;
-            request.Proxy = null;  //2.0.8
-            request.SendChunked = false; //2.0.9
-            request.KeepAlive = false; //2.0.12
+            request.Proxy = null;
+            request.SendChunked = false;
+            request.KeepAlive = false;
 
-            request.ServicePoint.UseNagleAlgorithm = false; //2.0.12
-            request.ServicePoint.Expect100Continue = false; //2.0.12
-            request.ServicePoint.ConnectionLimit = 5000; //2.0.18
-            request.ServicePoint.MaxIdleTime = 120000; //2.0.14
+            request.ServicePoint.UseNagleAlgorithm = false;
+            request.ServicePoint.Expect100Continue = false;
+            request.ServicePoint.ConnectionLimit = 5000;
+            request.ServicePoint.MaxIdleTime = 120000;
    
 
             if (measureTime)
@@ -302,8 +278,6 @@ namespace Loop54.Utils
             {
                 var buffer = dataEncoding.GetBytes(stringData);
 
-                //modifierat i 2.0.9
-                //using i 2.0.12
                 using (var stream = request.GetRequestStream())
                 {
                     stream.Write(buffer, 0, buffer.Length);
@@ -320,7 +294,6 @@ namespace Loop54.Utils
                 watch.Start();
             }
 
-            //lagt till using i 2.0.12
             using (var response = (HttpWebResponse) request.GetResponse())
             {
 
@@ -336,8 +309,6 @@ namespace Loop54.Utils
                     watch.Start();
                 }
 
-                //modifierat i 2.0.9
-                //lagt till using i 2.0.12
                 using (var responseStream = response.GetResponseStream())
                 {
                     if (responseStream != null)
@@ -349,7 +320,6 @@ namespace Loop54.Utils
                     }
                 }
 
-                //tillagt i 2.0.19
                 if (measureTime)
                 {
                     watch.Stop();
@@ -362,8 +332,6 @@ namespace Loop54.Utils
                 long.TryParse(response.GetResponseHeader("Content-Length"), out ret.ContentLength);
 
             }
-
-            
 
             return ret;
         }

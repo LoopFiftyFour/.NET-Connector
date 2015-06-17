@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Loop54.Exceptions;
-using Loop54.Public;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Loop54
 {
@@ -12,27 +13,26 @@ namespace Loop54
     
     public static class RequestHandling
     {
+
+        #region Overloads
         public static Response GetResponse(string url, Request request)
         {
-            return GetResponses(url, new[] { request })[request];
+            return GetResponse(url,  request );
         }
 
         public static Response GetResponse(string url, Request request, int timeout)
         {
-            return GetResponses(url, new[] { request }, timeout)[request];
+            return GetResponse(url, request, timeout,false);
         }
 
         public static Response GetResponse(string url, Request request, int timeout, bool measureResponse)
         {
-            return GetResponses(url, new[] { request }, timeout,measureResponse)[request];
+            return GetResponse(url, request, timeout,measureResponse,5,5);
         }
+        #endregion
 
-        public static Response GetResponse(string url, Request request, int timeout, bool measureResponse, int numFailuresToFallBack, int minutesOnFallBack)
-        {
-            return GetResponses(url, new[] { request }, timeout, measureResponse,numFailuresToFallBack,minutesOnFallBack)[request];
-        }
 
-        public static IDictionary<Request, Response> GetResponses(string url, IEnumerable<Request> requests, int timeout = 5000, bool measureResponseTime = false, int numFailuresToFallBack = 5, int minutesOnFallBack = 5)
+        private static Response GetResponse(string url, Request request, int timeout, bool measureResponseTime, int numFailuresToFallBack, int minutesOnFallBack)
         {
             Stopwatch watch=null;
             long serializationTime=0;
@@ -44,16 +44,9 @@ namespace Loop54
 
             url = Utils.Strings.FixEngineUrl(url);
 
-            var ret = new Dictionary<Request, Response>();
-
             
             var requestData = "{";
-
-            foreach (var request in requests)
-            {
-                requestData += request.Serialized + ",";
-            }
-
+            requestData += request.Serialized + ",";
             requestData = requestData.Trim(',') + "}";
 
             
@@ -67,55 +60,47 @@ namespace Loop54
 
             if (measureResponseTime)
             {
-                watch.Reset(); //tillagt i 2.0.19
+                watch.Reset();
                 watch.Start();
             }
 
-            var json = JSON.JsonDecode(httpResponse.Content) as Hashtable;
+            var json = JObject.Parse(httpResponse.Content);
 
             if (json == null)
                 throw new DeserializationException();
 
+            //If data is wrapped in quest name, use the data within
+            if (json[request.Name] != null)
+                json = json[request.Name].Value<JObject>();
+
+
+
+            var response = json.ToObject<Response>();
+
+
+
+            response.ContentLength = httpResponse.ContentLength;
+
             
-            var responseObj = Serialization.DeserializePersistent<Response>(json);
-
-            var data = json["Data"] as Hashtable;
-
-            foreach (var request in requests)
-            {
-                var newResp = responseObj.CreateClone();
-
-                if (data != null)
-                    newResp.Data = data[request.Name] as Hashtable;
-
-                newResp.ContentLength = httpResponse.ContentLength;
-
-                ret.Add(request, newResp);
-            }
 
             if (measureResponseTime)
             {
                 watch.Stop();
                 
-                foreach (var response in ret.Values)
-                {
-                    response.SerializationTime = serializationTime;
-                    response.DeserializationTime = watch.ElapsedMilliseconds;
+                response.SerializationTime = serializationTime;
+                response.DeserializationTime = watch.ElapsedMilliseconds;
 
-                    response.ResponseTime = httpResponse.ResponseTime;
-                    response.ReadDataTime = httpResponse.ReadDataTime;
-                    response.RequestTime = httpResponse.RequestTime;
-                    response.EngineTime = httpResponse.EngineTime;
-                    response.RoundtripTime = httpResponse.RoundtripTime;
-                    response.AddHeadersTime = httpResponse.AddHeadersTime;
-                    response.CreateRequestTime = httpResponse.CreateRequestTime;
-                    response.SetUpSPMTime = httpResponse.SetUpSPMTime;
+                response.ResponseTime = httpResponse.ResponseTime;
+                response.ReadDataTime = httpResponse.ReadDataTime;
+                response.RequestTime = httpResponse.RequestTime;
+                response.EngineTime = httpResponse.EngineTime;
+                response.RoundtripTime = httpResponse.RoundtripTime;
+                response.AddHeadersTime = httpResponse.AddHeadersTime;
+                response.CreateRequestTime = httpResponse.CreateRequestTime;
 
-                    
-                }
             }
 
-            return ret;
+            return response;
         }
 
         

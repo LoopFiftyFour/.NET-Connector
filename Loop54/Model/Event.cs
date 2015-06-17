@@ -9,10 +9,15 @@ namespace Loop54.Model
 
         public Entity Entity { get; set; }
 
-        public double Revenue = 0{ get; set; }
+        public double Revenue { get; set; }
 
         public string OrderId{ get; set; }
 
-        public int Quantity = 1{ get; set; }
+        public int Quantity { get; set; }
+
+        public Event()
+        {
+            Quantity = 1;
+        }
     }
 }
