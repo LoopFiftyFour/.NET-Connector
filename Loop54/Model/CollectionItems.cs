@@ -4,8 +4,8 @@ namespace Loop54.Model.CollectionItems
 {
     public class Item<T>
     {
-        public virtual T Key { get; set; }
-        public double Value;
+        public virtual T Key { get; private set; }
+        public double Value { get; private set; }
 
         public override string ToString()
         {
@@ -20,7 +20,7 @@ namespace Loop54.Model.CollectionItems
 
     public class V22EntityItem: Item<Entity>
     {
-        public Entity Entity;
+        public Entity Entity { get; private set; }
 
         public override Entity Key
         {
@@ -35,7 +35,7 @@ namespace Loop54.Model.CollectionItems
 
     public class V22StringItem : Item<String>
     {
-        public String String;
+        public String String { get; private set; }
 
         public override String Key
         {

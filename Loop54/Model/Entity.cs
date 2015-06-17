@@ -4,8 +4,9 @@ namespace Loop54.Model
 {
     public class Entity
     {
-        public string EntityType { get; set; }
-        public string ExternalId { get; set; }
+      
+        public string EntityType { get; private set; }
+        public string ExternalId { get; private set; }
 
         public Dictionary<string, List<object>> Attributes { get; private set; }
 
