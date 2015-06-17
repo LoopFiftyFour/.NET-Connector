@@ -12,12 +12,14 @@ namespace Loop54
     public class Response
     {
         #region JsonData
-        public bool Success { get; private set; }
+        public bool Success { get; internal set; }
 
-        public int Error_Code { get; private set; }
-        public string Error_Message { get; private set; }
-        public string RequestId { get; private set; }
-        internal Dictionary<string, JObject> Data = new Dictionary<string, JObject>();
+        public int Error_Code { get; internal set; }
+        public string Error_Message { get; internal set; }
+
+        public string RequestId { get; internal set; }
+
+        internal Dictionary<string, JToken> Data = new Dictionary<string, JToken>();
         #endregion
 
 
@@ -42,17 +44,7 @@ namespace Loop54
             
         }
 
-        internal Response CreateClone()
-        {
-            return new Response()
-                {
-                    Success = Success,
-                    Error_Code = Error_Code,
-                    Error_Message = Error_Message,
-                    RequestId = RequestId
-                };
-        }
-            
+      
         public bool HasData(string key)
         {
             lock(Data)

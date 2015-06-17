@@ -17,7 +17,7 @@ namespace Loop54
         #region Overloads
         public static Response GetResponse(string url, Request request)
         {
-            return GetResponse(url,  request );
+            return GetResponse(url,  request ,5000);
         }
 
         public static Response GetResponse(string url, Request request, int timeout)
@@ -69,13 +69,23 @@ namespace Loop54
             if (json == null)
                 throw new DeserializationException();
 
+            if(json["Data"]==null)
+                throw new DataNotFoundException("Data");
+
+            var data = json["Data"].Value<JObject>();
+
             //If data is wrapped in quest name, use the data within
-            if (json[request.Name] != null)
-                json = json[request.Name].Value<JObject>();
+            if (data[request.Name] != null)
+                data = data[request.Name].Value<JObject>();
 
 
 
-            var response = json.ToObject<Response>();
+            var response = new Response();
+            response.Success = json["Success"].ToObject<bool>();
+            response.RequestId = json["HeroId"].ToObject<string>();
+
+            foreach (var key in data.Properties())
+                response.Data[key.Name] = data[key.Name];
 
 
 

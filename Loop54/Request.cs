@@ -109,16 +109,28 @@ namespace Loop54
         {
             get
             {
-                var ret = "\"" + Name + "\":{";
+                var ret = JsonConvert.SerializeObject(Name) + ":{";
 
-                ret += "\"UserId\":\"" + Escape(UserId) + "\",";
-                ret += "\"IP\":\"" + IP + "\",";
+                if(UserId==null)
+                    throw new ArgumentNullException("UserId", "UserId cannot be null.");
 
-                ret += "\"Referer\":\"" + Escape(Referer) + "\",";
-                ret += "\"Url\":\"" + Escape(Url) + "\",";
-                ret += "\"UserAgent\":\"" + Escape(UserAgent) + "\",";
+                ret += "\"UserId\":" + JsonConvert.SerializeObject(UserId) + ",";
 
-                ret += "\"LibraryVersion\":\"" + LibraryVersion + "\",";
+                if (IP == null)
+                    throw new ArgumentNullException("IP", "IP cannot be null.");
+
+                ret += "\"IP\":" + JsonConvert.SerializeObject(IP) + ",";
+
+                if(Referer!=null)
+                    ret += "\"Referer\":" + JsonConvert.SerializeObject(Referer) + ",";
+
+                if (Url != null)
+                    ret += "\"Url\":" + JsonConvert.SerializeObject(Url) + ",";
+
+                if (UserAgent != null)
+                    ret += "\"UserAgent\":" + JsonConvert.SerializeObject(UserAgent) + ",";
+
+                ret += "\"LibraryVersion\":" + JsonConvert.SerializeObject(LibraryVersion) + ",";
 
 
 
@@ -137,33 +149,5 @@ namespace Loop54
                 return ret;
             }
         }
-
-        private static readonly string _backSlash = "\\";
-        private static readonly string _escapedBackSlash = "\\\\";
-        private static readonly string _quote = "\"";
-        private static readonly string _escapedQuote = "\\\"";
-        private static readonly string _newline = "\n";
-        private static readonly string _return = "\r";
-        private static readonly string _tab = "\t";
-        private readonly static string _verticalTab = "\v";
-        private readonly static string _dataLink = ((char)16).ToString();
-
-        private static string Escape(string str)
-        {
-            if (str == null)
-                return null;
-
-            return str
-                .Replace(_backSlash, _escapedBackSlash) //double backslash
-                .Replace(_quote, _escapedQuote) //quote
-
-                .Replace(_newline, string.Empty) //line break
-                .Replace(_return, string.Empty) //carriage return
-                .Replace(_tab, string.Empty) //tab
-                .Replace(_verticalTab, string.Empty) //vertical tab (i know, right?)
-
-                .Replace(_dataLink, string.Empty); //data link char escape
-        }
-
     }
 }
