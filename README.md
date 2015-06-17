@@ -15,3 +15,6 @@ Add a reference to the DLLs in the /dist folder. For more usage instructions, se
   - Referer
   - UserAgent
   - Url
+
+##TODO
+- Better documentation
