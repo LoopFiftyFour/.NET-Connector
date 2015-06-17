@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
-using Loop54.Public;
+using Newtonsoft.Json;
 
 namespace Loop54
 {
-    public class Request : Response
+    public class Request
     {
         private string _userId;
         public string UserId
@@ -78,6 +79,8 @@ namespace Loop54
             Name = requestName.ToLower().Trim();
         }
 
+        private Dictionary<string, object> Data = new Dictionary<string, object>();
+
         public void SetValue<T>(string key, T value)
         {
             if (value == null)
@@ -89,13 +92,6 @@ namespace Loop54
             }
         }
 
-        public void SetCollection(string key, ItemCollection value)
-        {
-            if (value == null)
-                throw new ArgumentNullException("value");
-
-            SetValue(key, value);
-        }
 
         private static string _libraryVersion = null;
         private static string LibraryVersion
@@ -108,17 +104,7 @@ namespace Loop54
                 return _libraryVersion;
             }
         }
-        private static string _publicVersion = null;
-        private static string PublicVersion
-        {
-            get
-            {
-                if (_publicVersion == null)
-                    _publicVersion = Assembly.GetAssembly(typeof(Entity)).GetName().Version.ToString();
 
-                return _publicVersion;
-            }
-        }
         public string Serialized
         {
             get
@@ -133,14 +119,14 @@ namespace Loop54
                 ret += "\"UserAgent\":\"" + Escape(UserAgent) + "\",";
 
                 ret += "\"LibraryVersion\":\"" + LibraryVersion + "\",";
-                ret += "\"PublicVersion\":\"" + PublicVersion + "\",";
-                
+
+
 
                 lock (Data)
                 {
                     foreach (var key in Data.Keys)
                     {
-                        ret += "\"" + key + "\":" + Public.Serialization.SerializeObject(Data[key], null) + ",";
+                        ret += "\"" + key + "\":" + JsonConvert.SerializeObject(Data[key]) + ",";
                     }
                 }
 
@@ -161,6 +147,7 @@ namespace Loop54
         private static readonly string _tab = "\t";
         private readonly static string _verticalTab = "\v";
         private readonly static string _dataLink = ((char)16).ToString();
+
         private static string Escape(string str)
         {
             if (str == null)

@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Loop54.Exceptions;
-using Loop54.Public;
+using Newtonsoft.Json;
 
 namespace Loop54
 {
 
-    [SerializableClass]
     public class Response
     {
-        [SerializableField]
+
         public bool Success { get; private set; }
 
-        [SerializableField]
+
         public int Error_Code { get; private set; }
 
-        [SerializableField]
+
         public string Error_Message { get; private set; }
 
-        [SerializableField]
+
         public string RequestId { get; private set; }
 
         public long ContentLength { get; internal set; }
@@ -31,7 +32,7 @@ namespace Loop54
         public long ResponseTime { get; internal set; }
         public long ReadDataTime { get; internal set; }
 
-        internal Hashtable Data = new Hashtable();
+        internal Dictionary<string,string> Data = new Dictionary<string, string>();
         public long AddHeadersTime;
         public long CreateRequestTime;
         public long SetUpSPMTime;
@@ -63,27 +64,18 @@ namespace Loop54
             lock (Data)
             {
                 if (!HasData(key))
-                    throw new DataNotFoundException(key);
+                    throw new KeyNotFoundException(key);
 
                 try
                 {
-                    return Serialization.DeserializeObject<T>(Data[key]);
+                    return JsonConvert.DeserializeObject<T>(Data[key]);
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Could not deserialize data in slot " + key,ex);
+                    throw new SerializationException("Could not deserialize data in slot " + key,ex);
                 }
                 
             }
         }
-
-        public ItemCollection GetCollection(string key)
-        {
-            return GetValue<ItemCollection>(key);
-        }
-
-
-
     }
-
 }
