@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions.cs" />
+    <Compile Include="Model\CollectionItems.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Event.cs" />
     <Compile Include="Request.cs" />
