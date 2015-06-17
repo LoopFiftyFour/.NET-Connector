@@ -125,7 +125,7 @@ namespace Loop54
             {
                 var ret = "\"" + Name + "\":{";
 
-                ret += "\"UserId\":\"" + UserId + "\",";
+                ret += "\"UserId\":\"" + Escape(UserId) + "\",";
                 ret += "\"IP\":\"" + IP + "\",";
 
                 ret += "\"Referer\":\"" + Escape(Referer) + "\",";
