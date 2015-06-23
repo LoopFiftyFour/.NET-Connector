@@ -9,12 +9,14 @@ Add a reference to the DLLs in the /dist folder. For more usage instructions, se
 - Wraps Loop54 JSON API with native .NET functions.
 - Handles user identification using random-generated cookies. Note: requires a valid HttpContext.Current.
 - Uses X-Forwarded-For as client IP if it's available.
-- Has options for compatibility with different engine versions
-- Handles GZIP
+- Has options for compatibility with different engine versions.
+- Handles GZIP.
+- Uses HTTP Keep-Alive if the engine endpoint supports it.
 - Relays HTTP data to engine:
   - Referer
   - UserAgent
   - Url
-
-##TODO
-- Better documentation
+  - Library version
+  
+## TODO
+- NuGet support
