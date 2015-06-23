@@ -20,6 +20,11 @@ namespace Loop54.Model
         /// </summary>
         public Dictionary<string, List<object>> Attributes { get; private set; }
 
+        /// <summary>
+        /// Creates a new entity.
+        /// </summary>
+        /// <param name="entityType">The type of entity. Example: "Product" or "Document".</param>
+        /// <param name="externalId">The id of the entity.</param>
         public Entity(string entityType, string externalId)
         {
             EntityType = entityType;
