@@ -36,12 +36,18 @@ namespace Loop54
         }
     }
 
+    /// <summary>
+    /// Used to create and launch a request to the engine.
+    /// </summary>
     public class Request
     {
-
+     
         internal RequestOptions Options;
 
         private string _userId;
+        /// <summary>
+        /// The id of the end user. This can be any persistent unique identifier. If not set, HttpContext.Current will be used to set a random value and sent it to the user in the next http response.
+        /// </summary>
         public string UserId
         {
             get
@@ -55,6 +61,9 @@ namespace Loop54
         }
 
         private string _ip;
+        /// <summary>
+        /// The IP of the end user. If not set, HttpContext.Current will be used to retrieve the IP of the end user.
+        /// </summary>
         public string IP
         {
             get
@@ -68,6 +77,10 @@ namespace Loop54
         }
 
         private string _referer;
+
+        /// <summary>
+        /// The HTTP referer of the end user request. If not set, HttpContext.Current will be used to retrieve the Referer.
+        /// </summary>
         public string Referer
         {
             get
@@ -81,6 +94,10 @@ namespace Loop54
         }
 
         private string _userAgent;
+
+        /// <summary>
+        /// The HTTP user-agent of the end user request. If not set, HttpContext.Current will be used to retrieve the UserAgent.
+        /// </summary>
         public string UserAgent
         {
             get
@@ -94,6 +111,10 @@ namespace Loop54
         }
 
         private string _url;
+
+        /// <summary>
+        /// The HTTP url of the end user request. If not set, HttpContext.Current will be used to retrieve the Url.
+        /// </summary>
         public string Url
         {
             get
@@ -106,14 +127,44 @@ namespace Loop54
             set { _url = value; }
         }
 
+
+        private static string _libraryVersion = null;
+        /// <summary>
+        /// The version of this assembly.
+        /// </summary>
+        private static string LibraryVersion
+        {
+            get
+            {
+                if (_libraryVersion == null)
+                    _libraryVersion = Assembly.GetAssembly(typeof(Request)).GetName().Version.ToString();
+
+                return _libraryVersion;
+            }
+        }
+
+
+
+        /// <summary>
+        /// The name of the current request.
+        /// </summary>
         public string QuestName { get; private set; }
 
+        /// <summary>
+        /// Created a new request.
+        /// </summary>
+        /// <param name="requestName">The name of the request. Examples: "Search", "AutoComplete", "CreateEvents".</param>
+        /// <param name="options">Optional request options for compatibility with older engines and other settings. Set to null to ignore.</param>
         public Request(string requestName,RequestOptions options)
         {
             QuestName = requestName;
             Options = options;
         }
 
+        /// <summary>
+        /// Created a new request.
+        /// </summary>
+        /// <param name="requestName">The name of the request. Examples: "Search", "AutoComplete", "CreateEvents".</param>
         public Request(string requestName) : this(requestName, new RequestOptions())
         {
             
@@ -121,6 +172,12 @@ namespace Loop54
 
         private Dictionary<string, object> Data = new Dictionary<string, object>();
 
+        /// <summary>
+        /// Sets a parameter of the request.
+        /// </summary>
+        /// <typeparam name="T">The type of data.</typeparam>
+        /// <param name="key">The name of the parameter.</param>
+        /// <param name="value">The value of the parameter.</param>
         public void SetValue<T>(string key, T value)
         {
             if (value == null)
@@ -133,18 +190,10 @@ namespace Loop54
         }
 
 
-        private static string _libraryVersion = null;
-        private static string LibraryVersion
-        {
-            get
-            {
-                if (_libraryVersion == null)
-                    _libraryVersion = Assembly.GetAssembly(typeof(Request)).GetName().Version.ToString();
-
-                return _libraryVersion;
-            }
-        }
-
+        
+        /// <summary>
+        /// The serialized data of this request object, including all user data and parameters.
+        /// </summary>
         public string Serialized
         {
             get
