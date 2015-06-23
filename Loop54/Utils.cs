@@ -195,7 +195,7 @@ namespace Loop54.Utils
             request.AutomaticDecompression = DecompressionMethods.GZip;
             request.Proxy = null;
             request.SendChunked = false;
-            request.KeepAlive = false;
+            request.KeepAlive = true;
 
             request.ServicePoint.UseNagleAlgorithm = false;
             request.ServicePoint.Expect100Continue = false;
