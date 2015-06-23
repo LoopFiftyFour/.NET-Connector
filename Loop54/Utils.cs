@@ -193,7 +193,6 @@ namespace Loop54.Utils
             request.Method = verb;
             request.Timeout = timeout;
             request.AutomaticDecompression = DecompressionMethods.GZip;
-            request.Proxy = null;
             request.SendChunked = false;
             request.KeepAlive = true;
 
