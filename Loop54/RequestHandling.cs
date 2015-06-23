@@ -10,12 +10,19 @@ namespace Loop54
 {
 
     
-    
+    /// <summary>
+    /// Used to create HTTP requests to an engine based on a Request object.
+    /// </summary>
     public static class RequestHandling
     {
 
         
-
+        /// <summary>
+        /// Sends the serialized request to the server and retrieves and deserializes the response.
+        /// </summary>
+        /// <param name="url">The engine endpoint.</param>
+        /// <param name="request">The request object to serialize and send.</param>
+        /// <returns>A deserialized response in the form of a Response object.</returns>
         public static Response GetResponse(string url, Request request)
         {
             Stopwatch watch=null;
