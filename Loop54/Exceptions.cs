@@ -5,7 +5,9 @@ using System.Text;
 namespace Loop54.Exceptions
 {
     
-
+    /// <summary>
+    /// Thrown when a connection to the engine cannot be made. Could have multiple causes.
+    /// </summary>
     public class EngineNotFoundException:Exception
     {
         internal EngineNotFoundException(string url, Exception innerException)
@@ -14,6 +16,9 @@ namespace Loop54.Exceptions
         }
     }
 
+    /// <summary>
+    /// Thrown when the engine is reachable, but the response status code was 500.
+    /// </summary>
     public class EngineErrorException : Exception
     {
         internal EngineErrorException(string url, Exception innerException)
@@ -22,6 +27,9 @@ namespace Loop54.Exceptions
         }
     }
 
+    /// <summary>
+    /// Thrown when the requested data was not found on the response object.
+    /// </summary>
     public class DataNotFoundException : Exception
     {
         internal DataNotFoundException(string dataIndex)
@@ -30,6 +38,9 @@ namespace Loop54.Exceptions
         }
     }
 
+    /// <summary>
+    /// Thrown when data on the request object was not of the requested type.
+    /// </summary>
     public class WrongTypeException : Exception
     {
         internal WrongTypeException(string dataIndex, Type expectedType, Type actualType)
@@ -41,6 +52,9 @@ namespace Loop54.Exceptions
         }
     }
 
+    /// <summary>
+    /// Thrown when the data returned from the engine could not be deserialized.
+    /// </summary>
     public class DeserializationException : Exception
     {
         internal DeserializationException()
