@@ -8,8 +8,8 @@ namespace Loop54.Model.CollectionItems
     /// <typeparam name="T"></typeparam>
     public class Item<T>
     {
-        public virtual T Key { get; private set; }
-        public double Value { get; private set; }
+        public virtual T Key { get; set; }
+        public double Value { get; set; }
 
         public override string ToString()
         {
@@ -27,7 +27,7 @@ namespace Loop54.Model.CollectionItems
     /// </summary>
     public class V22EntityItem: Item<Entity>
     {
-        public Entity Entity { get; private set; }
+        public Entity Entity { get; set; }
 
         public override Entity Key
         {
@@ -45,7 +45,7 @@ namespace Loop54.Model.CollectionItems
     /// </summary>
     public class V22StringItem : Item<String>
     {
-        public String String { get; private set; }
+        public String String { get; set; }
 
         public override String Key
         {
