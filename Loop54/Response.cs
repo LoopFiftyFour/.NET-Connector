@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Loop54.Exceptions;
 using Newtonsoft.Json;
@@ -58,8 +59,22 @@ namespace Loop54
         /// <returns>True if the data exists, otherwise false.</returns>
         public bool HasData(string key)
         {
-            lock(Data)
+            lock (Data)
+            {
                 return Data.ContainsKey(key);
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of keys to the data available in the response.
+        /// </summary>
+        /// <returns>Keys to the data in the response.</returns>
+        public IList<string> GetKeys()
+        {
+            lock (Data)
+            {
+                return Data.Keys.ToList();
+            }
         }
 
         /// <summary>
