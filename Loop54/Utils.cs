@@ -154,6 +154,11 @@ namespace Loop54.Utils
             }
             catch (WebException ex)
             {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    throw new EngineErrorException(url, ex);
+                }
+
                 throw new EngineNotFoundException(url, ex);
             }
 
