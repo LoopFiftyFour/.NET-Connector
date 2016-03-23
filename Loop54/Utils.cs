@@ -154,12 +154,14 @@ namespace Loop54.Utils
             }
             catch (WebException ex)
             {
-                if (ex.Status == WebExceptionStatus.ProtocolError)
-                {
-                    throw new EngineErrorException(url, ex);
-                }
+                string msg = url;
+                if (ex.Response is HttpWebResponse)
+                    msg += "; Engine response: " + new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()).ReadToEnd();
 
-                throw new EngineNotFoundException(url, ex);
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                    throw new EngineErrorException(msg, ex);
+
+                throw new EngineNotFoundException(msg, ex);
             }
 
             if (measureTime)
