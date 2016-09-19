@@ -6,3 +6,7 @@
 /Loop54/obj/Debug
 /Loop54/bin/Release
 /Loop54/obj/Release
+/NUnitTests/bin/Debug
+/NUnitTests/obj/Debug
+/.vs/Loop54/v14/.suo
+/packages/NUnit.3.4.1

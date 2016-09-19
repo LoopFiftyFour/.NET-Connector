@@ -204,12 +204,12 @@ namespace Loop54
                     ret += JsonConvert.SerializeObject(QuestName) + ":{";
 
                 if(UserId==null)
-                    throw new ArgumentNullException("UserId", "UserId cannot be null.");
+                    throw new ArgumentNullException("UserId", "UserId property cannot be null.");
 
                 ret += "\"UserId\":" + JsonConvert.SerializeObject(UserId) + ",";
 
                 if (IP == null)
-                    throw new ArgumentNullException("IP", "IP cannot be null.");
+                    throw new ArgumentNullException("IP", "IP property cannot be null.");
 
                 ret += "\"IP\":" + JsonConvert.SerializeObject(IP) + ",";
 
