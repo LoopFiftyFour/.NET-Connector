@@ -1,6 +1,6 @@
 /bin/Release
-/obj/Debug
-/obj/Release
+*/obj/Debug
+*/obj/Release
 /*.suo
 /Loop54/bin/Debug
 /Loop54/obj/Debug

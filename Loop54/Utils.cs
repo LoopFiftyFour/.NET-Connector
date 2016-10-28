@@ -193,8 +193,11 @@ namespace Loop54.Utils
                 watch.Start();
             }
 
+            const string apiVersionHeader = "Api-Version";
+            const string apiVersion = "V26";
 
-
+            const string libVersionHeader = "Lib-Version";
+            const string libVersion = "NET:2016-10-28T141131";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = verb;
@@ -202,6 +205,8 @@ namespace Loop54.Utils
             request.AutomaticDecompression = DecompressionMethods.GZip;
             request.SendChunked = false;
             request.KeepAlive = true;
+            request.Headers.Add(apiVersionHeader, apiVersion);
+            request.Headers.Add(libVersionHeader, libVersion);
 
             request.ServicePoint.UseNagleAlgorithm = false;
             request.ServicePoint.Expect100Continue = false;

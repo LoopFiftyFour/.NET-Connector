@@ -34,9 +34,7 @@ namespace Loop54
             }
 
             url = Utils.Strings.FixEngineUrl(url);
-
-            if (!request.Options.V25Url)
-                url += request.QuestName;
+            url += request.QuestName;
             
             var requestData = request.Serialized;
 
@@ -63,14 +61,7 @@ namespace Loop54
                 throw new DataNotFoundException("Data");
 
             var data = json["Data"].Value<JObject>();
-
-
-
-            if (request.Options.V25Url)
-                data = data[request.QuestName].Value<JObject>();
-
-
-
+            
             var response = new Response();
             response.Success = json["Success"].ToObject<bool>();
             response.RequestId = json["HeroId"].ToObject<string>();

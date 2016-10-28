@@ -16,13 +16,15 @@ namespace Loop54
         public int Timeout { get; set; }
 
         /// <summary>
-        /// If set to true, the response will be parsed assuming collections have V2.2-style [Entity and/or String, Value], instead of the newer [Key, Value]. Defaults to false.
+        /// NOTE: Deprecated! If set to true, the response will be parsed assuming collections have V2.2-style [Entity and/or String, Value], instead of the newer [Key, Value]. Defaults to false.
         /// </summary>
+        [Obsolete]
         public bool V22Collections { get; set; }
 
         /// <summary>
-        /// If set to true, the request will serialize with the quest name inside the POST body, instead of in the Url. Additionally, the response will be parsed assuming the data is wrapped in a property with the quest name as key. Defaults to false.
+        /// NOTE: Deprecated! If set to true, the request will serialize with the quest name inside the POST body, instead of in the Url. Additionally, the response will be parsed assuming the data is wrapped in a property with the quest name as key. Defaults to false.
         /// </summary>
+        [Obsolete]
         public bool V25Url { get; set; }
 
         /// <summary>
@@ -200,9 +202,6 @@ namespace Loop54
             {
                 var ret = "{";
                 
-                if(Options.V25Url)
-                    ret += JsonConvert.SerializeObject(QuestName) + ":{";
-
                 if(UserId==null)
                     throw new ArgumentNullException("UserId", "UserId property cannot be null.");
 
@@ -235,11 +234,7 @@ namespace Loop54
                 }
 
                 ret = ret.Trim(',');
-
-                if (Options.V25Url)
-                    ret += "}";
-
-
+                
                 ret += "}";
 
                 return ret;
