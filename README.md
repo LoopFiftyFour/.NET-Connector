@@ -22,12 +22,7 @@ Add a reference to the DLLs in the /dist folder. For more usage instructions, se
   
 ## Backward compatibility
 
-When implementing against older versions of Loop54 engines (or new engines which have been configured with compatibility bridges to be compatible with older API:s), custom options need to be set. To set custom options, create a Loop54.RequestOptions object and pass it to the Loop54.Request constructor.
-
-To enable backward compatibility:
-
-- Pre 2.6 engines: Set V25Url to true in the options object.
-- Pre 2.3 engines: Set V22Collections to true in the options object.
+Loop54 engines are (as of 3.1) able to use different API versions depending on the version of the library that connects to it. Contact your technical administrator at Loop54 to make sure that your engine is correctly configured.
   
 ## TODO
 - NuGet package
