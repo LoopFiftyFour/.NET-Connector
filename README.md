@@ -2,10 +2,9 @@
 .NET Wrapper for Loop54 JSON API
 
 ## How to use
-Add a reference to the DLLs in the /dist folder. For more usage instructions, see http://docs.loop54.com
+The Loop54 Connector is available for download as a NuGet package. For installation instructions, see https://www.nuget.org/packages/Loop54.Connector/. For usage instructions, see http://docs.loop54.com.
 
 ## Features
-
 - Wraps Loop54 JSON API with native .NET functions.
 - Handles user identification using random-generated cookies. Note: requires a valid HttpContext.Current.
 - Uses X-Forwarded-For as client IP if it's available.
@@ -21,8 +20,4 @@ Add a reference to the DLLs in the /dist folder. For more usage instructions, se
   - Library version
   
 ## Backward compatibility
-
 Loop54 engines are (as of 3.1) able to use different API versions depending on the version of the library that connects to it. Contact your technical administrator at Loop54 to make sure that your engine is correctly configured.
-  
-## TODO
-- NuGet package
