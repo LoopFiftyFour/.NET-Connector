@@ -82,11 +82,7 @@ namespace Loop54.Utils
                 return cookie;
 
             //create new cookie
-            var ip = GetIP();
-            if (ip == null)
-                return null;
-
-            var userId = ip.Replace(":",".") + "_" + Strings.Random(10, false);
+            var userId = Strings.Random(10, false);
             _contextInfo.SetCookie(CookieName, userId, DateTime.Now.AddYears(1));
 
             return userId;

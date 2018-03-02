@@ -24,7 +24,8 @@ namespace Loop54.Tests
         }
 
         [TestCase("testuser","0.0.0.0","beef","Search",ExpectedResult = null)]
-        [TestCase(null, "0.0.0.0", "beef", "Search", ExpectedResult = typeof(ArgumentNullException))]
+        [TestCase(null, "0.0.0.0", "beef", "Search", ExpectedResult = null)]
+        [TestCase(null, null, "beef", "Search", ExpectedResult = typeof(ArgumentNullException))]
         [TestCase("testuser", null, "beef", "Search", ExpectedResult = typeof(ArgumentNullException))]
         [TestCase("testuser", "0.0.0.0", null, "Search", ExpectedResult = typeof(ArgumentNullException))]
         [TestCase("testuser", "0.0.0.0", "beef", null, ExpectedResult = typeof(EngineErrorException))]

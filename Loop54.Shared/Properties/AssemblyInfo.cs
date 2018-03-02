@@ -30,12 +30,15 @@ using Loop54.Properties;
 
 namespace Loop54.Properties
 {
-    // Use semantic versioning here: change Major for a breaking change, Minor for a non-breaking feature change, Patch for non-breaking fixes or performance improvements.
+    // Use semantic versioning here:
+    // *   Major increments for a breaking change;
+    // *   Minor increments for a non-breaking feature change;
+    // *   Patch increments for non-breaking fixes or performance improvements.
     // Assembly version will only change when Major changes, so references to it should break then and only then.
     internal static class PackageSemanticVersion
     {
         public const string Major = "3";
-        public const string Minor = "0";
+        public const string Minor = "1";
         public const string Patch = "0";
     }
 }
@@ -66,3 +69,4 @@ namespace Loop54.Properties
 // 2.0.22 Moved to GitHub
 // 2.1.0 Changed versioning to semantic for NuGet package (instaed of 1.0.0) and assembly version to MAJOR.0.0.0 so it doesn't break for minor upgrades
 // 3.0.0 Added .NET Standard 2.0 version. Allowed HttpContext to be passed in explicitly (and it may be null).
+// 3.1.0 Removed IP address from UserId.
