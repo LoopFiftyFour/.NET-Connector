@@ -63,12 +63,8 @@ namespace Loop54.Tests
             Assert.Greater(results.Count,0);
         }
 
-        /// <summary>
-        /// Note that this test only queries the result count. To obtain the actual results, a pagination call must be made,
-        /// by setting the from/to parameters (see the SearchLimits test).
-        /// </summary>
         [Test]
-        public void SearchHasResults([Values("beef","chicken")]string query, [Values("DirectResults", "RecommendedResults")]string resultsType)
+        public void SearchHasResults([Values("steak", "chicken breast")]string query, [Values("DirectResults", "RecommendedResults")]string resultsType)
         {
             var request = CreateRequest("Search");
             request.SetValue("QueryString", query);
@@ -79,7 +75,7 @@ namespace Loop54.Tests
         }
 
         [Test]
-        public void SearchLimits([Values("beef", "chicken")]string query,[Values(2,5,10,100)]int number, [Values("DirectResults","RecommendedResults")]string resultsType)
+        public void SearchLimits([Values("steak", "chicken breast")]string query,[Values(2,5,10,100)]int number, [Values("DirectResults","RecommendedResults")]string resultsType)
         {
             var request = CreateRequest("Search");
             request.SetValue("QueryString", query);

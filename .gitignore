@@ -2,5 +2,4 @@
 */obj/*
 *.suo
 .vs/*
-packages
-*.nuspec
+packages/*
