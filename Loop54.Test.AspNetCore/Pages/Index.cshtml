@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Loop54 .NET Connector ASP.NET Core test";
+}
+
+<h1>Loop54 .NET Connector ASP.NET Core test</h1>
+
+<form id="SearchForm" method="POST">
+	<div>
+		<label for="QueryText">Search query</label>
+		<input type="text" id="QueryText" name="Query" autofocus="" />
+		<input type="submit" id="SubmitButton" name="Search" />
+	</div>
+</form>
+<hr />
+<div>@Model.RequestText</div>
+<hr />
+<div>@Model.ResponseText</div>

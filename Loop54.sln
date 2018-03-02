@@ -1,28 +1,65 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54", "Loop54\Loop54.csproj", "{610CE12E-8E29-42E8-89EA-E13EB4CE1AE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.NetStandard", "Loop54.NetStandard\Loop54.NetStandard.csproj", "{1C9C4176-EB9B-4196-8B7D-704F864AD386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54.Tests", "Loop54.Tests\Loop54.Tests.csproj", "{067456C0-086C-46A8-B37F-1405717B7BFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54.NetFramework", "Loop54.NetFramework\Loop54.NetFramework.csproj", "{7E6374EA-0C57-42CE-BE8A-D660E995CD7E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Loop54.Shared", "Loop54.Shared\Loop54.Shared.shproj", "{8887F236-EB5A-45CF-9B0A-5A35E44FF772}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Loop54.Tests.Shared", "Loop54.Tests.Shared\Loop54.Tests.Shared.shproj", "{8C684C06-BDDB-44CD-ADF0-C291EF3AFABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54.Tests.NetFramework", "Loop54.Tests.NetFramework\Loop54.Tests.NetFramework.csproj", "{BB751FD1-E296-4895-9CB2-28F2021B245C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.Tests.NetCore", "Loop54.Tests.NetCore\Loop54.Tests.NetCore.csproj", "{8237B0B4-6B5E-449D-9CC6-BA3912D9463A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54.Test.AspNet", "Loop54.Test.AspNet\Loop54.Test.AspNet.csproj", "{C29AFDFF-3DF9-4985-86F1-0D9B50F7CCF6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.Test.AspNetCore", "Loop54.Test.AspNetCore\Loop54.Test.AspNetCore.csproj", "{D88214FD-0CC7-4B57-A0B4-99EAEEEF5B08}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Loop54.Shared\Loop54.Shared.projitems*{7e6374ea-0c57-42ce-be8a-d660e995cd7e}*SharedItemsImports = 4
+		Loop54.Shared\Loop54.Shared.projitems*{8887f236-eb5a-45cf-9b0a-5a35e44ff772}*SharedItemsImports = 13
+		Loop54.Tests.Shared\Loop54.Tests.Shared.projitems*{8c684c06-bddb-44cd-adf0-c291ef3afabd}*SharedItemsImports = 13
+		Loop54.Tests.Shared\Loop54.Tests.Shared.projitems*{bb751fd1-e296-4895-9cb2-28f2021b245c}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{610CE12E-8E29-42E8-89EA-E13EB4CE1AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{610CE12E-8E29-42E8-89EA-E13EB4CE1AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{610CE12E-8E29-42E8-89EA-E13EB4CE1AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{610CE12E-8E29-42E8-89EA-E13EB4CE1AE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{067456C0-086C-46A8-B37F-1405717B7BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{067456C0-086C-46A8-B37F-1405717B7BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{067456C0-086C-46A8-B37F-1405717B7BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{067456C0-086C-46A8-B37F-1405717B7BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9C4176-EB9B-4196-8B7D-704F864AD386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9C4176-EB9B-4196-8B7D-704F864AD386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9C4176-EB9B-4196-8B7D-704F864AD386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9C4176-EB9B-4196-8B7D-704F864AD386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6374EA-0C57-42CE-BE8A-D660E995CD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6374EA-0C57-42CE-BE8A-D660E995CD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6374EA-0C57-42CE-BE8A-D660E995CD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6374EA-0C57-42CE-BE8A-D660E995CD7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB751FD1-E296-4895-9CB2-28F2021B245C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB751FD1-E296-4895-9CB2-28F2021B245C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB751FD1-E296-4895-9CB2-28F2021B245C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB751FD1-E296-4895-9CB2-28F2021B245C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8237B0B4-6B5E-449D-9CC6-BA3912D9463A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8237B0B4-6B5E-449D-9CC6-BA3912D9463A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8237B0B4-6B5E-449D-9CC6-BA3912D9463A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8237B0B4-6B5E-449D-9CC6-BA3912D9463A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C29AFDFF-3DF9-4985-86F1-0D9B50F7CCF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29AFDFF-3DF9-4985-86F1-0D9B50F7CCF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29AFDFF-3DF9-4985-86F1-0D9B50F7CCF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C29AFDFF-3DF9-4985-86F1-0D9B50F7CCF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D88214FD-0CC7-4B57-A0B4-99EAEEEF5B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88214FD-0CC7-4B57-A0B4-99EAEEEF5B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88214FD-0CC7-4B57-A0B4-99EAEEEF5B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88214FD-0CC7-4B57-A0B4-99EAEEEF5B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97D78AA9-29DF-470E-A1E5-D9090C08300D}
 	EndGlobalSection
 EndGlobal

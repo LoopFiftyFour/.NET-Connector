@@ -4,6 +4,8 @@
 ## How to use
 The Loop54 Connector is available for download as a NuGet package. For installation instructions, see https://www.nuget.org/packages/Loop54.Connector/. For usage instructions, see http://docs.loop54.com.
 
+Requires .NET Framework 3.5 or .NET Standard 2.0.
+
 ## Features
 - Wraps Loop54 JSON API with native .NET functions.
 - Handles user identification using random-generated cookies. Note: requires a valid HttpContext.Current.

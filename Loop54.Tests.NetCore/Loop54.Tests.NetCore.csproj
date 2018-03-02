@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Loop54.Tests.NetCore</AssemblyName>
+    <RootNamespace>Loop54.Tests</RootNamespace>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Loop54.NetStandard\Loop54.NetStandard.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Loop54.Tests.Shared\Loop54.Tests.Shared.projitems" Label="Shared" />
+
+</Project>
