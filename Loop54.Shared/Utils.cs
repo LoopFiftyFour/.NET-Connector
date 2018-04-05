@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using Loop54.AspNet;
 using Loop54.Exceptions;
+using Loop54.Properties;
 
 namespace Loop54.Utils
 {
@@ -170,12 +171,6 @@ namespace Loop54.Utils
                 watch.Start();
             }
 
-            const string apiVersionHeader = "Api-Version";
-            const string apiVersion = "V26";
-
-            const string libVersionHeader = "Lib-Version";
-            const string libVersion = "NET:2016-10-28T141131";
-
             var request = (HttpWebRequest)WebRequest.Create(url);
             // .NET Core throws PlatformNotSupportedException when getting ServicePoint if proxy is not set to something (null is OK)
             request.Proxy = proxy; // https://github.com/dotnet/corefx/issues/26922
@@ -185,8 +180,8 @@ namespace Loop54.Utils
             request.AutomaticDecompression = DecompressionMethods.GZip;
             request.SendChunked = false;
             request.KeepAlive = true;
-            request.Headers.Add(apiVersionHeader, apiVersion);
-            request.Headers.Add(libVersionHeader, libVersion);
+            request.Headers.Add(VersionHeaders.ApiVersionHeader, VersionHeaders.ApiVersion);
+            request.Headers.Add(VersionHeaders.LibVersionHeader, VersionHeaders.LibVersion);
 
             request.ServicePoint.UseNagleAlgorithm = false;
             request.ServicePoint.Expect100Continue = false;

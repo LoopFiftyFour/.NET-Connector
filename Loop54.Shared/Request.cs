@@ -138,24 +138,6 @@ namespace Loop54
             set { _url = value; }
         }
 
-
-        private static string _libraryVersion = null;
-        /// <summary>
-        /// The version of this assembly.
-        /// </summary>
-        private static string LibraryVersion
-        {
-            get
-            {
-                if (_libraryVersion == null)
-                    _libraryVersion = Assembly.GetAssembly(typeof(Request)).GetName().Version.ToString();
-
-                return _libraryVersion;
-            }
-        }
-
-
-
         /// <summary>
         /// The name of the current request.
         /// </summary>
@@ -209,10 +191,6 @@ namespace Loop54
 
                 if (UserAgent != null)
                     ret += "\"UserAgent\":" + JsonConvert.SerializeObject(UserAgent) + ",";
-
-                ret += "\"LibraryVersion\":" + JsonConvert.SerializeObject(LibraryVersion) + ",";
-
-
 
                 lock (Data)
                 {

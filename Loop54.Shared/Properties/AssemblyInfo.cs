@@ -19,11 +19,11 @@ using Loop54.Properties;
 [assembly: Guid("d3db88c7-9433-4e8d-9e4c-b4e1248fdc49")]
 
 // This is the NuGet Package version. It's displayed as "Product version" in Windows Explorer.
-[assembly: AssemblyInformationalVersion(PackageSemanticVersion.Major + "." + PackageSemanticVersion.Minor + "." + PackageSemanticVersion.Patch)]
+[assembly: AssemblyInformationalVersion(PackageSemanticVersion.Full)]
 
 // This is the "File version" displayed in Windows explorer.
 // [BUILD_COUNTER] is replaced with the TeamCity build counter when running in TeamCity.
-[assembly: AssemblyFileVersion(PackageSemanticVersion.Major + "." + PackageSemanticVersion.Minor + "." + PackageSemanticVersion.Patch + ".[BUILD_COUNTER]")]
+[assembly: AssemblyFileVersion(PackageSemanticVersion.Full + ".[BUILD_COUNTER]")]
 
 // This is the assembly version used for resolving references at compile and run time. It includes only the major version, so that it breaks only when that changes.
 [assembly: AssemblyVersion(PackageSemanticVersion.Major + ".0.0.0")]
@@ -38,8 +38,21 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "3";
-        public const string Minor = "1";
+        public const string Minor = "2";
         public const string Patch = "0";
+
+        public const string Full = Major + "." + Minor + "." + Patch;
+    }
+
+    internal class VersionHeaders
+    {
+        // The names of these headers need to be consistent with the other connectors (Java, PHP, etc.)
+
+        public const string ApiVersionHeader = "Api-Version";
+        public const string ApiVersion = "V26";
+
+        public const string LibVersionHeader = "Lib-Version";
+        public const string LibVersion = "NET:" + PackageSemanticVersion.Full;
     }
 }
 
@@ -70,3 +83,5 @@ namespace Loop54.Properties
 // 2.1.0 Changed versioning to semantic for NuGet package (instaed of 1.0.0) and assembly version to MAJOR.0.0.0 so it doesn't break for minor upgrades
 // 3.0.0 Added .NET Standard 2.0 version. Allowed HttpContext to be passed in explicitly (and it may be null).
 // 3.1.0 Removed IP address from UserId.
+// 3.2.0 Removed "LibraryVersion" JSON property and updated "Lib-Version" header to be consistent with other connectors.
+
