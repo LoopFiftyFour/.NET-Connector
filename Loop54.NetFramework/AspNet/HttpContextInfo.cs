@@ -1,18 +1,19 @@
+using Loop54.User;
 using System;
 using System.Web;
 
 namespace Loop54.AspNet
 {
-    internal class HttpContextInfo : IHttpContextInfo
+    /// <summary>
+    /// Wrapper around a <see cref="HttpContext"/> that supplies the Loop54 library with client info.
+    /// </summary>
+    public class HttpContextInfo : IRemoteClientInfo
     {
         private readonly HttpContext _context;
 
         public HttpContextInfo(HttpContext context)
         {
-            if (context == null)
-                throw new ArgumentNullException("context");
-
-            _context = context;
+            _context = context ?? throw new ArgumentNullException("context");
         }
 
         public string GetRequestUrl()

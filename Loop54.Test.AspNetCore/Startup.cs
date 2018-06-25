@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Loop54.AspNet;
+using Microsoft.AspNetCore.Http;
 
 namespace Loop54.Test.AspNetCore
 {
@@ -21,6 +23,8 @@ namespace Loop54.Test.AspNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddLoop54("https://helloworld.54proxy.com");
             services.AddMvc();
         }
 
@@ -34,12 +38,17 @@ namespace Loop54.Test.AspNetCore
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}");
+            });
         }
     }
 }

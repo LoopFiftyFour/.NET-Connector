@@ -9,16 +9,69 @@
     <Import_RootNamespace>Loop54</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AspNet\IHttpContextInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)AspNet\NullContextInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ILoop54Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)User\IRemoteClientInfoProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)User\IRemoteClientInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\IRequestManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\CollectionItems.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Entity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Loop54Client.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Headers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Loop54Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\AutoCompleteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\CreateEventsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetEntitiesByAttributeRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetEntitiesRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetRelatedEntitiesRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntityCollectionParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntitySortingParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Facets\DistinctFacetItemSortingParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Facets\DistinctFacetParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Facets\FacetParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Facets\RangeFacetParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\AndFilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\AttributeExistsFilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\AttributeFilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterParameterType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\InverseFilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\OrFilterParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\QueryCollectionParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\QuerySortingParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\SortOrders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\SearchRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\AutoCompleteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\EntityCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ErrorDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ErrorResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Facet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetEntitiesByAttributeResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetEntitiesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetRelatedEntitiesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Response.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\SearchResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Request.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)RequestHandling.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Response.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RequestExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\RequestManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\CamelCaseExceptDictionaryResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\EntityAttributeJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\FacetJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\SerializationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\Serializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)User\UserMetaData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\EntityAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\EntityAttributeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\FacetType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Http\" />
+    <Folder Include="$(MSBuildThisFileDirectory)User\" />
   </ItemGroup>
 </Project>

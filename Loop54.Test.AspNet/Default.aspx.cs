@@ -1,7 +1,12 @@
+using Loop54.AspNet;
+using Loop54.Model.Request;
+using Loop54.Model.Response;
+using Loop54.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,7 +17,7 @@ namespace Loop54.Test.AspNet
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Loop54ClientManager.StartUp("https://helloworld.54proxy.com");
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
@@ -25,32 +30,17 @@ namespace Loop54.Test.AspNet
             RequestLabel.Text = "";
             ResponseLabel.Text = "";
 
-            var request = CreateRequest("Search", "QueryString", query);
-            RequestLabel.Text = request.Serialized;
+            SearchRequest request = new SearchRequest(query);
 
-            var response = GetResponse(request);
-
-            if (response.Success)
-            {
-                var directItems = response.GetValue<double>("DirectResults_TotalItems");
-                ResponseLabel.Text = directItems + " direct results found.";
+            try
+            { 
+                SearchResponse response = Loop54ClientManager.Client().Search(request);
+                ResponseLabel.Text = response.Results.Count + " direct results found.";
             }
-            else
+            catch(Exception e)
             {
-                ResponseLabel.Text = "Error!";
+                ResponseLabel.Text = "Error! " + e.ToString();
             }
-        }
-
-        private static Request CreateRequest(string requestName, string key, string value)
-        {
-            var request = new Request(requestName);
-            request.SetValue(key, value);
-            return request;
-        }
-
-        private static Response GetResponse(Request request)
-        {
-            return RequestHandling.GetResponse("http://helloworld.54proxy.com", request);
         }
     }
 }

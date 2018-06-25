@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Loop54.Properties;
 
@@ -28,6 +29,9 @@ using Loop54.Properties;
 // This is the assembly version used for resolving references at compile and run time. It includes only the major version, so that it breaks only when that changes.
 [assembly: AssemblyVersion(PackageSemanticVersion.Major + ".0.0.0")]
 
+[assembly: InternalsVisibleTo("Loop54.Tests.NetCore")]
+[assembly: InternalsVisibleTo("Loop54.Tests.NetFramework")]
+
 namespace Loop54.Properties
 {
     // Use semantic versioning here:
@@ -37,8 +41,8 @@ namespace Loop54.Properties
     // Assembly version will only change when Major changes, so references to it should break then and only then.
     internal static class PackageSemanticVersion
     {
-        public const string Major = "3";
-        public const string Minor = "2";
+        public const string Major = "4";
+        public const string Minor = "0";
         public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
@@ -49,7 +53,7 @@ namespace Loop54.Properties
         // The names of these headers need to be consistent with the other connectors (Java, PHP, etc.)
 
         public const string ApiVersionHeader = "Api-Version";
-        public const string ApiVersion = "V26";
+        public const string ApiVersion = "v3";
 
         public const string LibVersionHeader = "Lib-Version";
         public const string LibVersion = "NET:" + PackageSemanticVersion.Full;
