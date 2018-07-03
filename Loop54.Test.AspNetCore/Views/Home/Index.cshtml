@@ -1,98 +1,12 @@
-@using Loop54.Test.AspNetCore.Models
-@model SearchViewModel
+
 @{
-    ViewData["Title"] = "Loop54 .NET Connector ASP.NET Core test";
+    ViewData["PageName"] = "Index";
 }
-<h1>Loop54 .NET Connector ASP.NET Core test</h1>
-<form id="SearchForm" method="POST">
-    <div>
-        <label for="QueryText">Search query</label>
-        <input type="text" id="QueryText" name="Query" autofocus="" />
-        <input type="submit" id="SubmitButton" name="Search" />
-    </div>
-</form>
-@if (Model != null)
-{
-    <hr />
-    <div>Query: @Model.Query</div>
-    <div>Make sense: @Model.MakesSense</div>
-
-    @if (Model.RelatedQueries != null)
-    {
-        <hr />
-        <h2>Related queries</h2>
-        <ul>
-            @foreach (string query in Model.RelatedQueries)
-            {
-                <li>@query</li>
-            }
-        </ul>
-    }
-
-    @if (Model.SpellingSuggestions != null)
-    {
-        <hr />
-        <h2>Spelling suggestions</h2>
-        <ul>
-            @foreach (string query in Model.SpellingSuggestions)
-            {
-                <li>@query</li>
-            }
-        </ul>
-    }
-
-    <h2>Results</h2>
-    <div>@Model.Count total</div>
-    <table>
-        <tr><th></th><th>Name</th><th>Price</th><th>Category</th><th>Manufacturer</th></tr>
-        @foreach (var product in Model.Results)
-        {
-            <tr>
-                <td><img src="@product.ImageUrl" height="100" width="100" /></td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Category</td>
-                <td>@product.Manufacturer</td>
-            </tr>
-        }
-    </table>
-    <hr />
-    <h2>Related Results</h2>
-    <div>@Model.RelatedCount total</div>
-    <table>
-        <tr><th>Name</th><th>Price</th><th>Category</th><th>Manufacturer</th></tr>
-        @foreach (var product in Model.RelatedResults)
-        {
-            <tr>
-                <td><img src="@product.ImageUrl" height="100" width="100" /></td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Category</td>
-                <td>@product.Manufacturer</td>
-            </tr>
-        }
-    </table>
-
-    <hr />
-    <h2>Facets</h2>
-    @foreach (var facet in Model.Facets)
-    {
-        <div>@facet.Name</div>
-        @if (facet.IsDistinct)
-        {
-            var distictfacet = facet as DistinctFacetViewModel;
-            <ul>
-                @foreach (var option in distictfacet.Options)
-                {
-                    <li>@option.Key  (@option.Value)</li>
-                }
-            </ul>
-        }
-        else
-        {
-            var rangefacet = facet as RangeFacetViewModel;
-            <div>Min: @rangefacet.Min</div>
-            <div>Max: @rangefacet.Max</div>
-        }
-    }
-}
+<ul>
+    <li><a asp-controller="Search" asp-action="Index">Search</a></li>
+    <li><a asp-controller="GetEntities" asp-action="Index">GetEntities</a></li>
+    <li><a asp-controller="GetRelatedEntities" asp-action="Index">GetRelatedEntities</a></li>
+    <li><a asp-controller="GetEntitiesByAttribute" asp-action="Index">GetEntitiesByAttribute</a></li>
+    <li><a asp-controller="AutoComplete" asp-action="Index">AutoComplete</a></li>
+    <li><a asp-controller="CreateEvents" asp-action="Index">CreateEvents</a></li>
+</ul>

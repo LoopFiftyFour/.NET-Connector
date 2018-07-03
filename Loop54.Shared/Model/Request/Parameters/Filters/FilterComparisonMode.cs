@@ -14,6 +14,10 @@ namespace Loop54.Model.Request.Parameters.Filters
         GreaterThanOrEquals,
         LessThan,
         LessThanOrEquals,
+
+        /// <summary>
+        /// Only available if filtering on strings.
+        /// </summary>
         Contains
     }
 }

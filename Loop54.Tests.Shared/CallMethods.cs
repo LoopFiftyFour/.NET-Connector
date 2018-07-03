@@ -70,11 +70,8 @@ namespace Loop54.Tests
         {
             //Should result in an expensive steak
             var request = new GetEntitiesRequest();
-            request.ResultsOptions.Filter = new AttributeFilterParameter<double>()
+            request.ResultsOptions.Filter = new AttributeFilterParameter<double>("Price", 100)
             {
-                Type = FilterParameterType.Attribute,
-                AttributeName = "Price",
-                Value = 100,
                 ComparisonMode = FilterComparisonMode.GreaterThanOrEquals
             };
 

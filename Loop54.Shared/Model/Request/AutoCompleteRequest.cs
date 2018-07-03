@@ -24,6 +24,6 @@ namespace Loop54.Model.Request
         /// <summary>
         /// Parameters for specifying how the auto-complete results should be retrieved. Contains paging and sorting options.
         /// </summary>
-        public QueryCollectionParameters QueriesOptions { get; set; }
+        public QueryCollectionParameters QueriesOptions { get; set; } = new QueryCollectionParameters();
     }
 }

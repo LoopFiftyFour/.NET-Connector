@@ -6,6 +6,33 @@ namespace Loop54.Model.Request.Parameters
     public class QuerySortingParameter
     {
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public QuerySortingParameter()
+        {
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="type">How to sort the queries</param>
+        public QuerySortingParameter(Types type)
+        {
+            Type = type;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="type">How to sort the queries</param>
+        /// <param name="order">In what order to sort the queries</param>
+        public QuerySortingParameter(Types type, SortOrders order)
+            : this(type)
+        {
+            Order = order;
+        }
+        
+        /// <summary>
         /// How the queries should be sorted.
         /// </summary>
         public Types Type { get; set; }

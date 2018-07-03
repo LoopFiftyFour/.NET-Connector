@@ -17,4 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Loop54.NetStandard\Loop54.NetStandard.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 </Project>

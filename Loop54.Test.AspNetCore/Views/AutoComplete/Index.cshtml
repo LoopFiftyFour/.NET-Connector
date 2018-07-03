@@ -1,0 +1,33 @@
+@using Loop54.Test.AspNetCore.Models
+@model AutoCompleteViewModel
+@{
+    ViewData["PageName"] = "AutoComplete";
+}
+<form id="AutoCompleteForm" method="POST">
+    <div>
+        <label for="QueryText">Query</label>
+        <input type="text" id="QueryText" name="Query" autofocus="" />
+        <input type="submit" id="SubmitButton" name="AutoComplete" />
+    </div>
+</form>
+@if (Model != null)
+{
+    <hr />
+    <div>Query: @Model.Query</div>
+
+    <h2>Autocomplete queries (@Model.Count)</h2>
+    <ul>
+        @foreach (string query in Model.Results)
+        {
+            <li>@query</li>
+        }
+    </ul>
+
+    <h2>Scoped query (@Model.ScopedQuery)</h2>
+    <ul>
+        @foreach (string scope in Model.Scopes)
+        {
+            <li>@scope</li>
+        }
+    </ul>
+}

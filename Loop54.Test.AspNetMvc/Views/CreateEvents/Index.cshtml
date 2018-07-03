@@ -1,0 +1,20 @@
+@using Loop54.Test.AspNetMvc.Models
+@model string
+@{
+    ViewData["PageName"] = "CreateEvents";
+}
+<form id="CreateEventsForm" method="POST">
+    <div>
+        <label>Event type</label><br/>
+        <input type="radio" id="clickRadio" name="eventType" value="click" /><label for="clickRadio"> click</label><br />
+        <input type="radio" id="addtocartRadio" name="eventType" value="addtocart" /><label for="addtocartRadio"> addtocart</label><br />
+        <input type="radio" id="purchaseRadio" name="eventType" value="purchase" /><label for="purchaseRadio"> purchase</label><br />
+        <label>Entity type</label><input type="text" name="entityType" /><span>Tip: Product</span><br />
+        <label>Id</label> <input type="text" name="entityId" /><span>Tip: 13</span><br />
+        <input type="submit" name="CreateEvents" />
+    </div>
+</form>
+@if (Model != null)
+{
+    <h2>@Model</h2>
+}
