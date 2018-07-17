@@ -24,7 +24,16 @@ namespace Loop54.Test.AspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddLoop54("https://helloworld.54proxy.com");
+
+            //Here we add a named loop54 instance. We could add more named instances, for example if using multiple languages 
+            //by adding them to the Loop54SettingsCollection. Note that if adding more than one named Loop54Setting the 
+            //ILoop54Client interface wont be injectable. but instead you need to inject the ILoop54ClientProvider and use 
+            //the GetNamed method, providing the same name used here, as seen in the SearchController.
+            services.AddLoop54(Loop54SettingsCollection.Create().Add("English", "https://helloworld.54proxy.com"));
+            //Could be replaced with:
+            //services.AddLoop54("https://helloworld.54proxy.com");
+            //For the most basic implementations.
+
             services.AddMvc();
         }
 

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Loop54.AspNet;
 using Loop54.Model.Request;
 using Loop54.Model.Response;
 using Loop54.Test.AspNetCore.Models;
@@ -11,9 +12,9 @@ namespace Loop54.Test.AspNetCore.Controllers
     {
         private readonly ILoop54Client _loop54Client;
 
-        public SearchController(ILoop54Client loop54Client)
+        public SearchController(ILoop54ClientProvider loop54ClientProvider)
         {
-            _loop54Client = loop54Client;
+            _loop54Client = loop54ClientProvider.GetNamed("English"); //'English' is the same name we gave the instance in startup.cs
         }
 
         [HttpGet]

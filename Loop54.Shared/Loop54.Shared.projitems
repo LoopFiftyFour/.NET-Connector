@@ -9,6 +9,9 @@
     <Import_RootNamespace>Loop54</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ILoop54ClientProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Loop54ClientProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ILoop54Client.cs" />

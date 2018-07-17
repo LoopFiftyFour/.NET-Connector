@@ -33,6 +33,11 @@ namespace Loop54.Http
         private Loop54Settings _settings;
 
         /// <summary>
+        /// Settings used by this request manager.
+        /// </summary>
+        internal Loop54Settings Settings => _settings;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="settings">The settings for this instance to use when calling loop54.</param>

@@ -29,6 +29,11 @@ namespace Loop54
         private readonly IRemoteClientInfoProvider _remoteClientInfoProvider;
 
         /// <summary>
+        /// IRequestManager used by this client.
+        /// </summary>
+        internal IRequestManager RequestManager => _requestManager;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="requestManager">The <see cref="IRequestManager"/> to use when making calls to the api. Must not be null.</param>

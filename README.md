@@ -1,3 +1,4 @@
+
 # .NET-Connector
 .NET Wrapper for Loop54 JSON V3 API
 
@@ -18,17 +19,51 @@ Simply add the following code to the service configuration in your startup.cs fi
 
 An `ILoop54Client` is then injectable to your middleware or controllers. See [official ms docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.1) for more information about how that works.
 
+#### Multiple instances
+
+If you are using multiple instances of the Loop54 engine within you application you instead need to do the following:
+
+	services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+	services.AddLoop54(Loop54SettingsCollection.Create()
+		//Adding just the endpoint
+		.Add("English", "https://helloworld-en.54proxy.com")
+		//Adding a setting object
+		.Add("Swedish", new Loop54Settings("https://helloworld-se.54proxy.com") 
+		{ 
+			RequestTimeoutMs = 5000 
+		}));
+
+And then inject the `ILoop54ClientProvider` interface into your middleware or controllers. And obtain a specific instance using the `GetNamed` method with the same name as above:
+
+	ILoop54Client client = clientProvider.GetNamed("Swedish");
+
 ### ASP.NET
 Call the following static method once in the beginning of you application life cycle. For example in the `Application_Start` method in the Global.asax.cs file:
     
     Loop54ClientManager.StartUp("https://helloworld.54proxy.com");
     // or Loop54ClientManager.StartUp(new Loop54Settings("https://helloworld.54proxy.com")); for more options
-    
+     
 The `ILoop54Client` is then attainable with the following method:
 
     ILoop54Client client = Loop54ClientManager.Client();
     
 This `ILoop54Client` could of course be handled by a dependency injection system. Simply register the instance as a singleton in the framework of your choice. 
+
+#### Multiple instances
+If you need to use multiple instances of the Loop54 engine, for example if requiring support for multiple languages, use the `StartUp` with the `Loop54SettingsCollection` option:
+		
+	Loop54ClientManager.StartUp(Loop54SettingsCollection.Create()
+		//Adding just the endpoint
+		.Add("English", "https://helloworld-en.54proxy.com")
+		//Adding a setting object
+		.Add("Swedish", new Loop54Settings("https://helloworld-se.54proxy.com") 
+		{ 
+			RequestTimeoutMs = 5000 
+		}));
+	
+The `ILoop54Client` for swedish is then attainable with the following method:
+
+    ILoop54Client client = Loop54ClientManager.Client("Swedish");
 
 ### Using the `ILoop54Client`
 The `ILoop54Client` contains methods for making all public API calls to the Loop54 e-commerce search engine. It contains both synchronous and asynchronous variants of all methods.
