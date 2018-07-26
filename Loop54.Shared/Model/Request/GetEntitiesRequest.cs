@@ -2,6 +2,9 @@ using Loop54.Model.Request.Parameters;
 
 namespace Loop54.Model.Request
 {
+    /// <summary>
+    /// This class is used to configure a GetEntities request to the Loop54 e-commerce search engine.
+    /// </summary>
     public class GetEntitiesRequest : Request
     {
         /// <summary>

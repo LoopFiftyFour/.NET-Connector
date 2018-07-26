@@ -16,6 +16,11 @@
     <div>Query: @Model.Query</div>
     <div>Make sense: @Model.MakesSense</div>
 
+    @if (Model.ResponseMessage != null)
+    {
+    <div><b>Ping: @Model.ResponseMessage</b></div>
+    }
+
     @if (Model.RelatedQueries != null)
     {
         <hr />

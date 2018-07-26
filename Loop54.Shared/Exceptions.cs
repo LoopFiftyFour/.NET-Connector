@@ -55,4 +55,28 @@ namespace Loop54
         {
         }
     }
+
+    /// <summary>
+    /// Thrown when the custom data returned from the engine could not be retrieved properly.
+    /// </summary>
+    public class CustomDataException : Exception
+    {
+        /// <summary>
+        /// The data that failed to be deserialized or cast. 
+        /// Will be null if no data was found at all.
+        /// </summary>
+        public object FailedData { get; }
+
+        internal CustomDataException(string message, object data = null)
+            : base(message)
+        {
+            FailedData = data;
+        }
+
+        internal CustomDataException(string message, Exception innerException, object data = null)
+            : base(message, innerException)
+        {
+            FailedData = data;
+        }
+    }
 }

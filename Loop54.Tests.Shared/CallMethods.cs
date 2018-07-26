@@ -55,7 +55,17 @@ namespace Loop54.Tests
             Assert.Greater(response.RelatedResults.Count, 0);
             Assert.Greater(response.RelatedResults.Items.Count, 0);
         }
-        
+
+        [Test]
+        public void SearchWithCustomData([Values("steak", "chicken breast")]string query)
+        {
+            var request = new SearchRequest(query);
+            request.AddCustomData("message", "ping");
+            var response = GetClient().Search(request.Wrap(metaDataOverrides: CreateMetaData()));
+            var responseMessage = response.GetCustomDataOrDefault<string>("responseMessage");
+            Assert.AreEqual("pong", responseMessage);
+        }
+
         [Test]
         public void GetRelatedEntitiesHasResults()
         {

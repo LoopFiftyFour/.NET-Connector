@@ -46,5 +46,51 @@ namespace Loop54.Test.AspNetMvc.Controllers
                 RelatedQueries = response.RelatedQueries.Count > 0 ? response.RelatedQueries.Items.Select(i => i.Query).ToList() : null,
             });
         }
+
+        [HttpGet]
+        public ActionResult WithCustomData()
+        {
+            return View("Index");
+        }
+
+        [HttpPost]
+        public ActionResult WithCustomData(string query)
+        {
+            SearchRequest request = new SearchRequest(query);
+            request.ResultsOptions.Skip = 0;
+            request.ResultsOptions.Take = 10;
+
+            //Add facets to the search request
+            request.ResultsOptions.AddDistinctFacet<string>("Manufacturer");
+            request.ResultsOptions.AddDistinctFacet<string>("Organic");
+            request.ResultsOptions.AddDistinctFacet<string>("Category");
+            request.ResultsOptions.AddRangeFacet<double>("Price");
+
+            //Add custom data to the request
+            //What custom data that is available to you may vary depending on your price package.
+            //Please contact customer support for more information.
+            request.AddCustomData("message", "ping");
+
+            SearchResponse response = _loop54Client.Search(request);
+
+            //Get the custom data from the response
+            //This method can deserialize complex types as well, for instance a EntityCollection if doing content search. 
+            //Again, contact customer support for more information.
+            string responseMessage = response.GetCustomDataOrDefault<string>("responseMessage");
+
+            return View("Index", new SearchViewModel
+            {
+                ResponseMessage = responseMessage,
+                Query = response.Query,
+                MakesSense = response.MakesSense,
+                Count = response.Results.Count,
+                Results = ModelUtils.GetViewModelFromEntities(response.Results.Items),
+                Facets = response.Results.Facets.Where(f => f.HasValues).Select(ModelUtils.CreateFacet).ToList(),
+                RelatedCount = response.RelatedResults.Count,
+                RelatedResults = ModelUtils.GetViewModelFromEntities(response.RelatedResults.Items),
+                SpellingSuggestions = response.SpellingSuggestions.Count > 0 ? response.SpellingSuggestions.Items.Select(i => i.Query).ToList() : null,
+                RelatedQueries = response.RelatedQueries.Count > 0 ? response.RelatedQueries.Items.Select(i => i.Query).ToList() : null,
+            });
+        }
     }
 }

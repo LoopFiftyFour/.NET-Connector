@@ -14,6 +14,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Loop54Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54ClientProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />

@@ -42,7 +42,7 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "4";
-        public const string Minor = "1";
+        public const string Minor = "2";
         public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
@@ -91,3 +91,4 @@ namespace Loop54.Properties
 // 4.0.0 Rewritten library to work with v3 of the api
 // 4.0.1 Synchronous calls are no longer deadlocked because of task system
 // 4.1.0 Added support for multiple instances of the client
+// 4.2.0 Better support for custom request data 
