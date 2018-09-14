@@ -37,11 +37,11 @@ namespace Loop54.Test.AspNetMvc.Controllers
 
             return View(new AutoCompleteViewModel
             {
-                Query = response.Query,
                 Count = response.Queries.Count,
                 Results = response.Queries.Items.Select(q => q.Query).ToList(),
-                ScopedQuery = response.ScopedQuery.Query,
-                Scopes = response.ScopedQuery.Scopes
+                ScopedQuery = response.ScopedQuery?.Query,
+                ScopeAttribute = response.ScopedQuery?.ScopeAttributeName,
+                Scopes = response.ScopedQuery?.Scopes ?? new List<string>()
             });
         }
     }

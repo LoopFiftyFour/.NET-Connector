@@ -11,11 +11,6 @@ namespace Loop54.Model.Response
         public bool MakesSense { get; set; }
 
         /// <summary>
-        /// The query made in the search request.
-        /// </summary>
-        public string Query { get; set; }
-
-        /// <summary>
         /// A collection of suggestions for alternate spellings of the query.
         /// </summary>
         public QueryCollection SpellingSuggestions { get; set; }

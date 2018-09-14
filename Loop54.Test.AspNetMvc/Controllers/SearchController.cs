@@ -35,7 +35,6 @@ namespace Loop54.Test.AspNetMvc.Controllers
 
             return View(new SearchViewModel
             {
-                Query = response.Query,
                 MakesSense = response.MakesSense,
                 Count = response.Results.Count,
                 Results = ModelUtils.GetViewModelFromEntities(response.Results.Items),
@@ -81,7 +80,6 @@ namespace Loop54.Test.AspNetMvc.Controllers
             return View("Index", new SearchViewModel
             {
                 ResponseMessage = responseMessage,
-                Query = response.Query,
                 MakesSense = response.MakesSense,
                 Count = response.Results.Count,
                 Results = ModelUtils.GetViewModelFromEntities(response.Results.Items),

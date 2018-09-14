@@ -23,5 +23,10 @@ namespace Loop54.Model.Response
         /// Scopes where this query is relevant. Based on which entity attribute values will be present in the search results. Use together with faceting of search results for this query.
         /// </summary>
         public IList<string> Scopes { get; set; }
+
+        /// <summary>
+        /// Which attribute the scopes were built using.
+        /// </summary>
+        public string ScopeAttributeName { get; set; }
     }
 }

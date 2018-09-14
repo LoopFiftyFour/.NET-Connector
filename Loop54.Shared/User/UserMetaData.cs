@@ -82,12 +82,7 @@ namespace Loop54.User
             {
                 string newUserId = Utils.GenerateUserId();
                 cookieAccessor.SetCookie(UserIdCookieKey, newUserId, DateTime.Now.AddYears(1));
-                cookieValue = cookieAccessor.GetCookie(UserIdCookieKey);
-
-                if (!newUserId.Equals(cookieValue, StringComparison.Ordinal))
-                    throw new ClientInfoException($"The cookie with the name '{UserIdCookieKey}' (Value: '{cookieValue}') does not match the newly " +
-                        $"generated userId '{newUserId}'. Make sure you've implemented the {nameof(IRemoteClientInfo)} interface " +
-                        $"properly so that the cookie setting and getting works.");
+                cookieValue = newUserId;
             }
 
             return cookieValue;

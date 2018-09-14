@@ -13,8 +13,6 @@
 @if (Model != null)
 {
     <hr />
-    <div>Query: @Model.Query</div>
-
     <h2>Autocomplete queries (@Model.Count)</h2>
     <ul>
         @foreach (string query in Model.Results)
@@ -23,7 +21,7 @@
         }
     </ul>
 
-    <h2>Scoped query (@Model.ScopedQuery)</h2>
+    <h2>Scopes (for query @Model.ScopedQuery, based on attribute @Model.ScopeAttribute)</h2>
     <ul>
         @foreach (string scope in Model.Scopes)
         {

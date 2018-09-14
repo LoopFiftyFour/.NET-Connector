@@ -28,9 +28,9 @@ namespace Loop54.Test.AspNetCore.Controllers
         {
             GetEntitiesByAttributeRequest request = new GetEntitiesByAttributeRequest("Category", category);
 
-            //We only want products that have the organic attribute and that is either "True" or "False"
+            //We only want organic/non-organic products that have got the price attribute
             request.ResultsOptions.Filter = new AndFilterParameter(
-                new AttributeExistsFilterParameter("Organic"),
+                new AttributeExistsFilterParameter("Price"),
                 //Because the organic attribute is stored as a string in the engine we need to filter with that type.
                 //If it would have been stored as a boolean we would have used bool instead.
                 new AttributeFilterParameter<string>("Organic", organic ? "True" : "False"));

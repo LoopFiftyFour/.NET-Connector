@@ -4,7 +4,6 @@ namespace Loop54.Test.AspNetMvc.Models
 {
     public class SearchViewModel
     {
-        public string Query { get; set; }
         public bool MakesSense { get; set; }
         public int Count { get; set; }
         public IList<ProductViewModel> Results { get; set; }

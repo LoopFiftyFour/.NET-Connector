@@ -8,11 +8,6 @@ namespace Loop54.Model.Response
     public class AutoCompleteResponse : Response
     {
         /// <summary>
-        /// The query made in the autocomplete request.
-        /// </summary>
-        public string Query { get; set; }
-
-        /// <summary>
         /// The query the engine deemed most relevant, will get a result with scopes.
         /// </summary>
         public ScopedQueryResult ScopedQuery { get; set; }

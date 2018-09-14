@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.Test.AspNetCore", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loop54.Test.AspNetMvc", "Loop54.Test.AspNetMvc\Loop54.Test.AspNetMvc.csproj", "{5268AE34-AEB2-407A-BEF2-CC73C10A7AC7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.NetCoreCodeExamples", "Loop54.NetCoreCodeExamples\Loop54.NetCoreCodeExamples.csproj", "{910C51C1-F1B4-4967-A74C-AE0352592A98}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Loop54.Shared\Loop54.Shared.projitems*{7e6374ea-0c57-42ce-be8a-d660e995cd7e}*SharedItemsImports = 4
@@ -55,6 +57,10 @@ Global
 		{5268AE34-AEB2-407A-BEF2-CC73C10A7AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5268AE34-AEB2-407A-BEF2-CC73C10A7AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5268AE34-AEB2-407A-BEF2-CC73C10A7AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910C51C1-F1B4-4967-A74C-AE0352592A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910C51C1-F1B4-4967-A74C-AE0352592A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910C51C1-F1B4-4967-A74C-AE0352592A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910C51C1-F1B4-4967-A74C-AE0352592A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
