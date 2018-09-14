@@ -41,8 +41,8 @@ namespace Loop54.Properties
     // Assembly version will only change when Major changes, so references to it should break then and only then.
     internal static class PackageSemanticVersion
     {
-        public const string Major = "4";
-        public const string Minor = "2";
+        public const string Major = "5";
+        public const string Minor = "0";
         public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
@@ -92,3 +92,4 @@ namespace Loop54.Properties
 // 4.0.1 Synchronous calls are no longer deadlocked because of task system
 // 4.1.0 Added support for multiple instances of the client
 // 4.2.0 Better support for custom request data 
+// 5.0.0 Added code samples, removed SearchResponse.Query and AutoCompleteResponse.Query and added support for ScopeAttributeName in scoped AutoComplete
