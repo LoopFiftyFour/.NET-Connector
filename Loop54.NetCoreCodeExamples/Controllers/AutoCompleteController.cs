@@ -24,6 +24,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
 
             // Code examples
             AutoCompleteExample(query);
+            ScopedAutoCompleteExample(query);
 
             return View();
         }

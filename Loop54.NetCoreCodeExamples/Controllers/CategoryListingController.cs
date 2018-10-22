@@ -80,7 +80,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
             // INJECT SAMPLE render-items BEGIN
             RenderItems(response);
             // INJECT SAMPLE END
-            // INJECT SAMPLE render-facets BEGIN
+            // INJECT SAMPLE render-distinct-facets BEGIN
             RenderFacets(response);
             // INJECT SAMPLE END
             // CODE SAMPLE END
@@ -231,7 +231,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
 
         private void RenderFacets(GetEntitiesByAttributeResponse response)
         {
-            // CODE SAMPLE render-facets BEGIN
+            // CODE SAMPLE render-distinct-facets BEGIN
             List<string> distinctFacetsToDisplay = new List<string>() { "Manufacturer", "Category", "Organic" };
             foreach (string attributeName in distinctFacetsToDisplay)
             {
@@ -247,6 +247,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
                     }
                 }
             }
+            // CODE SAMPLE END
 
             //if there is a price range facet
             var priceFacet = response.Results.GetRangeFacetByName("Price");
@@ -261,7 +262,6 @@ namespace Loop54.NetCoreCodeExamples.Controllers
                                 " kr, min selected: " + minPriceSelected.ToString() + " kr," +
                                 " max selected: " + maxPriceSelected.ToString() + " kr.");
             }
-            // CODE SAMPLE END
         }
         #endregion
     }

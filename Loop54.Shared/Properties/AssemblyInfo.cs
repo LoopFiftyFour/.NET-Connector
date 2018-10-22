@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "0";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -93,3 +93,4 @@ namespace Loop54.Properties
 // 4.1.0 Added support for multiple instances of the client
 // 4.2.0 Better support for custom request data 
 // 5.0.0 Added code samples, removed SearchResponse.Query and AutoCompleteResponse.Query and added support for ScopeAttributeName in scoped AutoComplete
+// 5.0.1 Run the scoped query autocomplete test in the code examples project. Changed some code example names and printouts. Added a license document.

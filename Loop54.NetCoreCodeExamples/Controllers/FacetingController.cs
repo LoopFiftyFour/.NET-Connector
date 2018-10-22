@@ -188,7 +188,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
             var results = response.Results.Items;
 
             if (!results.Any())
-                Debug.WriteLine("There were no items in this category.");
+                Debug.WriteLine("There were no items.");
 
             foreach (var resultItem in results)
             {
