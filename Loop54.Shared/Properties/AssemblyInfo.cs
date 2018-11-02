@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "0";
-        public const string Patch = "2";
+        public const string Patch = "3";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -95,3 +95,4 @@ namespace Loop54.Properties
 // 5.0.0 Added code samples, removed SearchResponse.Query and AutoCompleteResponse.Query and added support for ScopeAttributeName in scoped AutoComplete
 // 5.0.1 Run the scoped query autocomplete test in the code examples project. Changed some code example names and printouts. Added a license document.
 // 5.0.2 Update ASP.NET Core version
+// 5.0.3 Run more tests in the code examples project (no items returned in search/faceting, related results returned in search).

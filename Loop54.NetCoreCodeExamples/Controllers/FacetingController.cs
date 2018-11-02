@@ -23,6 +23,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
         {
             // Setup
             string query = "a";
+            string query2 = "dfshdfjsdkhfsdjkf";
             string specificManufacturer = "MeatNStuff";
 
             // Code examples
@@ -31,6 +32,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
             FacetingEngineResponseExample(query);
             FacetingDistinctFacetExample(query, specificManufacturer);
             FacetingRangeFacetExample(query);
+            FacetingSingleFacetExample(query2);
 
             return View();
         }

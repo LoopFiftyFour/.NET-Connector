@@ -22,10 +22,14 @@ namespace Loop54.NetCoreCodeExamples.Controllers
             // Setup
             string query1 = "a";
             string query2 = "b";
+            string query3 = "dfshdfjsdkhfsdjkf";
+            string query4 = "apple";
 
             // Code examples
             SearchExample(query1);
-            SearchCheckResultExample(query2);
+            SearchExample(query2);
+            SearchExample(query3);
+            SearchExample(query4);
 
             return View();
         }
@@ -79,26 +83,6 @@ namespace Loop54.NetCoreCodeExamples.Controllers
             // CODE SAMPLE END
 
             Debug.WriteLine("search-full (end) " + Environment.NewLine);
-        }
-
-        private void SearchCheckResultExample(string query)
-        {
-            Debug.WriteLine("search-check-result: " + Environment.NewLine);
-            //initialize "Search" request and set search query
-            SearchRequest request = new SearchRequest(query);
-
-            //specify number of response items
-            request.ResultsOptions.Skip = 0;
-            request.ResultsOptions.Take = 10;
-            request.RelatedResultsOptions.Skip = 0;
-            request.RelatedResultsOptions.Take = 9;
-
-            //fetch response from engine
-            SearchResponse response = _loop54Client.Search(request);
-            
-            CheckResults(response);
-
-            Debug.WriteLine("search-check-result (end) " + Environment.NewLine);
         }
         #endregion
 
