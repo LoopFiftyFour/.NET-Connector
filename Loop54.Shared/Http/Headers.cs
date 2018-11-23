@@ -1,7 +1,7 @@
 namespace Loop54.Http
 {
     /// <summary>
-    /// Headers used by v3 of the Loop54 api
+    /// Headers used by V3 of the Loop54 API
     /// </summary>
     internal static class Headers
     {

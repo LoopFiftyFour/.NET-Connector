@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "0";
-        public const string Patch = "3";
+        public const string Patch = "4";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -53,7 +53,7 @@ namespace Loop54.Properties
         // The names of these headers need to be consistent with the other connectors (Java, PHP, etc.)
 
         public const string ApiVersionHeader = "Api-Version";
-        public const string ApiVersion = "v3";
+        public const string ApiVersion = "V3";
 
         public const string LibVersionHeader = "Lib-Version";
         public const string LibVersion = "NET:" + PackageSemanticVersion.Full;
@@ -88,7 +88,7 @@ namespace Loop54.Properties
 // 3.0.0 Added .NET Standard 2.0 version. Allowed HttpContext to be passed in explicitly (and it may be null).
 // 3.1.0 Removed IP address from UserId.
 // 3.2.0 Removed "LibraryVersion" JSON property and updated "Lib-Version" header to be consistent with other connectors.
-// 4.0.0 Rewritten library to work with v3 of the api
+// 4.0.0 Rewritten library to work with V3 of the api
 // 4.0.1 Synchronous calls are no longer deadlocked because of task system
 // 4.1.0 Added support for multiple instances of the client
 // 4.2.0 Better support for custom request data 
@@ -96,3 +96,4 @@ namespace Loop54.Properties
 // 5.0.1 Run the scoped query autocomplete test in the code examples project. Changed some code example names and printouts. Added a license document.
 // 5.0.2 Update ASP.NET Core version
 // 5.0.3 Run more tests in the code examples project (no items returned in search/faceting, related results returned in search).
+// 5.0.4 Api-Version value "v3" -> "V3"
