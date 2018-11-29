@@ -17,7 +17,7 @@ namespace Loop54.Model.Request
         
         /// <summary>
         /// The attribute name-value-pair to find entities connected to. Note: this attribute needs 
-        /// to be indexed in the engine. See the endpoint GetIndexedAttribute.
+        /// to be indexed in the engine. See the endpoint /getIndexedAttributes.
         /// </summary>
         public AttributeNameValuePair Attribute { get; set; } = new AttributeNameValuePair();
 

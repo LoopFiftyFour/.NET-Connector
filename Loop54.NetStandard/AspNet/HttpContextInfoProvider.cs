@@ -27,6 +27,9 @@ namespace Loop54.AspNet
         /// <returns>A <see cref="IRemoteClientInfo"/> based on the current <see cref="HttpContext"/></returns>
         public IRemoteClientInfo GetRemoteClientInfo()
         {
+            if (_contextAccessor.HttpContext == null)
+                throw Utils.CreateNullHttpContextException<HttpContextInfoProvider>("IHttpContextAccessor.HttpContext");
+
             return new HttpContextInfo(_contextAccessor.HttpContext);
         }
     }

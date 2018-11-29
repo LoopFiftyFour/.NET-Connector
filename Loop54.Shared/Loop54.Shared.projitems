@@ -13,6 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Loop54ClientProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ILoop54Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)User\IRemoteClientInfoProvider.cs" />

@@ -24,6 +24,7 @@ namespace Loop54
         private const string GetEntitiesByAttributeRequestName = "getEntitiesByAttribute";
         private const string GetRelatedEntitiesRequestName = "getRelatedEntities";
         private const string CreateEventsRequestName = "createEvents";
+        private const string SyncRequestName = "sync";
 
         private readonly IRequestManager _requestManager;
         private readonly IRemoteClientInfoProvider _remoteClientInfoProvider;
@@ -34,7 +35,7 @@ namespace Loop54
         internal IRequestManager RequestManager => _requestManager;
 
         /// <summary>
-        /// Constructor
+        /// Creates an instance of Loop54Client using the specified <see cref="IRequestManager"/> and <see cref="IRemoteClientInfoProvider"/>.
         /// </summary>
         /// <param name="requestManager">The <see cref="IRequestManager"/> to use when making calls to the api. Must not be null.</param>
         /// <param name="remoteClientInfoProvider">The <see cref="IRemoteClientInfoProvider"/></param>
@@ -86,14 +87,22 @@ namespace Loop54
         public async Task<Response> CreateEventsAsync(RequestContainer<CreateEventsRequest> request) 
             => await CallEngineWithinClientContextAsync<CreateEventsRequest, Response>(CreateEventsRequestName, request);
 
+        public Response Sync(Request request = null) => Sync(request.Wrap());
+        public Response Sync(RequestContainer<Request> request)
+            => CallEngineWithinClientContext<Request, Response>(SyncRequestName, request, true);
+        public async Task<Response> SyncAsync(Request request = null) => await SyncAsync(request.Wrap());
+        public async Task<Response> SyncAsync(RequestContainer<Request> request)
+            => await CallEngineWithinClientContextAsync<Request, Response>(SyncRequestName, request, true);
+
         public Response CustomCall(string name, Request request) => CustomCall(name, request.Wrap());
         public Response CustomCall(string name, RequestContainer<Request> request) => CallEngineWithinClientContext<Request, Response>(name, request);
         public async Task<Response> CustomCallAsync(string name, Request request) => await CustomCallAsync(name, request.Wrap());
         public async Task<Response> CustomCallAsync(string name, RequestContainer<Request> request) => await CallEngineWithinClientContextAsync<Request, Response>(name, request);
 
-        private TResponse CallEngineWithinClientContext<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request) where TResponse : Response where TRequest : Request
+        private TResponse CallEngineWithinClientContext<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest = false) where TResponse : Response where TRequest : Request
         {
-            UserMetaData metaData = PrepareAndValidateRequest(requestName, request);
+            request = ValidateRequest(requestName, request, allowNullRequest);
+            UserMetaData metaData = PrepareRequest(requestName, request);
 
             try
             {
@@ -107,13 +116,14 @@ namespace Loop54
             }
         }
 
-        private async Task<TResponse> CallEngineWithinClientContextAsync<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request) where TResponse : Response where TRequest : Request
+        private async Task<TResponse> CallEngineWithinClientContextAsync<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest = false) where TResponse : Response where TRequest : Request
         {
-            UserMetaData metaData = PrepareAndValidateRequest(requestName, request);
+            request = ValidateRequest(requestName, request, allowNullRequest);
+            UserMetaData metaData = PrepareRequest(requestName, request);
             return await _requestManager.CallEngineAsync<TRequest, TResponse>(requestName, request.Request, metaData);
         }
 
-        private UserMetaData PrepareAndValidateRequest<TRequest>(string requestName, RequestContainer<TRequest> request) where TRequest : Request
+        private RequestContainer<TRequest> ValidateRequest<TRequest>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest) where TRequest : Request
         {
             if (requestName == null)
                 throw new ArgumentNullException(nameof(requestName));
@@ -121,6 +131,30 @@ namespace Loop54
             if (requestName.Length == 0 || char.IsUpper(requestName[0]))
                 throw new ArgumentException($"The {nameof(requestName)} must be in lower camel case with a length over 0.", nameof(requestName));
 
+            //null handling
+            if ((request == null || request.Request == null))
+            {
+                if (allowNullRequest)
+                {
+                    if (typeof(TRequest) != typeof(Request))
+                        throw new ArgumentNullException(nameof(request), $"{nameof(request)} can not be null when the type is not {typeof(Request)}.");
+
+                    if (request == null)
+                        request = new RequestContainer<TRequest>((TRequest)new Request());
+                    else if (request.Request == null)
+                        request.Request = (TRequest)new Request();
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(request), $"{nameof(request)} can not be null for the engine operation {requestName}.");
+                }
+            }
+
+            return request;
+        }
+
+        private UserMetaData PrepareRequest<TRequest>(string requestName, RequestContainer<TRequest> request) where TRequest : Request
+        {
             return GetOrCreateMetaData(request);
         }
 

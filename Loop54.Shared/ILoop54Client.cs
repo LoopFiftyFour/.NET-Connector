@@ -201,6 +201,38 @@ namespace Loop54
 
         #endregion
 
+        #region Sync
+
+        /// <summary>
+        /// Make a sync call to the engine, telling it to re-sync the catalog.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The results of a sync request.</returns>
+        Response Sync(Request request = null);
+
+        /// <summary>
+        /// Make an asynchronous sync call to the engine, telling it to re-sync the catalog.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The results of a sync request.</returns>
+        Task<Response> SyncAsync(Request request = null);
+
+        /// <summary>
+        /// Make a sync call to the engine, telling it to re-sync the catalog.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The results of a sync request.</returns>
+        Response Sync(RequestContainer<Request> request);
+
+        /// <summary>
+        /// Make an asynchronous sync call to the engine, telling it to re-sync the catalog.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The results of a sync request.</returns>
+        Task<Response> SyncAsync(RequestContainer<Request> request);
+
+        #endregion
+
         #region CustomCall
 
         /// <summary>

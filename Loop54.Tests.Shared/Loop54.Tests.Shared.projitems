@@ -16,8 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResourceHoster.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FacetJsonConverter.cs" />

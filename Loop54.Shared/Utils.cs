@@ -17,6 +17,12 @@ namespace Loop54
             return ret.TrimEnd('/');
         }
 
+        internal static Exception CreateNullHttpContextException<T>(string property)
+        {
+            return new ClientInfoException($"The {typeof(T)} cannot be used when {property} is null. " +
+                    "Either make sure {property} is not null or use another IRemoteClientInfoProvider, for instance Loop54.NullClientInfoProvider.");
+        }
+
         /// <summary>
         /// Checks whether an URL is using HTTPS
         /// </summary>

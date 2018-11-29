@@ -1,9 +1,4 @@
 using Loop54.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Loop54.AspNet
@@ -15,6 +10,9 @@ namespace Loop54.AspNet
     {
         public IRemoteClientInfo GetRemoteClientInfo()
         {
+            if (HttpContext.Current == null)
+                throw Utils.CreateNullHttpContextException<HttpContextInfoProvider>("HttpContext.Current");
+
             return new HttpContextInfo(HttpContext.Current);
         }
     }

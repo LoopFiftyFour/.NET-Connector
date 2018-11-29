@@ -69,7 +69,7 @@ namespace Loop54.NetCoreCodeExamples.Controllers
                 Debug.WriteLine(productId + " " + productTitle); //render a product on the search results page
             }
 
-            //render recommended results
+            //render related results
             var relatedResults = response.RelatedResults.Items;
             if (relatedResults.Any())
                 Debug.WriteLine("Maybe you also want these?");

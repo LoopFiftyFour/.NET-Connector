@@ -18,6 +18,7 @@ namespace Loop54.Tests
         {
             return new Loop54.Loop54Client(new RequestManager(new Loop54Settings("https://helloworld.54proxy.com")
             {
+                ApiKey = "TestApiKey",
                 RequestTimeoutMs = 2000
             }), new NullClientInfoProvider());
         }
@@ -111,6 +112,16 @@ namespace Loop54.Tests
             var response = GetClient().Search(searchRequest.Wrap(metaDataOverrides: CreateMetaData()));
 
             AssertNumber(response.Results, number);
+        }
+
+        [Test]
+        public void Sync()
+        {
+            ILoop54Client client = GetClient();
+
+            var request = new Request();
+
+            var response = client.Sync(request);
         }
 
         private void AssertNumber(EntityCollection results, int desiredNumber)

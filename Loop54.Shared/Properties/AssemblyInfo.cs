@@ -42,8 +42,8 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "5";
-        public const string Minor = "0";
-        public const string Patch = "4";
+        public const string Minor = "1";
+        public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -97,3 +97,4 @@ namespace Loop54.Properties
 // 5.0.2 Update ASP.NET Core version
 // 5.0.3 Run more tests in the code examples project (no items returned in search/faceting, related results returned in search).
 // 5.0.4 Api-Version value "v3" -> "V3"
+// 5.1.0 Added support for Sync request and some related things
