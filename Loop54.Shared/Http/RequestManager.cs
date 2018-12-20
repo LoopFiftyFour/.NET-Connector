@@ -1,4 +1,3 @@
-using Loop54.AspNet;
 using Loop54.Model.Request;
 using Loop54.Model.Response;
 using Loop54.Properties;
@@ -17,7 +16,7 @@ namespace Loop54.Http
     /// </summary>
     public class RequestManager : IRequestManager
     {
-        private HttpClient _httpClient = new HttpClient(new HttpClientHandler()
+        private readonly HttpClient _httpClient = new HttpClient(new HttpClientHandler
         {
             AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
         });
@@ -76,7 +75,7 @@ namespace Loop54.Http
             };
 
             byte[] responseBytes = await MakeHttpRequest(request);
-            return Serializer.Deserialize<TResponse>(responseBytes);
+            return Serializer.DeserializeBytes<TResponse>(responseBytes);
         }
 
         private async Task<byte[]> MakeHttpRequest(RequestData request)
@@ -85,16 +84,15 @@ namespace Loop54.Http
             SetHeadersOnRequest(content, request);
             string endpoint = GetValidatedEndpoint();
 
-            HttpResponseMessage message = null;
-
+            HttpResponseMessage message;
             try
             {
                 message = await _httpClient.PostAsync($"{endpoint}/{request.Action}", content);
             }
             catch (Exception e)
             {
-                throw new EngineNotReachableException($"Could not make request to engine at '{endpoint}', you might have entered the wrong endpoint or there might " +
-                    $"be a firewall blocking outgoing port 80", e);
+                throw new EngineNotReachableException($"Could not make request to engine at '{endpoint}', you might have entered the wrong endpoint or there"
+                    + " might be a firewall blocking the port.", e);
             }
 
             if (message.IsSuccessStatusCode)
@@ -123,16 +121,26 @@ namespace Loop54.Http
             AddHeaderIfNotNull(content.Headers, Headers.Referer, request.UserMetaData.Referer);
         }
         
-        private void AddHeaderIfNotNull(HttpContentHeaders headers, string headerName, string headerValue)
+        private static void AddHeaderIfNotNull(HttpContentHeaders headers, string headerName, string headerValue)
         {
             if (headerValue != null)
                 headers.Add(headerName, headerValue);
         }
         
-        private Exception CreateEngineErrorException(byte[] responseData)
+        private static Exception CreateEngineErrorException(byte[] responseData)
         {
-            ErrorResponse errorResponse = Serializer.Deserialize<ErrorResponse>(responseData);
-            return new EngineStatusCodeException(errorResponse.Error);
+            string responseText = Serializer.GetStringFromBytes(responseData);
+            try
+            {
+                ErrorResponse errorResponse = Serializer.DeserializeString<ErrorResponse>(responseText);
+                if (errorResponse.Error == null)
+                    throw new ApplicationException("The response JSON does not have an 'Error' property.");
+                return new EngineStatusCodeException(errorResponse.Error);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidEngineResponseException(responseText, ex);
+            }
         }
     }
 }

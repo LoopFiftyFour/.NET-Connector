@@ -73,9 +73,9 @@ namespace Loop54.Tests.Model
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<EntityCollection>("complexData"));
         }
 
-        private Loop54.Model.Response.Response GetResponse(string responseJson)
+        private static Loop54.Model.Response.Response GetResponse(string responseJson)
         {
-            return Serializer.Deserialize<Loop54.Model.Response.Response>(Encoding.UTF8.GetBytes(responseJson));
+            return Serializer.DeserializeBytes<Loop54.Model.Response.Response>(Encoding.UTF8.GetBytes(responseJson));
         }
     }
 }

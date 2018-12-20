@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -11,9 +10,9 @@ namespace Loop54.Serialization
 {
     internal class Serializer
     {
-        private static Encoding _encoding = new UTF8Encoding(false);
+        private static readonly Encoding _encoding = new UTF8Encoding(false);
 
-        private static JsonSerializer _jsonSerializer = new JsonSerializer
+        private static readonly JsonSerializer _jsonSerializer = new JsonSerializer
         {
             ContractResolver = new CamelCaseExceptDictionaryKeysResolver(),
             NullValueHandling = NullValueHandling.Ignore,
@@ -48,7 +47,7 @@ namespace Loop54.Serialization
             }
         }
 
-        internal static T Deserialize<T>(JToken token)
+        internal static T DeserializeToken<T>(JToken token)
         {
             try
             {
@@ -56,24 +55,34 @@ namespace Loop54.Serialization
             }
             catch (Exception e)
             {
-                throw new SerializationException($"Could not deserialize object of type {typeof(T).ToString()}", e);
+                throw new SerializationException($"Could not deserialize object of type {typeof(T)}", e);
             }
         }
 
-        internal static T Deserialize<T>(byte[] data)
+        internal static string GetStringFromBytes(byte[] data)
+        {
+            return _encoding.GetString(data);
+        }
+
+        internal static T DeserializeBytes<T>(byte[] data)
+        {
+            var json = GetStringFromBytes(data);
+            return DeserializeString<T>(json);
+        }
+
+        internal static T DeserializeString<T>(string json)
         {
             try
             {
-                using (MemoryStream stream = new MemoryStream(data))
-                using (StreamReader streamReader = new StreamReader(stream))
-                using (JsonTextReader jsonReader = new JsonTextReader(streamReader))
+                using (var stringReader = new StringReader(json))
+                using (var jsonReader = new JsonTextReader(stringReader))
                 {
                     return _jsonSerializer.Deserialize<T>(jsonReader);
                 }
             }
             catch (Exception e)
             {
-                throw new SerializationException($"Could not deserialize object of type {typeof(T).ToString()}", e);
+                throw new SerializationException($"Could not deserialize object of type {typeof(T)}", e);
             }
         }
     }

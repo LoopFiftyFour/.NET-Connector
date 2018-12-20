@@ -1,7 +1,5 @@
 using Loop54.Model.Response;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Loop54
 {
@@ -15,6 +13,21 @@ namespace Loop54
             : base(message, innerException)
         {
         }
+    }
+
+    /// <summary>
+    /// Thrown when the response returned from an endpoint cannot be parsed as a valid engine response.
+    /// The usually means the endpoint URL does not point to an engine.
+    /// </summary>
+    public class InvalidEngineResponseException : Exception
+    {
+        internal InvalidEngineResponseException(string responseText, Exception innerException)
+            : base("Unexpected engine response text: " + responseText, innerException)
+        {
+            ResponseText = responseText;
+        }
+
+        public string ResponseText { get; }
     }
 
     /// <summary>

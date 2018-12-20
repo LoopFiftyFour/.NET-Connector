@@ -40,7 +40,7 @@ namespace Loop54.Tests
         }
         
         [Test]
-        public void AutoCompleteHasResults([Values("b", "be", "bee", "beef", "c", "ch", "chi", "chic", "chick", "chicke", "chicken")]string query)
+        public void AutoCompleteHasResults([Values("s", "st", "ste", "stea", "steak", "c", "ch", "chi", "chic", "chick", "chicke", "chicken")]string query)
         {
             var response = GetClient().AutoComplete(new AutoCompleteRequest(query).Wrap(metaDataOverrides: CreateMetaData()));
             Assert.Greater(response.Queries.Count, 0);

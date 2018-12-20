@@ -54,7 +54,7 @@ namespace Loop54.Model.Response
                 {
                     try
                     {
-                        return (true, Serializer.Deserialize<T>(token));
+                        return (true, Serializer.DeserializeToken<T>(token));
                     }
                     catch(Exception e)
                     {
