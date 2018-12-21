@@ -81,7 +81,7 @@ namespace Loop54.Http
         private async Task<byte[]> MakeHttpRequest(RequestData request)
         {
             var content = new ByteArrayContent(request.Body);
-            SetHeadersOnRequest(content, request);
+            SetRequestHeaders(content.Headers, request.UserMetaData);
             string endpoint = GetValidatedEndpoint();
 
             HttpResponseMessage message;
@@ -109,16 +109,16 @@ namespace Loop54.Http
             return endpoint;
         }
 
-        private void SetHeadersOnRequest(ByteArrayContent content, RequestData request)
+        protected virtual void SetRequestHeaders(HttpContentHeaders headers, UserMetaData userMetaData)
         {
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            content.Headers.Add(VersionHeaders.ApiVersionHeader, VersionHeaders.ApiVersion);
-            content.Headers.Add(VersionHeaders.LibVersionHeader, VersionHeaders.LibVersion);
-            AddHeaderIfNotNull(content.Headers, Headers.ApiKey, _settings.ApiKey);
-            AddHeaderIfNotNull(content.Headers, Headers.UserId, request.UserMetaData.UserId);
-            AddHeaderIfNotNull(content.Headers, Headers.IpAddress, request.UserMetaData.IpAddress);
-            AddHeaderIfNotNull(content.Headers, Headers.UserAgent, request.UserMetaData.UserAgent);
-            AddHeaderIfNotNull(content.Headers, Headers.Referer, request.UserMetaData.Referer);
+            headers.ContentType = new MediaTypeHeaderValue("application/json");
+            headers.Add(VersionHeaders.ApiVersionHeader, VersionHeaders.ApiVersion);
+            headers.Add(VersionHeaders.LibVersionHeader, VersionHeaders.LibVersion);
+            AddHeaderIfNotNull(headers, Headers.ApiKey, _settings.ApiKey);
+            AddHeaderIfNotNull(headers, Headers.UserId, userMetaData.UserId);
+            AddHeaderIfNotNull(headers, Headers.IpAddress, userMetaData.IpAddress);
+            AddHeaderIfNotNull(headers, Headers.UserAgent, userMetaData.UserAgent);
+            AddHeaderIfNotNull(headers, Headers.Referer, userMetaData.Referer);
         }
         
         private static void AddHeaderIfNotNull(HttpContentHeaders headers, string headerName, string headerValue)
