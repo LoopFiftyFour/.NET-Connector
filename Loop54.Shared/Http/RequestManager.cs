@@ -132,9 +132,13 @@ namespace Loop54.Http
             string responseText = Serializer.GetStringFromBytes(responseData);
             try
             {
+                if (string.IsNullOrEmpty(responseText))
+                    throw new ApplicationException("An empty response was received.");
+
                 ErrorResponse errorResponse = Serializer.DeserializeString<ErrorResponse>(responseText);
                 if (errorResponse.Error == null)
                     throw new ApplicationException("The response JSON does not have an 'Error' property.");
+
                 return new EngineStatusCodeException(errorResponse.Error);
             }
             catch (Exception ex)

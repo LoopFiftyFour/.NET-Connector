@@ -6,11 +6,12 @@
         <title>Loop54 Connector</title>
         <authors>The Loop54 Group AB</authors>
         <owners>The Loop54 Group AB</owners>
+        <license type="expression">BSD-3-Clause</license>
         <projectUrl>https://github.com/LoopFiftyFour/.NET-Connector</projectUrl>
         <iconUrl>http://res.cloudinary.com/drfdb8pjs/image/upload/v1478781000/Loop54-Logotype-Square_hjt0pg.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Developer friendly API wrapper for the Loop54 eCommerce product search engine.</description>
-        <copyright>Copyright 2018, The Loop54 Group AB</copyright>
+        <copyright>Copyright 2020, The Loop54 Group AB</copyright>
         <tags>loop54 eCommerce product search</tags>
         <dependencies>
             <group>

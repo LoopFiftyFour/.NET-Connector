@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "1";
-        public const string Patch = "2";
+        public const string Patch = "3";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }

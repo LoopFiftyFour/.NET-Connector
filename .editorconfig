@@ -1,0 +1,34 @@
+[*]
+# Use Unix-style newlines (LF) - Windows deals better with LF than Linux does with CRLF
+end_of_line = lf
+
+# Unix requires a terminating newline on each line – including the last one
+insert_final_newline = true
+
+# Use UTF-8 without BOM for everything. The BOM is bad [https://stackoverflow.com/q/2223882/1536933].
+charset = utf-8
+
+# Most existing source files use spaces to indent and this is the default in VS since VS 2005.
+indent_style = space
+
+# Indent by 4 spaces throughout for consistent alignment and consistent wrapping of lines.
+indent_size = 4
+
+# Supported by JetBrains products, Emacs, Vim, and a few others [https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#max_line_length]
+max_line_length = 150
+
+# Used by the VS EditorGuidelines plugin [https://marketplace.visualstudio.com/items?itemName=PaulHarrington.EditorGuidelines].
+guidelines = 150
+
+# Visual Studio settings for C# code (there are none for F#, unfortunately)
+[*.{cs,csx}]
+# Suggest using built-in types over .NET type names ("string" instead of "String")
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:suggestion
+
+# Suggest adding accessibility modifiers and re-ordering modifiers (this is the default VS order, but it's silent by default)
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+csharp_preferred_modifier_order = public, private, protected, internal, static, extern, new, virtual, abstract, sealed, override, readonly, unsafe, volatile, async:suggestion
+
+# Prefer built-in types over var
+csharp_style_var_for_built_in_types = false:suggestion
