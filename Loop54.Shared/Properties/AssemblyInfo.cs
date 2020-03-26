@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "1";
-        public const string Patch = "3";
+        public const string Patch = "4";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -100,3 +100,5 @@ namespace Loop54.Properties
 // 5.1.0 Added support for Sync request and some related things
 // 5.1.1 Better error if the endpoint response is not a valid engine response
 // 5.1.2 Allow overriding request headers sent to the engine
+// 5.1.3 Better error if an empty response is received from the engine
+// 5.1.4 Better error if the engine request fails, especially if it times out

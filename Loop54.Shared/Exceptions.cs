@@ -3,7 +3,22 @@ using System;
 
 namespace Loop54
 {
-    
+    /// <summary>
+    /// Thrown when a request to the engine times out, i.e. the engine did not respond within <see cref="Loop54Settings.RequestTimeoutMs"/> ms.
+    /// </summary>
+    /// <remarks>
+    /// For short timeouts (under about 3 seconds) this may also be thrown for a failure to connect that would normally throw another
+    /// <see cref="EngineNotReachableException"/>, e.g. a "connection refused" error or DNS resolution error, because the attempt to connect times
+    /// out before the "real" error has a chance to happen.
+    /// </remarks>
+    public class EngineTimeoutException : EngineNotReachableException
+    {
+        internal EngineTimeoutException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+    }
+   
     /// <summary>
     /// Thrown when a connection to the engine cannot be made. Could have multiple causes.
     /// </summary>

@@ -83,16 +83,22 @@ namespace Loop54.Http
             var content = new ByteArrayContent(request.Body);
             SetRequestHeaders(content.Headers, request.UserMetaData);
             string endpoint = GetValidatedEndpoint();
+            string requestUri = $"{endpoint}/{request.Action}";
 
             HttpResponseMessage message;
             try
             {
-                message = await _httpClient.PostAsync($"{endpoint}/{request.Action}", content);
+                message = await _httpClient.PostAsync(requestUri, content);
+            }
+            catch (TaskCanceledException e) // TaskCanceledException from HttpClient is a timeout in practice
+            {
+                throw new EngineTimeoutException(
+                    $"Request to engine URL '{requestUri}' timed out (timeout = {_httpClient.Timeout.TotalMilliseconds:N0} ms).", e);
             }
             catch (Exception e)
             {
-                throw new EngineNotReachableException($"Could not make request to engine at '{endpoint}', you might have entered the wrong endpoint or there"
-                    + " might be a firewall blocking the port.", e);
+                throw new EngineNotReachableException($"Could not make request to engine at '{requestUri}'. The endpoint may be incorrect or there"
+                    + " may be a firewall blocking the port.", e);
             }
 
             if (message.IsSuccessStatusCode)
