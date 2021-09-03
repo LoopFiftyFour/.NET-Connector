@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Loop54.Test.AspNetMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string type)
+        public ActionResult Index(string id, string type, string relationKind)
         {
             GetRelatedEntitiesRequest request = new GetRelatedEntitiesRequest(type, id);
 
@@ -38,6 +39,11 @@ namespace Loop54.Test.AspNetMvc.Controllers
             request.ResultsOptions.Skip = 0;
             request.ResultsOptions.Take = 20;
 
+            // set relation kind
+            RelationTypes relKind;
+            if(Enum.TryParse(relationKind, true, out relKind))
+                request.RelationKind = relKind;
+            
             GetRelatedEntitiesResponse response = _loop54Client.GetRelatedEntities(request);
 
             return View(new GetRelatedEntitiesViewModel

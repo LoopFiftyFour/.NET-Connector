@@ -5,10 +5,13 @@
 }
 <form id="GetRelatedEntitiesForm" method="POST">
     <div>
-        <label for="QueryText">Id</label>
+        <label for="IdText">Id</label>
         <input type="text" id="IdText" name="id" autofocus="" value="13" />
-        <label for="QueryText">Type</label>
-        <input type="text" id="TypeText" name="type" autofocus="" value="Product" />
+        <label for="TypeText">Type</label>
+        <input type="text" id="TypeText" name="type" autofocus="" value="Product" /><br/>
+        <label>Relation kind</label><br/>
+        <input type="radio" id="similarRadio" name="relationKind" value="similar" checked/><label for="similarRadio">similar</label><br />
+        <input type="radio" id="complementaryRadio" name="relationKind" value="complementary" /><label for="complementaryRadio">complementary</label><br />
         <input type="submit" id="SubmitButton" name="GetRelatedEntities" />
     </div>
 </form>
