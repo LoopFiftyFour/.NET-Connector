@@ -3,7 +3,7 @@ namespace Loop54.Model.Request.Parameters
     /// <summary>
     /// Represents the type of relation that would be done when calling <see cref="GetRelatedEntitiesRequest"/>
     /// </summary>
-    public enum RelationTypes
+    public enum RelationKinds
     {
         /// <summary>
         /// Return the entities that are on the same context as the requested entity 

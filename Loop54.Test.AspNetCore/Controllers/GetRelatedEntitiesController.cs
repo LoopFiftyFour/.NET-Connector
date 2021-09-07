@@ -44,7 +44,7 @@ namespace Loop54.Test.AspNetCore.Controllers
             request.ResultsOptions.Take = 20;
             
             // set relation kind
-            RelationTypes relKind;
+            RelationKinds relKind;
             if(Enum.TryParse(relationKind, true, out relKind))
                 request.RelationKind = relKind;
 
