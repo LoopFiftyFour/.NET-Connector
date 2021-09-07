@@ -41,11 +41,7 @@ namespace Loop54.Model.Request
         /// The kind of relation that will be used to create resulting entities. Similar or Complementary.
         /// Defaults to Similar in the engine if not specified.
         /// </summary>
-        /// <remarks>
-        /// When getting related entities for 'BrandA bike tire': <br/>
-        /// "similar" - will return entities that are 'more of the same' (f.e. 'BrandB bike tire')<br/>
-        /// "complementary" - will return entities that are 'people also buy' (f.e. 'BrandX bike pump')
-        /// </remarks>
+        /// <remarks>See <see cref="RelationKinds"/> cases for examples.</remarks>
         public RelationKinds? RelationKind { get; set; } = null;
     }
 }
