@@ -5,6 +5,8 @@
     <AssemblyName>Loop54</AssemblyName>
     <RootNamespace>Loop54</RootNamespace>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>sign2021.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
