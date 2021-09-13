@@ -11,6 +11,8 @@
     <AssemblyName>Loop54.Tests.NetFramework</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Loop54.Shared\sign2021.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Loop54.Shared\sign2021.snk">
+      <Link>sign2021.snk</Link>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

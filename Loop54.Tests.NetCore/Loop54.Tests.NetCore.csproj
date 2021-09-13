@@ -5,6 +5,8 @@
     <AssemblyName>Loop54.Tests.NetCore</AssemblyName>
     <RootNamespace>Loop54.Tests</RootNamespace>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>..\Loop54.Shared\sign2021.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -23,6 +25,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Loop54.NetStandard\Loop54.NetStandard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Loop54.Shared\sign2021.snk">
+      <Link>sign2021.snk</Link>
+    </None>
   </ItemGroup>
 
   <Import Project="..\Loop54.Tests.Shared\Loop54.Tests.Shared.projitems" Label="Shared" />

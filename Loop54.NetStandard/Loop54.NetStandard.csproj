@@ -5,6 +5,8 @@
     <AssemblyName>Loop54</AssemblyName>
     <RootNamespace>Loop54</RootNamespace>
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>..\Loop54.Shared\sign2021.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -21,6 +23,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Loop54.Shared\sign2021.snk">
+      <Link>sign2021.snk</Link>
+    </None>
   </ItemGroup>
 
   <Import Project="..\Loop54.Shared\Loop54.Shared.projitems" Label="Shared" />

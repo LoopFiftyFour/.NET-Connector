@@ -29,8 +29,8 @@ using Loop54.Properties;
 // This is the assembly version used for resolving references at compile and run time. It includes only the major version, so that it breaks only when that changes.
 [assembly: AssemblyVersion(PackageSemanticVersion.Major + ".0.0.0")]
 
-[assembly: InternalsVisibleTo("Loop54.Tests.NetCore")]
-[assembly: InternalsVisibleTo("Loop54.Tests.NetFramework")]
+[assembly: InternalsVisibleTo("Loop54.Tests.NetCore,PublicKey=00240000048000001401000006020000002400005253413100080000010001008d6d9a3679f23f196dcf36d5562159a91d21b45994104712ee46bbcd3f24b075dc38f1e0a04b4a199610e24247e3e766626c087fef1c6c6fe4b41ac7d32c45920afa9d94e19bf464ec4129ca8c10fa957f5afefb8132e8001cb6228486bf2aa78d96997567846025ebc055c06946157fd2e3ef2c3574905a35d21d7fa0f8cdc716ff6f1fd5f3cf0e55a147c20100aa4db5a1d59f2434deb9ed11361a7b7d6cde1102e7f698b0f94627b143b544ae7fab807813a6931540e6b29fbd1ab83fda4a48e5321ca5eed5335a41e4e5a25a84ff34f480b422c8c339daf1a539ef92433931cc3bda665f9f86170dcf88499f84fd3f1ff91e39499668ed36292118de1be0")]
+[assembly: InternalsVisibleTo("Loop54.Tests.NetFramework,PublicKey=00240000048000001401000006020000002400005253413100080000010001008d6d9a3679f23f196dcf36d5562159a91d21b45994104712ee46bbcd3f24b075dc38f1e0a04b4a199610e24247e3e766626c087fef1c6c6fe4b41ac7d32c45920afa9d94e19bf464ec4129ca8c10fa957f5afefb8132e8001cb6228486bf2aa78d96997567846025ebc055c06946157fd2e3ef2c3574905a35d21d7fa0f8cdc716ff6f1fd5f3cf0e55a147c20100aa4db5a1d59f2434deb9ed11361a7b7d6cde1102e7f698b0f94627b143b544ae7fab807813a6931540e6b29fbd1ab83fda4a48e5321ca5eed5335a41e4e5a25a84ff34f480b422c8c339daf1a539ef92433931cc3bda665f9f86170dcf88499f84fd3f1ff91e39499668ed36292118de1be0")]
 
 namespace Loop54.Properties
 {
@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "1";
-        public const string Patch = "4";
+        public const string Patch = "5";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -102,3 +102,4 @@ namespace Loop54.Properties
 // 5.1.2 Allow overriding request headers sent to the engine
 // 5.1.3 Better error if an empty response is received from the engine
 // 5.1.4 Better error if the engine request fails, especially if it times out
+// 5.1.5 Sign the assembly
