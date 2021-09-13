@@ -21,4 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Response.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)sign2021.snk" />
+  </ItemGroup>
 </Project>
