@@ -36,5 +36,12 @@ namespace Loop54.Model.Request
         /// Parameters for specifying which results to retrieve. Such as filtering, faceting, sorting and paging. 
         /// </summary>
         public EntityCollectionParameters ResultsOptions { get; set; } = new EntityCollectionParameters();
+        
+        /// <summary>
+        /// The kind of relation that will be used to create resulting entities. Similar or Complementary.
+        /// Defaults to Similar in the engine if not specified.
+        /// </summary>
+        /// <remarks>See <see cref="RelationKinds"/> cases for examples.</remarks>
+        public RelationKinds? RelationKind { get; set; } = null;
     }
 }
