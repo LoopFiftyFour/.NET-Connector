@@ -26,7 +26,7 @@ namespace Loop54.Test.AspNetCore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string id, string type, string relationKind)
+        public async Task<IActionResult> Index(string id, string type)
         {
             GetRelatedEntitiesRequest request = new GetRelatedEntitiesRequest(type, id);
 
@@ -42,21 +42,6 @@ namespace Loop54.Test.AspNetCore.Controllers
 
             request.ResultsOptions.Skip = 0;
             request.ResultsOptions.Take = 20;
-            
-            // set relation kind
-            if(!string.IsNullOrEmpty(relationKind))
-            {
-                RelationKinds relKind;
-                if (Enum.TryParse(relationKind, true, out relKind))
-                {
-                    request.RelationKind = relKind;
-                }
-                else
-                {
-                    throw new ArgumentException($"Illegal value supplied:\"{relationKind}\". It should be one of [" +
-                                                $"{string.Join(", ", Enum.GetNames(typeof(RelationKinds)).Select(str => str.ToLowerInvariant()))}]");
-                }
-            }
 
             GetRelatedEntitiesResponse response = await _loop54Client.GetRelatedEntitiesAsync(request);
 

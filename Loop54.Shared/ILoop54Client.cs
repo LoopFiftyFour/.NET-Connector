@@ -168,6 +168,38 @@ namespace Loop54
         Task<GetRelatedEntitiesResponse> GetRelatedEntitiesAsync(RequestContainer<GetRelatedEntitiesRequest> request);
 
         #endregion
+        
+        #region GetComplementaryEntities
+
+        /// <summary>
+        /// Make a getComplementaryEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The complementary entities</returns>
+        GetComplementaryEntitiesResponse GetComplementaryEntities(GetComplementaryEntitiesRequest request);
+
+        /// <summary>
+        /// Make an asynchronous getComplementaryEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The complementary entities</returns>
+        Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(GetComplementaryEntitiesRequest request);
+
+        /// <summary>
+        /// Make a getComplementaryEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The complementary entities</returns>
+        GetComplementaryEntitiesResponse GetComplementaryEntities(RequestContainer<GetComplementaryEntitiesRequest> request);
+
+        /// <summary>
+        /// Make an asynchronous getComplementaryEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The complementary entities</returns>
+        Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(RequestContainer<GetComplementaryEntitiesRequest> request);
+
+        #endregion
 
         #region Search
 

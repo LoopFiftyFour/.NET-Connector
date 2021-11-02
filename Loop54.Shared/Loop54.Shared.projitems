@@ -13,7 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Loop54ClientProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\RelationKinds.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />
@@ -30,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetEntitiesByAttributeRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetRelatedEntitiesRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetComplementaryEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntityCollectionParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntitySortingParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Event.cs" />
@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetEntitiesByAttributeResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetEntitiesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetRelatedEntitiesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetComplementaryEntitiesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Response.cs" />
