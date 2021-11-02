@@ -77,6 +77,16 @@ namespace Loop54.Tests
         }
 
         [Test]
+        [Ignore("Not released to HelloWorld engine yet")]
+        public void GetComplementaryEntitiesHasResults()
+        {
+            //Should be a wheat flour
+            var response = GetClient().GetComplementaryEntities(new GetComplementaryEntitiesRequest("Product", "13").Wrap(metaDataOverrides: CreateMetaData()));
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
+        }
+
+        [Test]
         public void GetEntitiesHasResults()
         {
             //Should result in an expensive steak
