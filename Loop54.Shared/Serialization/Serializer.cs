@@ -29,6 +29,8 @@ namespace Loop54.Serialization
             }
         };
 
+        internal static string BytesToString(byte[] serializedBytes) => _encoding.GetString(serializedBytes);
+
         internal static byte[] SerializeToBytes(object data)
         {
             try

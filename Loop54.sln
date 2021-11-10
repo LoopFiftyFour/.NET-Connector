@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.NetStandard", "Loop54.NetStandard\Loop54.NetStandard.csproj", "{1C9C4176-EB9B-4196-8B7D-704F864AD386}"
 EndProject
@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loop54.NetCoreCodeExamples"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Loop54.Shared\Loop54.Shared.projitems*{1c9c4176-eb9b-4196-8b7d-704f864ad386}*SharedItemsImports = 5
 		Loop54.Shared\Loop54.Shared.projitems*{7e6374ea-0c57-42ce-be8a-d660e995cd7e}*SharedItemsImports = 4
+		Loop54.Tests.Shared\Loop54.Tests.Shared.projitems*{8237b0b4-6b5e-449d-9cc6-ba3912d9463a}*SharedItemsImports = 5
 		Loop54.Shared\Loop54.Shared.projitems*{8887f236-eb5a-45cf-9b0a-5a35e44ff772}*SharedItemsImports = 13
 		Loop54.Tests.Shared\Loop54.Tests.Shared.projitems*{8c684c06-bddb-44cd-adf0-c291ef3afabd}*SharedItemsImports = 13
 		Loop54.Tests.Shared\Loop54.Tests.Shared.projitems*{bb751fd1-e296-4895-9cb2-28f2021b245c}*SharedItemsImports = 4
