@@ -46,6 +46,14 @@ namespace Loop54.Http
             _httpClient.Timeout = TimeSpan.FromMilliseconds(settings.RequestTimeoutMs);
         }
 
+        /// <summary>Serializes a request to a JSON string.</summary>
+        /// <remarks><see cref="CallEngineAsync{TRequest,TResponse}"/> does this internally, but this method is useful for debugging.</remarks>
+        /// <returns>The request in JSON format, as would be sent by <see cref="CallEngineAsync{TRequest,TResponse}"/>.</returns>
+        public static string GetRequestJson<TRequest>(TRequest request) where TRequest : Request
+        {
+            return Serializer.BytesToString(Serializer.SerializeToBytes(request));
+        }
+
         /// <summary>
         /// Calls the loop54 search engine and returns a deserialized response object. 
         /// </summary>

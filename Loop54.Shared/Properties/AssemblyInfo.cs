@@ -43,7 +43,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "3";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -104,3 +104,4 @@ namespace Loop54.Properties
 // 5.1.4 Better error if the engine request fails, especially if it times out
 // 5.2.0 Added "complementary" relation to GetRelatedEntities
 // 5.3.0 Added "getComplementaryEntities", remove relationkind from GetRelatedEntities
+// 5.3.1 Added RequestManager.GetRequestJson debugging helper method
