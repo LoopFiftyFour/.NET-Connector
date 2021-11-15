@@ -22,7 +22,7 @@ namespace Loop54.Test.AspNetMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string id, string type, string relationKind)
+        public ActionResult Index(string id, string type)
         {
             GetRelatedEntitiesRequest request = new GetRelatedEntitiesRequest(type, id);
 
@@ -39,21 +39,6 @@ namespace Loop54.Test.AspNetMvc.Controllers
             request.ResultsOptions.Skip = 0;
             request.ResultsOptions.Take = 20;
 
-            // set relation kind
-            if(!string.IsNullOrEmpty(relationKind))
-            {
-                RelationKinds relKind;
-                if (Enum.TryParse(relationKind, true, out relKind))
-                {
-                    request.RelationKind = relKind;
-                }
-                else
-                {
-                    throw new ArgumentException($"Illegal value supplied:\"{relationKind}\". It should be one of [" +
-                                                $"{string.Join(", ", Enum.GetNames(typeof(RelationKinds)).Select(str => str.ToLowerInvariant()))}]");
-                }
-            }
-            
             GetRelatedEntitiesResponse response = _loop54Client.GetRelatedEntities(request);
 
             return View(new GetRelatedEntitiesViewModel

@@ -23,6 +23,7 @@ namespace Loop54
         private const string GetEntitiesRequestName = "getEntities";
         private const string GetEntitiesByAttributeRequestName = "getEntitiesByAttribute";
         private const string GetRelatedEntitiesRequestName = "getRelatedEntities";
+        private const string GetComplementaryEntitiesRequestName = "getComplementaryEntities";
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
 
@@ -79,6 +80,13 @@ namespace Loop54
         public async Task<GetRelatedEntitiesResponse> GetRelatedEntitiesAsync(GetRelatedEntitiesRequest request) => await GetRelatedEntitiesAsync(request.Wrap());
         public async Task<GetRelatedEntitiesResponse> GetRelatedEntitiesAsync(RequestContainer<GetRelatedEntitiesRequest> request) 
             => await CallEngineWithinClientContextAsync<GetRelatedEntitiesRequest, GetRelatedEntitiesResponse>(GetRelatedEntitiesRequestName, request);
+
+        public GetComplementaryEntitiesResponse GetComplementaryEntities(GetComplementaryEntitiesRequest request) => GetComplementaryEntities(request.Wrap());
+        public GetComplementaryEntitiesResponse GetComplementaryEntities(RequestContainer<GetComplementaryEntitiesRequest> request) 
+            => CallEngineWithinClientContext<GetComplementaryEntitiesRequest, GetComplementaryEntitiesResponse>(GetComplementaryEntitiesRequestName, request);
+        public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(GetComplementaryEntitiesRequest request) => await GetComplementaryEntitiesAsync(request.Wrap());
+        public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(RequestContainer<GetComplementaryEntitiesRequest> request) 
+            => await CallEngineWithinClientContextAsync<GetComplementaryEntitiesRequest, GetComplementaryEntitiesResponse>(GetComplementaryEntitiesRequestName, request);
 
         public Response CreateEvents(CreateEventsRequest request) => CreateEvents(request.Wrap());
         public Response CreateEvents(RequestContainer<CreateEventsRequest> request) 
