@@ -1,0 +1,7 @@
+<Project>
+  <!-- Work around "SourceRoot items must include at least one top-level (not nested) item when DeterministicSourcePaths is true"
+       [https://github.com/dotnet/roslyn/issues/37379#issuecomment-513371985] -->
+  <ItemGroup>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/"/>
+  </ItemGroup>
+</Project>
