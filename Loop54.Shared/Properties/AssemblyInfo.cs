@@ -44,8 +44,8 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "5";
-        public const string Minor = "3";
-        public const string Patch = "1";
+        public const string Minor = "4";
+        public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
