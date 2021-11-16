@@ -1,4 +1,3 @@
-﻿using Loop54;
 using Loop54.AspNet;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,11 +31,11 @@ namespace NetCoreCodeExamples
             //the GetNamed method, providing the same name used here, as seen in the SearchController.
             //services.AddLoop54(Loop54SettingsCollection.Create().Add("English", "https://helloworld.54proxy.com"));
 
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles();
 

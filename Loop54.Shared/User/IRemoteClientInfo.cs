@@ -22,7 +22,7 @@ namespace Loop54.User
         /// <summary>
         /// Get the User-Agent header sent by the end-user.
         /// </summary>
-        /// <returns>User-Agent header or null if it doesn't exist.<</returns>
+        /// <returns>User-Agent header or null if it doesn't exist.</returns>
         string GetUserAgent();
 
         /// <summary>
