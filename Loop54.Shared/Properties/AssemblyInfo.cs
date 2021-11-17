@@ -24,7 +24,9 @@ using Loop54.Properties;
 
 // This is the "File version" displayed in Windows explorer.
 // [BUILD_COUNTER] is replaced with the TeamCity build counter when running in TeamCity.
+#pragma warning disable 7035
 [assembly: AssemblyFileVersion(PackageSemanticVersion.Full + ".[BUILD_COUNTER]")]
+#pragma warning restore 7035
 
 // This is the assembly version used for resolving references at compile and run time. It includes only the major version, so that it breaks only when that changes.
 [assembly: AssemblyVersion(PackageSemanticVersion.Major + ".0.0.0")]
@@ -42,8 +44,8 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "5";
-        public const string Minor = "3";
-        public const string Patch = "1";
+        public const string Minor = "4";
+        public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -105,3 +107,4 @@ namespace Loop54.Properties
 // 5.2.0 Added "complementary" relation to GetRelatedEntities
 // 5.3.0 Added "getComplementaryEntities", remove relationkind from GetRelatedEntities
 // 5.3.1 Added RequestManager.GetRequestJson debugging helper method
+// 5.4.0 Fixed build warnings. Upgraded .NET Core tests and examples to .NET Core 3.1.

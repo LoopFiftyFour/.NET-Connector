@@ -27,7 +27,7 @@ namespace Loop54
         /// Adds a named endpoint setting to the collection.
         /// </summary>
         /// <param name="instanceName">Name of the setting instance. For example 'swedish', 'english' or 'content'.</param>
-        /// <param name="settings">The endpoint to affiliate with the instance.</param>
+        /// <param name="endpoint">The endpoint to affiliate with the instance.</param>
         /// <returns>The Loop54SettingsCollection instance. For chaining.</returns>
         public Loop54SettingsCollection Add(string instanceName, string endpoint) 
             => Add(instanceName, new Loop54Settings(endpoint ?? throw new ArgumentNullException(nameof(endpoint))));

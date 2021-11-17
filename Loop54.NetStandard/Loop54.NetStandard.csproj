@@ -4,12 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Loop54</AssemblyName>
     <RootNamespace>Loop54</RootNamespace>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\Loop54.xml</DocumentationFile>
     <LangVersion>7.1</LangVersion>
+    <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
