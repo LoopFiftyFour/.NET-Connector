@@ -24,6 +24,7 @@ namespace Loop54
         private const string GetEntitiesByAttributeRequestName = "getEntitiesByAttribute";
         private const string GetRelatedEntitiesRequestName = "getRelatedEntities";
         private const string GetComplementaryEntitiesRequestName = "getComplementaryEntities";
+        private const string GetBasketRecommendationsRequestName = "getBasketRecommendations";
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
 
@@ -87,6 +88,13 @@ namespace Loop54
         public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(GetComplementaryEntitiesRequest request) => await GetComplementaryEntitiesAsync(request.Wrap());
         public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(RequestContainer<GetComplementaryEntitiesRequest> request) 
             => await CallEngineWithinClientContextAsync<GetComplementaryEntitiesRequest, GetComplementaryEntitiesResponse>(GetComplementaryEntitiesRequestName, request);
+
+        public GetBasketRecommendationsResponse GetBasketRecommendations(GetBasketRecommendationsRequest request) => GetBasketRecommendations(request.Wrap());
+        public GetBasketRecommendationsResponse GetBasketRecommendations(RequestContainer<GetBasketRecommendationsRequest> request) 
+            => CallEngineWithinClientContext<GetBasketRecommendationsRequest, GetBasketRecommendationsResponse>(GetBasketRecommendationsRequestName, request);
+        public async Task<GetBasketRecommendationsResponse> GetBasketRecommendationsAsync(GetBasketRecommendationsRequest request) => await GetBasketRecommendationsAsync(request.Wrap());
+        public async Task<GetBasketRecommendationsResponse> GetBasketRecommendationsAsync(RequestContainer<GetBasketRecommendationsRequest> request) 
+            => await CallEngineWithinClientContextAsync<GetBasketRecommendationsRequest, GetBasketRecommendationsResponse>(GetBasketRecommendationsRequestName, request);
 
         public Response CreateEvents(CreateEventsRequest request) => CreateEvents(request.Wrap());
         public Response CreateEvents(RequestContainer<CreateEventsRequest> request) 

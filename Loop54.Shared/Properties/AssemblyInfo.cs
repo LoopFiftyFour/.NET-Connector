@@ -44,7 +44,7 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "5";
-        public const string Minor = "4";
+        public const string Minor = "5";
         public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
@@ -108,3 +108,4 @@ namespace Loop54.Properties
 // 5.3.0 Added "getComplementaryEntities", remove relationkind from GetRelatedEntities
 // 5.3.1 Added RequestManager.GetRequestJson debugging helper method
 // 5.4.0 Fixed build warnings. Upgraded .NET Core tests and examples to .NET Core 3.1.
+// 5.5.0 Added "getBasketRecommendations".
