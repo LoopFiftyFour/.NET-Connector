@@ -201,6 +201,38 @@ namespace Loop54
 
         #endregion
 
+        #region GetBasketRecommendations
+
+        /// <summary>
+        /// Make a getBasketRecommendations call to the engine.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The recommended entities</returns>
+        GetBasketRecommendationsResponse GetBasketRecommendations(GetBasketRecommendationsRequest request);
+
+        /// <summary>
+        /// Make an asynchronous getBasketRecommendations call to the engine.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The recommended entities</returns>
+        Task<GetBasketRecommendationsResponse> GetBasketRecommendationsAsync(GetBasketRecommendationsRequest request);
+
+        /// <summary>
+        /// Make a getBasketRecommendations call to the engine.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The recommended entities</returns>
+        GetBasketRecommendationsResponse GetBasketRecommendations(RequestContainer<GetBasketRecommendationsRequest> request);
+
+        /// <summary>
+        /// Make an asynchronous getBasketRecommendations call to the engine.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The recommended entities</returns>
+        Task<GetBasketRecommendationsResponse> GetBasketRecommendationsAsync(RequestContainer<GetBasketRecommendationsRequest> request);
+
+        #endregion
+
         #region Search
 
         /// <summary>

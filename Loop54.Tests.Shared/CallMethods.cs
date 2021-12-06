@@ -87,6 +87,16 @@ namespace Loop54.Tests
         }
 
         [Test]
+        [Ignore("Not released to HelloWorld engine yet")]
+        public void GetGetBasketRecommendationsHasResults()
+        {
+            var entities = new List<Entity> { new Entity("Product", "26397727") };
+            var response = GetClient().GetBasketRecommendations(new GetBasketRecommendationsRequest(entities).Wrap(metaDataOverrides: CreateMetaData()));
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
+        }
+
+        [Test]
         public void GetEntitiesHasResults()
         {
             //Should result in an expensive steak
