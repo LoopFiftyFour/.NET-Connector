@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json.Serialization;
 
 namespace Loop54.Serialization
 {
@@ -21,7 +22,7 @@ namespace Loop54.Serialization
             Converters = {
                 new StringEnumConverter
                 {
-                    CamelCaseText = true,
+                    NamingStrategy = new CamelCaseNamingStrategy(),
                     AllowIntegerValues = false
                 },
                 new EntityAttributeJsonConverter(),
