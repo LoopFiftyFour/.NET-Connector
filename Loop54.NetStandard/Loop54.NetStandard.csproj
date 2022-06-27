@@ -23,6 +23,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+
+    <!-- Explicitly referenced to fix NuGet vulnerability warnings -->
+    <PackageReference Include="System.Text.Encodings.Web" Version="4.5.1" />
+    <!-- /Explicitly referenced to fix NuGet vulnerability warnings -->    
   </ItemGroup>
 
   <Import Project="..\Loop54.Shared\Loop54.Shared.projitems" Label="Shared" />

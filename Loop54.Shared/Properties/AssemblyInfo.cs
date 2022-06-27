@@ -45,7 +45,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "6";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -110,3 +110,4 @@ namespace Loop54.Properties
 // 5.4.0 Fixed build warnings. Upgraded .NET Core tests and examples to .NET Core 3.1.
 // 5.5.0 Added "getBasketRecommendations".
 // 5.6.0 Upgraded .NET Framework from 4.5 (out of support) to 4.6.2 and Newtonsoft.Json from 10.0.3 to 13.0.1
+// 5.6.1 Upgraded System.Text.Encodings.Web to 4.5.1
