@@ -11,7 +11,7 @@ namespace Loop54.Test.AspNetMvc.Controllers
     public class SearchController : Controller
     {
         private readonly ILoop54Client _loop54Client = Loop54ClientManager.Client();
-        
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,7 +30,7 @@ namespace Loop54.Test.AspNetMvc.Controllers
             request.ResultsOptions.AddDistinctFacet<string>("Organic");
             request.ResultsOptions.AddDistinctFacet<string>("Category");
             request.ResultsOptions.AddRangeFacet<double>("Price");
-            
+
             SearchResponse response = _loop54Client.Search(request);
 
             return View(new SearchViewModel
@@ -41,8 +41,10 @@ namespace Loop54.Test.AspNetMvc.Controllers
                 Facets = response.Results.Facets.Where(f => f.HasValues).Select(ModelUtils.CreateFacet).ToList(),
                 RelatedCount = response.RelatedResults.Count,
                 RelatedResults = ModelUtils.GetViewModelFromEntities(response.RelatedResults.Items),
-                SpellingSuggestions = response.SpellingSuggestions.Count > 0 ? response.SpellingSuggestions.Items.Select(i => i.Query).ToList() : null,
+                SpellingSuggestions =
+                    response.SpellingSuggestions.Count > 0 ? response.SpellingSuggestions.Items.Select(i => i.Query).ToList() : null,
                 RelatedQueries = response.RelatedQueries.Count > 0 ? response.RelatedQueries.Items.Select(i => i.Query).ToList() : null,
+                Redirect = response.Redirect,
             });
         }
 
@@ -86,8 +88,10 @@ namespace Loop54.Test.AspNetMvc.Controllers
                 Facets = response.Results.Facets.Where(f => f.HasValues).Select(ModelUtils.CreateFacet).ToList(),
                 RelatedCount = response.RelatedResults.Count,
                 RelatedResults = ModelUtils.GetViewModelFromEntities(response.RelatedResults.Items),
-                SpellingSuggestions = response.SpellingSuggestions.Count > 0 ? response.SpellingSuggestions.Items.Select(i => i.Query).ToList() : null,
+                SpellingSuggestions =
+                    response.SpellingSuggestions.Count > 0 ? response.SpellingSuggestions.Items.Select(i => i.Query).ToList() : null,
                 RelatedQueries = response.RelatedQueries.Count > 0 ? response.RelatedQueries.Items.Select(i => i.Query).ToList() : null,
+                Redirect = response.Redirect,
             });
         }
     }
