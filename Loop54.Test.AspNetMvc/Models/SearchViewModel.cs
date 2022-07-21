@@ -14,5 +14,6 @@ namespace Loop54.Test.AspNetMvc.Models
         public IList<string> RelatedQueries { get; set; }
         public IList<string> SpellingSuggestions { get; set; }
         public string ResponseMessage { get; set; }
+        public string Redirect { get; set; }
     }
 }

@@ -29,5 +29,10 @@ namespace Loop54.Model.Response
         /// Any additional results that, while not matching, are relevant to the query.
         /// </summary>
         public EntityCollection RelatedResults { get; set; }
+
+        /// <summary>
+        /// The redirect target.
+        /// </summary>
+        public string Redirect { get; set; }
     }
 }
