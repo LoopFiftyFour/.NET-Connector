@@ -11,6 +11,7 @@ namespace Loop54.Tests.Model
     public class Response
     {
         private const string ResponseJsonWithCustomData = "{ \"customData\": { \"stringData\": \"Hjalmar Söderberg\", \"doubleData\": 13.37, " +
+            "\"enumData\": \"wednesday\", " +
             "\"complexData\": { \"count\": 3, \"facets\": [], \"items\": [{\"id\": \"sku-123\", \"type\": \"product\"}] } } }";
 
         private const string ResponseJsonWithoutCustomData = "{}";
@@ -22,6 +23,7 @@ namespace Loop54.Tests.Model
 
             Assert.AreEqual("Hjalmar Söderberg", responseObject.GetCustomDataOrDefault<string>("stringData"));
             Assert.AreEqual(13.37d, responseObject.GetCustomDataOrDefault<double>("doubleData"));
+            Assert.AreEqual(DayOfWeek.Wednesday, responseObject.GetCustomDataOrDefault<DayOfWeek>("enumData"));
             var complex = responseObject.GetCustomDataOrDefault<EntityCollection>("complexData");
             Assert.AreEqual(3, complex.Count);
             Assert.AreEqual(0, complex.Facets.Count);
@@ -41,6 +43,7 @@ namespace Loop54.Tests.Model
 
             Assert.IsNull(responseObject.GetCustomDataOrDefault<string>("stringData"));
             Assert.AreEqual(default(double), responseObject.GetCustomDataOrDefault<double>("doubleData"));
+            Assert.AreEqual(default(DayOfWeek), responseObject.GetCustomDataOrDefault<DayOfWeek>("enumData"));
             Assert.IsNull(responseObject.GetCustomDataOrDefault<EntityCollection>("complexData"));
         }
         
@@ -51,6 +54,7 @@ namespace Loop54.Tests.Model
 
             Assert.AreEqual("Hjalmar Söderberg", responseObject.GetCustomDataOrThrow<string>("stringData"));
             Assert.AreEqual(13.37d, responseObject.GetCustomDataOrThrow<double>("doubleData"));
+            Assert.AreEqual(DayOfWeek.Wednesday, responseObject.GetCustomDataOrThrow<DayOfWeek>("enumData"));
             var complex = responseObject.GetCustomDataOrThrow<EntityCollection>("complexData");
             Assert.AreEqual(3, complex.Count);
             Assert.AreEqual(0, complex.Facets.Count);
@@ -70,6 +74,7 @@ namespace Loop54.Tests.Model
 
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<string>("stringData"));
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<double>("doubleData"));
+            Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<double>("enumData"));
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<EntityCollection>("complexData"));
         }
 

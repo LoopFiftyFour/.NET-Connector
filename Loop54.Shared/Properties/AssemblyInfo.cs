@@ -45,7 +45,7 @@ namespace Loop54.Properties
     {
         public const string Major = "5";
         public const string Minor = "7";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -113,3 +113,4 @@ namespace Loop54.Properties
 // 5.6.1 Upgraded System.Text.Encodings.Web to 4.5.1
 // 5.6.2 Updated NuGet package specification with correct dependency versions, added icon
 // 5.7.0 Added redirect target to the search response
+// 5.7.1 Parse enums from strings in TryGetCustomData
