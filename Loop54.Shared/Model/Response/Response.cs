@@ -56,16 +56,30 @@ namespace Loop54.Model.Response
                     {
                         return (true, Serializer.DeserializeToken<T>(token));
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        throw new CustomDataException($"The data with key '{key}' couldn't be deserialized to '{typeof(T).ToString()}'", e, data);
+                        throw new CustomDataException($"The data with key '{key}' couldn't be deserialized to '{typeof(T)}'", e, data);
                     }
                 }
 
                 if (data is T tData)
                     return (true, tData);
-                
-                throw new CustomDataException($"The data with key '{key}' couldn't be deserialized or cast to '{typeof(T).ToString()}'", data);
+
+                // Enums get deserialized as strings, since the JSON.NET deserializer has no idea what type they're supposed to be.
+                if (typeof(T).IsEnum && data is string stringData)
+                {
+                    try
+                    {
+                        return (true, (T)Enum.Parse(typeof(T), stringData, true)); // Ignore case, because our serializer camelCases enums
+                    }
+                    catch (Exception e)
+                    {
+                        throw new CustomDataException($"The data with key '{key}' couldn't be converted from string '{stringData}' to an enum of type"
+                            + $" '{typeof(T)}'", e, data);
+                    }
+                }
+
+                throw new CustomDataException($"The data with key '{key}' couldn't be deserialized or cast to '{typeof(T)}'", data);
             }
 
             return (false, default);
