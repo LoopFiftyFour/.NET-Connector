@@ -1,4 +1,3 @@
-using Loop54.AspNet;
 using Loop54.Http;
 using Loop54.Model.Request;
 using Loop54.Model.Response;
@@ -27,6 +26,7 @@ namespace Loop54
         private const string GetBasketRecommendationsRequestName = "getBasketRecommendations";
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
+        private const string GetIndexedAttributesRequestName = "getIndexedAttributes";
 
         private readonly IRequestManager _requestManager;
         private readonly IRemoteClientInfoProvider _remoteClientInfoProvider;
@@ -110,12 +110,24 @@ namespace Loop54
         public async Task<Response> SyncAsync(RequestContainer<Request> request)
             => await CallEngineWithinClientContextAsync<Request, Response>(SyncRequestName, request, true);
 
+        public GetIndexedAttributesResponse GetIndexedAttributes(GetIndexedAttributesRequest request)
+            => GetIndexedAttributes(request.Wrap());
+        public GetIndexedAttributesResponse GetIndexedAttributes(RequestContainer<GetIndexedAttributesRequest> request)
+            => CallEngineWithinClientContext<GetIndexedAttributesRequest, GetIndexedAttributesResponse>(GetIndexedAttributesRequestName, request);
+        public async Task<GetIndexedAttributesResponse> GetIndexedAttributesAsync(GetIndexedAttributesRequest request)
+            => await GetIndexedAttributesAsync(request.Wrap());
+        public async Task<GetIndexedAttributesResponse> GetIndexedAttributesAsync(RequestContainer<GetIndexedAttributesRequest> request)
+            => await CallEngineWithinClientContextAsync<GetIndexedAttributesRequest, GetIndexedAttributesResponse>(GetIndexedAttributesRequestName, request);
+
         public Response CustomCall(string name, Request request) => CustomCall(name, request.Wrap());
         public Response CustomCall(string name, RequestContainer<Request> request) => CallEngineWithinClientContext<Request, Response>(name, request);
         public async Task<Response> CustomCallAsync(string name, Request request) => await CustomCallAsync(name, request.Wrap());
         public async Task<Response> CustomCallAsync(string name, RequestContainer<Request> request) => await CallEngineWithinClientContextAsync<Request, Response>(name, request);
 
-        private TResponse CallEngineWithinClientContext<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest = false) where TResponse : Response where TRequest : Request
+        private TResponse CallEngineWithinClientContext<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request,
+            bool allowNullRequest = false)
+            where TResponse : Response
+            where TRequest : Request
         {
             request = ValidateRequest(requestName, request, allowNullRequest);
             UserMetaData metaData = PrepareRequest(requestName, request);
@@ -132,14 +144,18 @@ namespace Loop54
             }
         }
 
-        private async Task<TResponse> CallEngineWithinClientContextAsync<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest = false) where TResponse : Response where TRequest : Request
+        private async Task<TResponse> CallEngineWithinClientContextAsync<TRequest, TResponse>(string requestName, RequestContainer<TRequest> request,
+            bool allowNullRequest = false)
+            where TResponse : Response
+            where TRequest : Request
         {
             request = ValidateRequest(requestName, request, allowNullRequest);
             UserMetaData metaData = PrepareRequest(requestName, request);
             return await _requestManager.CallEngineAsync<TRequest, TResponse>(requestName, request.Request, metaData);
         }
 
-        private RequestContainer<TRequest> ValidateRequest<TRequest>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest) where TRequest : Request
+        private RequestContainer<TRequest> ValidateRequest<TRequest>(string requestName, RequestContainer<TRequest> request, bool allowNullRequest)
+            where TRequest : Request
         {
             if (requestName == null)
                 throw new ArgumentNullException(nameof(requestName));

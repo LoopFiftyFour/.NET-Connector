@@ -26,7 +26,8 @@ namespace Loop54.Test.AspNetCore
             //by adding them to the Loop54SettingsCollection. Note that if adding more than one named Loop54Setting the 
             //ILoop54Client interface wont be injectable. but instead you need to inject the ILoop54ClientProvider and use 
             //the GetNamed method, providing the same name used here, as seen in the SearchController.
-            services.AddLoop54(Loop54SettingsCollection.Create().Add("English", "https://helloworld.54proxy.com"));
+            var loop54Settings = new Loop54Settings("https://helloworld.54proxy.com", "TestApiKey");
+            services.AddLoop54(Loop54SettingsCollection.Create().Add("English", loop54Settings));
             //Could be replaced with:
             //services.AddLoop54("https://helloworld.54proxy.com");
             //For the most basic implementations.

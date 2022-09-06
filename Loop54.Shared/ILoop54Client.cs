@@ -297,6 +297,26 @@ namespace Loop54
 
         #endregion
 
+        #region GetIndexedAttributes
+
+        /// <summary>Make a getIndexedAttributes call to the engine. Will return information about attributes, indexed and non-indexed.</summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        GetIndexedAttributesResponse GetIndexedAttributes(GetIndexedAttributesRequest request);
+
+        /// <summary>Make a getIndexedAttributes call to the engine. Will return information about attributes, indexed and non-indexed.</summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        Task<GetIndexedAttributesResponse> GetIndexedAttributesAsync(GetIndexedAttributesRequest request);
+
+        /// <summary>Make a getIndexedAttributes call to the engine. Will return information about attributes, indexed and non-indexed.</summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        GetIndexedAttributesResponse GetIndexedAttributes(RequestContainer<GetIndexedAttributesRequest> request);
+
+        /// <summary>Make a getIndexedAttributes call to the engine. Will return information about attributes, indexed and non-indexed.</summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        Task<GetIndexedAttributesResponse> GetIndexedAttributesAsync(RequestContainer<GetIndexedAttributesRequest> request);
+
+        #endregion
+
         #region CustomCall
 
         /// <summary>
