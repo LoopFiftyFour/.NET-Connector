@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Loop54.Http;
 using Loop54.Model;
@@ -14,35 +13,28 @@ namespace Loop54.Tests
     [TestFixture]
     public class CallMethods
     {
-        private Loop54.Loop54Client GetClient()
+        private static Loop54.Loop54Client GetClient()
         {
-            return new Loop54.Loop54Client(new RequestManager(new Loop54Settings("https://helloworld.54proxy.com")
+            return new Loop54.Loop54Client(new RequestManager(new Loop54Settings("https://helloworld.54proxy.com", "TestApiKey")
             {
-                ApiKey = "TestApiKey",
                 RequestTimeoutMs = 2000
             }), new NullClientInfoProvider());
         }
 
-        private UserMetaData CreateMetaData()
-        {
-            return new UserMetaData
-            {
-                UserId = "testUser",
-                IpAddress = "0.0.0.0"
-            };
-        }
+        private static RequestContainer<T> WrapRequest<T>(T requestData) where T : Request
+            => requestData.Wrap(new UserMetaData { UserId = "testUser", IpAddress = "0.0.0.0" });
         
         [Test]
         public void CreateEvents()
         {
             var request = new CreateEventsRequest(new ClickEvent(new Entity("123", "321")));
-            GetClient().CreateEvents(request.Wrap(metaDataOverrides: CreateMetaData()));
+            GetClient().CreateEvents(WrapRequest(request));
         }
         
         [Test]
         public void AutoCompleteHasResults([Values("s", "st", "ste", "stea", "steak", "c", "ch", "chi", "chic", "chick", "chicke", "chicken")]string query)
         {
-            var response = GetClient().AutoComplete(new AutoCompleteRequest(query).Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().AutoComplete(WrapRequest(new AutoCompleteRequest(query)));
             Assert.Greater(response.Queries.Count, 0);
             Assert.Greater(response.Queries.Items.Count, 0);
         }
@@ -50,7 +42,7 @@ namespace Loop54.Tests
         [Test]
         public void SearchHasResults([Values("steak", "chicken breast")]string query)
         {
-            var response = GetClient().Search(new SearchRequest(query).Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().Search(WrapRequest(new SearchRequest(query)));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
             Assert.Greater(response.RelatedResults.Count, 0);
@@ -62,7 +54,7 @@ namespace Loop54.Tests
         {
             var request = new SearchRequest(query);
             request.AddCustomData("message", "ping");
-            var response = GetClient().Search(request.Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().Search(WrapRequest(request));
             var responseMessage = response.GetCustomDataOrDefault<string>("responseMessage");
             Assert.AreEqual("pong", responseMessage);
         }
@@ -71,7 +63,7 @@ namespace Loop54.Tests
         public void GetRelatedEntitiesHasResults()
         {
             //Should be a wheat flour
-            var response = GetClient().GetRelatedEntities(new GetRelatedEntitiesRequest("Product", "13").Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().GetRelatedEntities(WrapRequest(new GetRelatedEntitiesRequest("Product", "13")));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -81,7 +73,7 @@ namespace Loop54.Tests
         public void GetComplementaryEntitiesHasResults()
         {
             //Should be a wheat flour
-            var response = GetClient().GetComplementaryEntities(new GetComplementaryEntitiesRequest("Product", "13").Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().GetComplementaryEntities(WrapRequest(new GetComplementaryEntitiesRequest("Product", "13")));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -91,7 +83,7 @@ namespace Loop54.Tests
         public void GetGetBasketRecommendationsHasResults()
         {
             var entities = new List<Entity> { new Entity("Product", "26397727") };
-            var response = GetClient().GetBasketRecommendations(new GetBasketRecommendationsRequest(entities).Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().GetBasketRecommendations(WrapRequest(new GetBasketRecommendationsRequest(entities)));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -106,7 +98,7 @@ namespace Loop54.Tests
                 ComparisonMode = FilterComparisonMode.GreaterThanOrEquals
             };
 
-            var response = GetClient().GetEntities(request.Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().GetEntities(WrapRequest(request));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -117,7 +109,7 @@ namespace Loop54.Tests
             //Should result in two flour products
             var request = new GetEntitiesByAttributeRequest("Manufacturer", "Grinders inc");
 
-            var response = GetClient().GetEntitiesByAttribute(request.Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().GetEntitiesByAttribute(WrapRequest(request));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -129,7 +121,7 @@ namespace Loop54.Tests
             searchRequest.ResultsOptions.Skip = 0;
             searchRequest.ResultsOptions.Take = number;
 
-            var response = GetClient().Search(searchRequest.Wrap(metaDataOverrides: CreateMetaData()));
+            var response = GetClient().Search(WrapRequest(searchRequest));
 
             AssertNumber(response.Results, number);
         }
@@ -144,7 +136,19 @@ namespace Loop54.Tests
             var response = client.Sync(request);
         }
 
-        private void AssertNumber(EntityCollection results, int desiredNumber)
+        [Test]
+        public void GetIndexedAttributesHasResults()
+        {
+            var response = GetClient().GetIndexedAttributes(WrapRequest(new GetIndexedAttributesRequest()));
+            
+            Assert.Greater(response.Attributes.Length, 10);
+            Assert.Greater(response.IndexedAttributes.Length, 2);
+            
+            CollectionAssert.IsOrdered(response.Attributes, EntityAttribute.NameComparer);
+            CollectionAssert.IsOrdered(response.IndexedAttributes, EntityAttribute.NameComparer);
+        }
+
+        private static void AssertNumber(EntityCollection results, int desiredNumber)
         {
             Assert.LessOrEqual(results.Items.Count, results.Count, "The engine returned more results than the engine reported existed."); //do not return more than exist
             Assert.LessOrEqual(results.Items.Count, desiredNumber, "The engine returned more results than we asked for."); //do not return more than we asked for

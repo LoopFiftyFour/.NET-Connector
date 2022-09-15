@@ -42,8 +42,7 @@ namespace Loop54.Model
             }
             set
             {
-                //In the engine attributes are treated case-insensitive.
-                _internalAttributeMapping = value?.ToDictionary(k => k.Name, v => v, StringComparer.OrdinalIgnoreCase);
+                _internalAttributeMapping = value?.ToDictionary(k => k.Name, v => v, EntityAttribute.NameComparer);
             }
         }
 

@@ -11,6 +11,9 @@ namespace Loop54.Model
     /// </summary>
     public class EntityAttribute
     {
+        /// <summary>Attribute names are treated as case-insensitive by the engine, though the case received should be preserved preserved.</summary>
+        public static readonly StringComparer NameComparer = StringComparer.OrdinalIgnoreCase;
+
         /// <summary>
         /// Name of the attribute. For instance "Price", "Name" or "Category".
         /// </summary>

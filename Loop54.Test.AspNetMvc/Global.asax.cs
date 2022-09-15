@@ -11,7 +11,7 @@ namespace Loop54.Test.AspNetMvc
             //Will configure the client to point to the provided endpoint. Will thereafter serve a singleton 
             //instance when calling Client method. If calling StartUp multiple times, a new instance of the 
             //client will be created each time.
-            Loop54ClientManager.StartUp("https://helloworld.54proxy.com");
+            Loop54ClientManager.StartUp(new Loop54Settings("https://helloworld.54proxy.com", "TestApiKey"));
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

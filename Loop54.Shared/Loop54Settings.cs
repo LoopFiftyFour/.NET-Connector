@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Loop54
 {
@@ -9,13 +7,12 @@ namespace Loop54
     /// </summary>
     public class Loop54Settings
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
         /// <param name="endpoint">The endpoint of the Loop54 search engine. If you don't have this please contact customer support.</param>
-        public Loop54Settings(string endpoint)
+        /// <param name="apiKey">The API key authenticating you as a trusted caller. If you don't have this please contact customer support.</param>
+        public Loop54Settings(string endpoint, string apiKey = null)
         {
             Endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            ApiKey = apiKey;
         }
 
         /// <summary>
@@ -24,7 +21,7 @@ namespace Loop54
         public string Endpoint { get; set; }
 
         /// <summary>
-        /// The api key authenticating you as a trusted caller. If you don't have this please contact customer support.
+        /// The API key authenticating you as a trusted caller. If you don't have this please contact customer support.
         /// </summary>
         public string ApiKey { get; set; } = null;
 

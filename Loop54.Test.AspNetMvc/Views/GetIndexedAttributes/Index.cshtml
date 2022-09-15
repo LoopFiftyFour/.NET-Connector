@@ -1,0 +1,20 @@
+@using Loop54.Test.AspNetMvc.Models
+@model GetIndexedAttributesViewModel
+@{
+    ViewData["PageName"] = "GetIndexedAttributes";
+}
+<h3>@Model.Attributes.Length available attributes</h3>
+<ol>
+    @foreach (string name in Model.Attributes)
+    {
+        <li>@name</li>
+    }
+</ol>
+
+<h3>@Model.IndexedAttributes.Length indexed attributes</h3>
+<ol>
+    @foreach (string name in Model.IndexedAttributes)
+    {
+        <li>@name</li>
+    }
+</ol>
