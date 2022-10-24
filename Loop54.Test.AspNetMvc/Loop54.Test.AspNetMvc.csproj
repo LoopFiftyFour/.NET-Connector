@@ -121,6 +121,7 @@
     <Compile Include="Controllers\CreateEventsController.cs" />
     <Compile Include="Controllers\GetEntitiesByAttributeController.cs" />
     <Compile Include="Controllers\GetEntitiesController.cs" />
+    <Compile Include="Controllers\GetIndexedAttributeValuesController.cs" />
     <Compile Include="Controllers\GetIndexedAttributesController.cs" />
     <Compile Include="Controllers\GetRelatedEntitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Models\FacetViewModel.cs" />
     <Compile Include="Models\GetEntitiesByAttributeViewModel.cs" />
     <Compile Include="Models\GetEntitiesViewModel.cs" />
+    <Compile Include="Models\GetIndexedAttributeValuesViewModel.cs" />
     <Compile Include="Models\GetIndexedAttributesViewModel.cs" />
     <Compile Include="Models\GetRelatedEntitiesViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -168,6 +170,7 @@
     <Content Include="Views\AutoComplete\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\GetIndexedAttributes\Index.cshtml" />
+    <Content Include="Views\GetIndexedAttributeValues\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Loop54.NetFramework\Loop54.NetFramework.csproj">

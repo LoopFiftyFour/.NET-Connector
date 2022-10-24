@@ -27,6 +27,7 @@ namespace Loop54
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
         private const string GetIndexedAttributesRequestName = "getIndexedAttributes";
+        private const string GetIndexedAttributeValuesRequestName = "getIndexedAttributeValues";
 
         private readonly IRequestManager _requestManager;
         private readonly IRemoteClientInfoProvider _remoteClientInfoProvider;
@@ -118,6 +119,15 @@ namespace Loop54
             => await GetIndexedAttributesAsync(request.Wrap());
         public async Task<GetIndexedAttributesResponse> GetIndexedAttributesAsync(RequestContainer<GetIndexedAttributesRequest> request)
             => await CallEngineWithinClientContextAsync<GetIndexedAttributesRequest, GetIndexedAttributesResponse>(GetIndexedAttributesRequestName, request);
+
+        public GetIndexedAttributeValuesResponse GetIndexedAttributeValues(GetIndexedAttributeValuesRequest request)
+            => GetIndexedAttributeValues(request.Wrap());
+        public GetIndexedAttributeValuesResponse GetIndexedAttributeValues(RequestContainer<GetIndexedAttributeValuesRequest> request)
+            => CallEngineWithinClientContext<GetIndexedAttributeValuesRequest, GetIndexedAttributeValuesResponse>(GetIndexedAttributeValuesRequestName, request);
+        public async Task<GetIndexedAttributeValuesResponse> GetIndexedAttributeValuesAsync(GetIndexedAttributeValuesRequest request)
+            => await GetIndexedAttributeValuesAsync(request.Wrap());
+        public async Task<GetIndexedAttributeValuesResponse> GetIndexedAttributeValuesAsync(RequestContainer<GetIndexedAttributeValuesRequest> request)
+            => await CallEngineWithinClientContextAsync<GetIndexedAttributeValuesRequest, GetIndexedAttributeValuesResponse>(GetIndexedAttributeValuesRequestName, request);
 
         public Response CustomCall(string name, Request request) => CustomCall(name, request.Wrap());
         public Response CustomCall(string name, RequestContainer<Request> request) => CallEngineWithinClientContext<Request, Response>(name, request);
