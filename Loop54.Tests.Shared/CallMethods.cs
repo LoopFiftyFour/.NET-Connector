@@ -148,6 +148,16 @@ namespace Loop54.Tests
             CollectionAssert.IsOrdered(response.IndexedAttributes, EntityAttribute.NameComparer);
         }
 
+        [Test]
+        public void GetIndexedAttributeValuesHasResults()
+        {
+            var response = GetClient().GetIndexedAttributeValues(WrapRequest(new GetIndexedAttributeValuesRequest("Category")));
+
+            Assert.Greater(response.Values.Length, 5);
+
+            CollectionAssert.IsOrdered(response.Values, EntityAttribute.NameComparer);
+        }
+
         private static void AssertNumber(EntityCollection results, int desiredNumber)
         {
             Assert.LessOrEqual(results.Items.Count, results.Count, "The engine returned more results than the engine reported existed."); //do not return more than exist

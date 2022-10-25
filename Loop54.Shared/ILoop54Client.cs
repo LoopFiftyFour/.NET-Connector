@@ -317,6 +317,26 @@ namespace Loop54
 
         #endregion
 
+        #region GetIndexedAttributeValues
+
+        /// <summary>Make a getIndexedAttributeValues call to the engine. Will return a list of unique values that are indexed for the provided attribute.</summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        GetIndexedAttributeValuesResponse GetIndexedAttributeValues(GetIndexedAttributeValuesRequest request);
+
+        /// <summary>Make a getIndexedAttributeValues call to the engine. Will return a list of unique values that are indexed for the provided attribute.</summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        Task<GetIndexedAttributeValuesResponse> GetIndexedAttributeValuesAsync(GetIndexedAttributeValuesRequest request);
+
+        /// <summary>Make a getIndexedAttributeValues call to the engine. Will return a list of unique values that are indexed for the provided attribute.</summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        GetIndexedAttributeValuesResponse GetIndexedAttributeValues(RequestContainer<GetIndexedAttributeValuesRequest> request);
+
+        /// <summary>Make a getIndexedAttributeValues call to the engine. Will return a list of unique values that are indexed for the provided attribute.</summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        Task<GetIndexedAttributeValuesResponse> GetIndexedAttributeValuesAsync(RequestContainer<GetIndexedAttributeValuesRequest> request);
+
+        #endregion
+
         #region CustomCall
 
         /// <summary>
