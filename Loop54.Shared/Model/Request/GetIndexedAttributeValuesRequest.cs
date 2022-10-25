@@ -6,14 +6,14 @@ namespace Loop54.Model.Request
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="attributeName">The indexed attribute for which to fetch unique values. Can at maximum be 200 chars long.</param>
+        /// <param name="attributeName">The indexed attribute for which to fetch unique values.</param>
         public GetIndexedAttributeValuesRequest(string attributeName)
         {
             AttributeName = attributeName;
         }
 
         /// <summary>
-        /// The search query from the end-user. Can at maximum be 200 chars long.
+        /// The indexed attribute for which to fetch unique values.
         /// </summary>
         public string AttributeName { get; set; }
     }
