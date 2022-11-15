@@ -170,8 +170,8 @@ namespace Loop54
             if (requestName == null)
                 throw new ArgumentNullException(nameof(requestName));
 
-            if (requestName.Length == 0 || char.IsUpper(requestName[0]))
-                throw new ArgumentException($"The {nameof(requestName)} must be in lower camel case with a length over 0.", nameof(requestName));
+            if (requestName.Length == 0)
+                throw new ArgumentException($"The {nameof(requestName)} can not be empty.", nameof(requestName));
 
             //null handling
             if ((request == null || request.Request == null))
