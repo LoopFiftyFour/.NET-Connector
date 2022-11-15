@@ -138,7 +138,7 @@ namespace Loop54.Tests
 
             var request = new Request();
             Assert.Throws<ArgumentNullException>(() => client.CustomCall(null, request));
-            Assert.Throws<ArgumentException>(() => client.CustomCall("ILLEGAL", request));
+            Assert.Throws<ArgumentException>(() => client.CustomCall("", request));
         }
     }
 }
