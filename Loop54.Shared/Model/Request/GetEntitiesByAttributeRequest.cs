@@ -1,7 +1,4 @@
 using Loop54.Model.Request.Parameters;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Xml.Linq;
 
 namespace Loop54.Model.Request
 {
@@ -76,7 +73,7 @@ namespace Loop54.Model.Request
             }
 
             /// <summary>
-            /// Value to filter by.
+            /// Values to filter by.
             /// </summary>
             public string[] Value { get; set; }
         }
