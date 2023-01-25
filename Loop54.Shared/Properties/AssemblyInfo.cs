@@ -44,8 +44,8 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "5";
-        public const string Minor = "9";
-        public const string Patch = "1";
+        public const string Minor = "10";
+        public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -117,3 +117,4 @@ namespace Loop54.Properties
 // 5.8.0 Added support for "getIndexedAttributes" API call
 // 5.9.0 Added support for "getIndexedAttributeValues" API call
 // 5.9.1 No longer throws when calling a uppercased custom endpoint
+// 5.10.0 Added support for calling GEBA with an array of attributes
