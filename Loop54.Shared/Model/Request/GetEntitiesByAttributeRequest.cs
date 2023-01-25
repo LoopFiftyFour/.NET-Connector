@@ -9,10 +9,11 @@ namespace Loop54.Model.Request
     /// </summary>
     public class GetEntitiesByAttributeRequest : Request
     {
-        public GetEntitiesByAttributeRequest(string attributeName, string attributeValue)
+        public GetEntitiesByAttributeRequest(string attributeName, string attributeValue, RequestAliasData requestAlias = null)
         {
             Attribute.Name = attributeName;
             Attribute.Value = attributeValue;
+            RequestAlias = requestAlias;
         }
         
         /// <summary>
@@ -25,6 +26,32 @@ namespace Loop54.Model.Request
         /// Parameters for specifying which results to retrieve and how to format them.
         /// </summary>
         public EntityCollectionParameters ResultsOptions { get; set; } = new EntityCollectionParameters();
+
+        /// <summary>
+        /// Provides human-readable labels in the Portal.
+        /// </summary>
+        public RequestAliasData RequestAlias { get; set; }
+
+        /// <summary>
+        /// Provides human-readable labels in the Portal.
+        /// </summary>
+        public class RequestAliasData
+        {
+            /// <summary>
+            /// Specify an alias for this attribute name.
+            /// </summary>
+            public string Name { get; set; }
+
+            /// <summary>
+            /// Specify an alias for this attribute value.
+            /// </summary>
+            public string Value { get; set; }
+
+            /// <summary>
+            /// Specify a more detailed description for this attribute name–value pair. Will be shown in the Portal.
+            /// </summary>
+            public string Details { get; set; }
+        }
 
         /// <summary>
         /// Name-value-pair to identify an attribute to filter by.
