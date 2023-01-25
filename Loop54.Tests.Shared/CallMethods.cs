@@ -104,13 +104,31 @@ namespace Loop54.Tests
         }
 
         [Test]
-        public void GetEntitiesByAttributeHasResults()
+        public void GetEntitiesByAttributeSingleValueHasResults()
         {
             //Should result in two flour products
             var request = new GetEntitiesByAttributeRequest("Manufacturer", "Grinders inc");
 
             var response = GetClient().GetEntitiesByAttribute(WrapRequest(request));
             Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
+        }
+
+        [Test]
+        [Ignore("Not released to HelloWorld engine yet")]
+        public void GetEntitiesByAttributeMultipleValuesHasEnoughResults()
+        {
+            //Get number of results in one of the categories
+            var request1 = new GetEntitiesByAttributeRequest("Category", "Bakery");
+            var response1 = GetClient().GetEntitiesByAttribute(WrapRequest(request1));
+            var firstCount = response1.Results.Count;
+
+            //Should result in more products than in just one category
+            var request = new GetEntitiesByAttributeRequest("Category", new[] { "Bakery", "Dairy" });
+            var response = GetClient().GetEntitiesByAttribute(WrapRequest(request));
+
+            //make sure we get more results than the first request
+            Assert.Greater(response.Results.Count, firstCount);
             Assert.Greater(response.Results.Items.Count, 0);
         }
 

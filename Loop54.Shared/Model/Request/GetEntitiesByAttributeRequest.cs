@@ -11,16 +11,29 @@ namespace Loop54.Model.Request
     {
         public GetEntitiesByAttributeRequest(string attributeName, string attributeValue, RequestAliasData requestAlias = null)
         {
-            Attribute.Name = attributeName;
-            Attribute.Value = attributeValue;
-            RequestAlias = requestAlias;
+            Attribute = new AttributeNameValuePairSingle()
+            {
+                Name = attributeName,
+                Value = attributeValue
+            };
+			RequestAlias = requestAlias;
         }
-        
+
+        public GetEntitiesByAttributeRequest(string attributeName, string[] attributeValue, RequestAliasData requestAlias = null)
+        {
+            Attribute = new AttributeNameValuePairMultiple()
+            {
+                Name = attributeName,
+                Value = attributeValue
+            };
+			RequestAlias = requestAlias;
+        }
+
         /// <summary>
         /// The attribute name-value-pair to find entities connected to. Note: this attribute needs 
         /// to be indexed in the engine. See the endpoint /getIndexedAttributes.
         /// </summary>
-        public AttributeNameValuePair Attribute { get; set; } = new AttributeNameValuePair();
+        public AttributeNameValuePair Attribute { get; set; }
 
         /// <summary>
         /// Parameters for specifying which results to retrieve and how to format them.
@@ -53,25 +66,44 @@ namespace Loop54.Model.Request
             public string Details { get; set; }
         }
 
-        /// <summary>
-        /// Name-value-pair to identify an attribute to filter by.
-        /// </summary>
-        public class AttributeNameValuePair
+        public abstract class AttributeNameValuePair
         {
-            //The client should not be able to create objects of this type.
-            internal AttributeNameValuePair()
-            {
-            }
-
             /// <summary>
             /// Name of the attribute.
             /// </summary>
             public string Name { get; set; }
+        }
+
+        /// <summary>
+        /// Name-value-pair to identify an attribute to filter by. Supports a single value for the attribute.
+        /// </summary>
+        public class AttributeNameValuePairSingle : AttributeNameValuePair
+        {
+            //The client should not be able to create objects of this type.
+            internal AttributeNameValuePairSingle()
+            {
+            }
 
             /// <summary>
             /// Value to filter by.
             /// </summary>
             public string Value { get; set; }
+        }
+
+        /// <summary>
+        /// Name-value-pair to identify an attribute to filter by. Supports multiple values for the attribute.
+        /// </summary>
+        public class AttributeNameValuePairMultiple : AttributeNameValuePair
+        {
+            //The client should not be able to create objects of this type.
+            internal AttributeNameValuePairMultiple()
+            {
+            }
+
+            /// <summary>
+            /// Values to filter by.
+            /// </summary>
+            public string[] Value { get; set; }
         }
     }
 }
