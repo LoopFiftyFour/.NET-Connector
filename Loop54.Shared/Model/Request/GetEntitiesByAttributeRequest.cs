@@ -61,7 +61,7 @@ namespace Loop54.Model.Request
             public string Value { get; set; }
 
             /// <summary>
-            /// Specify a more detailed description for this attribute name–value pair. Will be shown in the Portal.
+            /// Specify a more detailed description for this attribute name-value pair. Will be shown in the Portal.
             /// </summary>
             public string Details { get; set; }
         }
