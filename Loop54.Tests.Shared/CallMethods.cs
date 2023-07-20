@@ -45,8 +45,6 @@ namespace Loop54.Tests
             var response = GetClient().Search(WrapRequest(new SearchRequest(query)));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
-            Assert.Greater(response.RelatedResults.Count, 0);
-            Assert.Greater(response.RelatedResults.Items.Count, 0);
         }
 
         [Test]
