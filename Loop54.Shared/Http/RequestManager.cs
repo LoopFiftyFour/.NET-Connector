@@ -98,15 +98,14 @@ namespace Loop54.Http
             {
                 message = await _httpClient.PostAsync(requestUri, content);
             }
-            catch (TaskCanceledException e) // TaskCanceledException from HttpClient is a timeout in practice
+            catch (TaskCanceledException) // TaskCanceledException from HttpClient is a timeout in practice
             {
                 throw new EngineTimeoutException(
-                    $"Request to engine URL '{requestUri}' timed out (timeout = {_httpClient.Timeout.TotalMilliseconds:N0} ms).", e);
+                    $"Request to engine URL '{requestUri}' timed out (timeout = {_httpClient.Timeout.TotalMilliseconds:N0} ms).");
             }
             catch (Exception e)
             {
-                throw new EngineNotReachableException($"Could not make request to engine at '{requestUri}'. The endpoint may be incorrect or there"
-                    + " may be a firewall blocking the port.", e);
+                throw new EngineNotReachableException($"Could not make request to engine at '{requestUri}'.", e);
             }
 
             if (message.IsSuccessStatusCode)
