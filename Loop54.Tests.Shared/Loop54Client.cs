@@ -6,14 +6,12 @@ using Loop54.Model.Response;
 using Loop54.User;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Loop54.Tests
 {
     [TestFixture]
-    class Loop54Client
+    public class Loop54Client
     {
         public class TestRequestManager : IRequestManager
         {
@@ -79,27 +77,35 @@ namespace Loop54.Tests
         }
 
         [Test]
-        public void SearchWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.Search(r), new SearchRequest("pork belly"), "search");
+        public void SearchWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.Search(r), new SearchRequest("pork belly"), "search");
 
         [Test]
-        public void AutoCompleteWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.AutoComplete(r), new AutoCompleteRequest("pork bel"), "autoComplete");
+        public void AutoCompleteWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.AutoComplete(r), new AutoCompleteRequest("pork bel"), "autoComplete");
 
         [Test]
-        public void CreateEventsWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.CreateEvents(r), new CreateEventsRequest(new ClickEvent(new Entity("product", "1337"))), "createEvents");
+        public void CreateEventsWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.CreateEvents(r), new CreateEventsRequest(new ClickEvent(new Entity("product", "1337"))), "createEvents");
 
         [Test]
-        public void GetEntitiesWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.GetEntities(r), new GetEntitiesRequest(), "getEntities");
+        public void GetEntitiesWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetEntities(r), new GetEntitiesRequest(), "getEntities");
 
         [Test]
-        public void GetEntitiesByAttributeWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.GetEntitiesByAttribute(r), new GetEntitiesByAttributeRequest("category", "meats"), "getEntitiesByAttribute");
+        public void GetEntitiesByAttributeWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetEntitiesByAttribute(r), new GetEntitiesByAttributeRequest("category", "meats"), "getEntitiesByAttribute");
 
         [Test]
-        public void GetRelatedEntitiesWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.GetRelatedEntities(r), new GetRelatedEntitiesRequest("category", "meats"), "getRelatedEntities");
+        public void GetRelatedEntitiesWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetRelatedEntities(r), new GetRelatedEntitiesRequest("category", "meats"), "getRelatedEntities");
 
         [Test]
-        public void CustomCallWithMetaDataAndClientInfoOverrides() => CallWithOverrides((c, r) => c.CustomCall("customerspecific", r), new Request(), "customerspecific");
+        public void CustomCallWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.CustomCall("customerspecific", r), new Request(), "customerspecific");
 
-        private void CallWithOverrides<TResponse, TRequest>(Func<ILoop54Client, RequestContainer<TRequest>, TResponse> call, TRequest request, string expectedAction) 
+        private void CallWithOverrides<TResponse, TRequest>(Func<ILoop54Client, RequestContainer<TRequest>, TResponse> call, TRequest request,
+            string expectedAction) 
             where TRequest : Request
             where TResponse : Response
         {
