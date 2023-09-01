@@ -137,6 +137,50 @@ namespace Loop54
 
         #endregion
 
+        #region GetPopularEntities
+
+        /// <summary>
+        /// Make a getPopularEntities call to the engine. Will return the entities with the most navigations or interactions, either globally or for
+        /// the specified user.
+        /// </summary>
+        GetEntitiesResponse GetPopularEntities(GetPopularEntitiesRequest request);
+
+        /// <summary>
+        /// Make an asynchronous getPopularEntities call to the engine. Will return the entities with the most navigations or interactions, either
+        /// globally or for the specified user.
+        /// </summary>
+        Task<GetEntitiesResponse> GetPopularEntitiesAsync(GetPopularEntitiesRequest request);
+
+        /// <summary><inheritdoc cref="GetPopularEntities(GetPopularEntitiesRequest)"/></summary>
+        GetEntitiesResponse GetPopularEntities(RequestContainer<GetPopularEntitiesRequest> request);
+
+        /// <summary><inheritdoc cref="GetPopularEntitiesAsync(GetPopularEntitiesRequest)"/></summary>
+        Task<GetEntitiesResponse> GetPopularEntitiesAsync(RequestContainer<GetPopularEntitiesRequest> request);
+
+        #endregion
+
+        #region GetRecentEntities
+
+        /// <summary>
+        /// Make a getRecentEntities call to the engine. Will return the entities with the most recent navigations or interactions, either globally
+        /// or for the specified user.
+        /// </summary>
+        GetEntitiesResponse GetRecentEntities(GetRecentEntitiesRequest request);
+
+        /// <summary>
+        /// Make an asynchronous getRecentEntities call to the engine. Will return the entities with the most recent navigations or interactions,
+        /// either globally or for the specified user.
+        /// </summary>
+        Task<GetEntitiesResponse> GetRecentEntitiesAsync(GetRecentEntitiesRequest request);
+
+        /// <summary><inheritdoc cref="GetRecentEntities(GetRecentEntitiesRequest)"/></summary>
+        GetEntitiesResponse GetRecentEntities(RequestContainer<GetRecentEntitiesRequest> request);
+
+        /// <summary><inheritdoc cref="GetRecentEntitiesAsync(GetRecentEntitiesRequest)"/></summary>
+        Task<GetEntitiesResponse> GetRecentEntitiesAsync(RequestContainer<GetRecentEntitiesRequest> request);
+
+        #endregion
+
         #region GetRelatedEntities
 
         /// <summary>
