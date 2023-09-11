@@ -67,23 +67,21 @@ namespace Loop54.Tests
         }
 
         [Test]
-        [Ignore("Not released to HelloWorld engine yet")]
-        public void GetComplementaryEntitiesHasResults()
+        public void GetComplementaryEntitiesHasNoResults() // Currently no complementary entities in HelloWorld engine
         {
             //Should be a wheat flour
             var response = GetClient().GetComplementaryEntities(WrapRequest(new GetComplementaryEntitiesRequest("Product", "13")));
-            Assert.Greater(response.Results.Count, 0);
-            Assert.Greater(response.Results.Items.Count, 0);
+            Assert.AreEqual(response.Results.Count, 0);
+            Assert.AreEqual(response.Results.Items.Count, 0);
         }
 
         [Test]
-        [Ignore("Not released to HelloWorld engine yet")]
-        public void GetGetBasketRecommendationsHasResults()
+        public void GetGetBasketRecommendationsHasNoResults() // Currently no recommendations in HelloWorld engine
         {
-            var entities = new List<Entity> { new Entity("Product", "26397727") };
+            var entities = new List<Entity> { new Entity("Product", "13") };
             var response = GetClient().GetBasketRecommendations(WrapRequest(new GetBasketRecommendationsRequest(entities)));
-            Assert.Greater(response.Results.Count, 0);
-            Assert.Greater(response.Results.Items.Count, 0);
+            Assert.AreEqual(response.Results.Count, 0);
+            Assert.AreEqual(response.Results.Items.Count, 0);
         }
 
         [Test]
@@ -113,7 +111,6 @@ namespace Loop54.Tests
         }
 
         [Test]
-        [Ignore("Not released to HelloWorld engine yet")]
         public void GetEntitiesByAttributeMultipleValuesHasEnoughResults()
         {
             //Get number of results in one of the categories
