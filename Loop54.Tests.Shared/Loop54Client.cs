@@ -97,6 +97,14 @@ namespace Loop54.Tests
             CallWithOverrides((c, r) => c.GetEntitiesByAttribute(r), new GetEntitiesByAttributeRequest("category", "meats"), "getEntitiesByAttribute");
 
         [Test]
+        public void GetPopularEntitiesWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetPopularEntities(r), new GetPopularEntitiesRequest("click", null, null), "getPopularEntities");
+
+        [Test]
+        public void GetRecentEntitiesWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetRecentEntities(r), new GetRecentEntitiesRequest("purchase", new [] {"Pr"}, "U1"), "getRecentEntities");
+
+        [Test]
         public void GetRelatedEntitiesWithMetaDataAndClientInfoOverrides() =>
             CallWithOverrides((c, r) => c.GetRelatedEntities(r), new GetRelatedEntitiesRequest("category", "meats"), "getRelatedEntities");
 

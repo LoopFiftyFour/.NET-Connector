@@ -14,6 +14,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributeValuesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributesRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetPopularOrRecentEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributeValuesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributesResponse.cs" />

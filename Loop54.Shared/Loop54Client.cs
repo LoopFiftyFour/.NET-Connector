@@ -21,6 +21,8 @@ namespace Loop54
         private const string AutoCompleteRequestName = "autoComplete";
         private const string GetEntitiesRequestName = "getEntities";
         private const string GetEntitiesByAttributeRequestName = "getEntitiesByAttribute";
+        private const string GetPopularEntitiesRequestName = "getPopularEntities";
+        private const string GetRecentEntitiesRequestName = "getRecentEntities";
         private const string GetRelatedEntitiesRequestName = "getRelatedEntities";
         private const string GetComplementaryEntitiesRequestName = "getComplementaryEntities";
         private const string GetBasketRecommendationsRequestName = "getBasketRecommendations";
@@ -75,6 +77,20 @@ namespace Loop54
         public async Task<GetEntitiesByAttributeResponse> GetEntitiesByAttributeAsync(GetEntitiesByAttributeRequest request) => await GetEntitiesByAttributeAsync(request.Wrap());
         public async Task<GetEntitiesByAttributeResponse> GetEntitiesByAttributeAsync(RequestContainer<GetEntitiesByAttributeRequest> request) 
             => await CallEngineWithinClientContextAsync<GetEntitiesByAttributeRequest, GetEntitiesByAttributeResponse>(GetEntitiesByAttributeRequestName, request);
+
+        public GetEntitiesResponse GetPopularEntities(GetPopularEntitiesRequest request) => GetPopularEntities(request.Wrap());
+        public GetEntitiesResponse GetPopularEntities(RequestContainer<GetPopularEntitiesRequest> request) 
+            => CallEngineWithinClientContext<GetPopularEntitiesRequest, GetEntitiesResponse>(GetPopularEntitiesRequestName, request);
+        public async Task<GetEntitiesResponse> GetPopularEntitiesAsync(GetPopularEntitiesRequest request) => await GetPopularEntitiesAsync(request.Wrap());
+        public async Task<GetEntitiesResponse> GetPopularEntitiesAsync(RequestContainer<GetPopularEntitiesRequest> request) 
+            => await CallEngineWithinClientContextAsync<GetPopularEntitiesRequest, GetEntitiesResponse>(GetPopularEntitiesRequestName, request);
+
+        public GetEntitiesResponse GetRecentEntities(GetRecentEntitiesRequest request) => GetRecentEntities(request.Wrap());
+        public GetEntitiesResponse GetRecentEntities(RequestContainer<GetRecentEntitiesRequest> request) 
+            => CallEngineWithinClientContext<GetRecentEntitiesRequest, GetEntitiesResponse>(GetRecentEntitiesRequestName, request);
+        public async Task<GetEntitiesResponse> GetRecentEntitiesAsync(GetRecentEntitiesRequest request) => await GetRecentEntitiesAsync(request.Wrap());
+        public async Task<GetEntitiesResponse> GetRecentEntitiesAsync(RequestContainer<GetRecentEntitiesRequest> request) 
+            => await CallEngineWithinClientContextAsync<GetRecentEntitiesRequest, GetEntitiesResponse>(GetRecentEntitiesRequestName, request);
 
         public GetRelatedEntitiesResponse GetRelatedEntities(GetRelatedEntitiesRequest request) => GetRelatedEntities(request.Wrap());
         public GetRelatedEntitiesResponse GetRelatedEntities(RequestContainer<GetRelatedEntitiesRequest> request) 

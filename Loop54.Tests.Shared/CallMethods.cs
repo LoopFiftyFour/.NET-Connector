@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Loop54.Http;
 using Loop54.Model;
@@ -13,16 +14,33 @@ namespace Loop54.Tests
     [TestFixture]
     public class CallMethods
     {
+        private const string TestEndpointUrl = "https://helloworld.54proxy.com";
+        private const string TestUserId = "testUser";
+
         private static Loop54.Loop54Client GetClient()
         {
-            return new Loop54.Loop54Client(new RequestManager(new Loop54Settings("https://helloworld.54proxy.com", "TestApiKey")
+            return new Loop54.Loop54Client(new RequestManager(new Loop54Settings(TestEndpointUrl, "TestApiKey")
             {
                 RequestTimeoutMs = 2000
             }), new NullClientInfoProvider());
         }
 
         private static RequestContainer<T> WrapRequest<T>(T requestData) where T : Request
-            => requestData.Wrap(new UserMetaData { UserId = "testUser", IpAddress = "0.0.0.0" });
+            => requestData.Wrap(new UserMetaData { UserId = TestUserId, IpAddress = "0.0.0.0" });
+
+        private static TResponse IgnoreTestIfEndpointNotFound<TResponse>(Func<ILoop54Client, TResponse> runRequest)
+        {
+            var client = GetClient();
+
+            try
+            {
+                return runRequest(client);
+            }
+            catch (EngineStatusCodeException ex) when (ex.Details.Code == 404)
+            {
+                throw new IgnoreException("Not released to HelloWorld engine yet");
+            }
+        }
         
         [Test]
         public void CreateEvents()
@@ -55,6 +73,24 @@ namespace Loop54.Tests
             var response = GetClient().Search(WrapRequest(request));
             var responseMessage = response.GetCustomDataOrDefault<string>("responseMessage");
             Assert.AreEqual("pong", responseMessage);
+        }
+
+        [Test]
+        public void GetPopularEntitiesHasResults()
+        {
+            var request = new GetPopularEntitiesRequest("click", null, null);
+            var response = IgnoreTestIfEndpointNotFound(c => c.GetPopularEntities(WrapRequest(request)));
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
+        }
+
+        [Test]
+        public void GetRecentEntitiesHasResults()
+        {
+            var request = new GetRecentEntitiesRequest("purchase", new[] { "Product" }, null);
+            var response = IgnoreTestIfEndpointNotFound(c => c.GetRecentEntities(WrapRequest(request)));
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
         }
 
         [Test]
