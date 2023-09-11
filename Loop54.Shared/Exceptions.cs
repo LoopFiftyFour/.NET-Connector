@@ -13,8 +13,8 @@ namespace Loop54
     /// </remarks>
     public class EngineTimeoutException : EngineNotReachableException
     {
-        internal EngineTimeoutException(string message, Exception innerException)
-            : base(message, innerException)
+        internal EngineTimeoutException(string message)
+            : base(message)
         {
         }
     }
@@ -24,9 +24,22 @@ namespace Loop54
     /// </summary>
     public class EngineNotReachableException : Exception
     {
-        internal EngineNotReachableException(string message, Exception innerException)
-            : base(message, innerException)
+        internal EngineNotReachableException(string message)
+            : base(message)
         {
+        }
+
+        // Return the full message chain in this exception's message, because sometimes this is all we get in an error report
+        internal EngineNotReachableException(string message, Exception innerException)
+            : base(message + GetMessageChain(innerException), innerException)
+        {
+        }
+
+        private static string GetMessageChain(Exception ex)
+        {
+            if (ex == null)
+                return "";
+            return " --> " + ex.Message + GetMessageChain(ex.InnerException);
         }
     }
 
