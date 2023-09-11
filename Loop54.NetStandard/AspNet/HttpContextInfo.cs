@@ -1,8 +1,6 @@
 using System;
 using Loop54.User;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.Net.Http.Headers;
 
 namespace Loop54.AspNet
 {
@@ -39,12 +37,12 @@ namespace Loop54.AspNet
 
         public string GetReferrer()
         {
-            return _context.Request.Headers[HeaderNames.Referer];
+            return _context.Request.Headers["Referer"];
         }
 
         public string GetUserAgent()
         {
-            return _context.Request.Headers[HeaderNames.UserAgent];
+            return _context.Request.Headers["User-Agent"];
         }
 
         public string GetRemoteIp()
