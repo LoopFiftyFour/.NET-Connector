@@ -25,6 +25,7 @@ namespace Loop54
         private const string GetRecentEntitiesRequestName = "getRecentEntities";
         private const string GetRelatedEntitiesRequestName = "getRelatedEntities";
         private const string GetComplementaryEntitiesRequestName = "getComplementaryEntities";
+        private const string GetRecommendedEntitiesRequestName = "getRecommendedEntities";
         private const string GetBasketRecommendationsRequestName = "getBasketRecommendations";
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
@@ -105,6 +106,13 @@ namespace Loop54
         public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(GetComplementaryEntitiesRequest request) => await GetComplementaryEntitiesAsync(request.Wrap());
         public async Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(RequestContainer<GetComplementaryEntitiesRequest> request) 
             => await CallEngineWithinClientContextAsync<GetComplementaryEntitiesRequest, GetComplementaryEntitiesResponse>(GetComplementaryEntitiesRequestName, request);
+
+        public GetRecommendedEntitiesResponse GetRecommendedEntities(GetRecommendedEntitiesRequest request) => GetRecommendedEntities(request.Wrap());
+        public GetRecommendedEntitiesResponse GetRecommendedEntities(RequestContainer<GetRecommendedEntitiesRequest> request)
+            => CallEngineWithinClientContext<GetRecommendedEntitiesRequest, GetRecommendedEntitiesResponse>(GetRecommendedEntitiesRequestName, request);
+        public async Task<GetRecommendedEntitiesResponse> GetRecommendedEntitiesAsync(GetRecommendedEntitiesRequest request) => await GetRecommendedEntitiesAsync(request.Wrap());
+        public async Task<GetRecommendedEntitiesResponse> GetRecommendedEntitiesAsync(RequestContainer<GetRecommendedEntitiesRequest> request)
+            => await CallEngineWithinClientContextAsync<GetRecommendedEntitiesRequest, GetRecommendedEntitiesResponse>(GetRecommendedEntitiesRequestName, request);
 
         public GetBasketRecommendationsResponse GetBasketRecommendations(GetBasketRecommendationsRequest request) => GetBasketRecommendations(request.Wrap());
         public GetBasketRecommendationsResponse GetBasketRecommendations(RequestContainer<GetBasketRecommendationsRequest> request) 

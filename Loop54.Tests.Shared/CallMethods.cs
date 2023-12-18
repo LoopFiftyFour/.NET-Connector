@@ -28,20 +28,6 @@ namespace Loop54.Tests
         private static RequestContainer<T> WrapRequest<T>(T requestData) where T : Request
             => requestData.Wrap(new UserMetaData { UserId = TestUserId, IpAddress = "0.0.0.0" });
 
-        private static TResponse IgnoreTestIfEndpointNotFound<TResponse>(Func<ILoop54Client, TResponse> runRequest)
-        {
-            var client = GetClient();
-
-            try
-            {
-                return runRequest(client);
-            }
-            catch (EngineStatusCodeException ex) when (ex.Details.Code == 404)
-            {
-                throw new IgnoreException("Not released to HelloWorld engine yet");
-            }
-        }
-        
         [Test]
         public void CreateEvents()
         {
@@ -79,7 +65,7 @@ namespace Loop54.Tests
         public void GetPopularEntitiesHasResults()
         {
             var request = new GetPopularEntitiesRequest("click", null, null);
-            var response = IgnoreTestIfEndpointNotFound(c => c.GetPopularEntities(WrapRequest(request)));
+            var response = GetClient().GetPopularEntities(WrapRequest(request));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -88,7 +74,7 @@ namespace Loop54.Tests
         public void GetRecentEntitiesHasResults()
         {
             var request = new GetRecentEntitiesRequest("purchase", new[] { "Product" }, null);
-            var response = IgnoreTestIfEndpointNotFound(c => c.GetRecentEntities(WrapRequest(request)));
+            var response = GetClient().GetRecentEntities(WrapRequest(request));
             Assert.Greater(response.Results.Count, 0);
             Assert.Greater(response.Results.Items.Count, 0);
         }
@@ -103,21 +89,31 @@ namespace Loop54.Tests
         }
 
         [Test]
-        public void GetComplementaryEntitiesHasNoResults() // Currently no complementary entities in HelloWorld engine
+        public void GetComplementaryEntitiesHasResults()
         {
             //Should be a wheat flour
             var response = GetClient().GetComplementaryEntities(WrapRequest(new GetComplementaryEntitiesRequest("Product", "13")));
-            Assert.AreEqual(response.Results.Count, 0);
-            Assert.AreEqual(response.Results.Items.Count, 0);
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
         }
 
         [Test]
-        public void GetGetBasketRecommendationsHasNoResults() // Currently no recommendations in HelloWorld engine
+        public void GetBasketRecommendationsHasResults()
         {
             var entities = new List<Entity> { new Entity("Product", "13") };
             var response = GetClient().GetBasketRecommendations(WrapRequest(new GetBasketRecommendationsRequest(entities)));
-            Assert.AreEqual(response.Results.Count, 0);
-            Assert.AreEqual(response.Results.Items.Count, 0);
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
+        }
+
+        [Test]
+        public void GetRecommendedEntitiesHasResults()
+        {
+            const int nrOfResults = 5;
+            var response = GetClient().GetRecommendedEntities(WrapRequest(new GetRecommendedEntitiesRequest()));
+
+            Assert.Greater(response.Results.Count, 0);
+            Assert.Greater(response.Results.Items.Count, 0);
         }
 
         [Test]
