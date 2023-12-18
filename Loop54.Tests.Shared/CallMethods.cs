@@ -109,7 +109,6 @@ namespace Loop54.Tests
         [Test]
         public void GetRecommendedEntitiesHasResults()
         {
-            const int nrOfResults = 5;
             var response = GetClient().GetRecommendedEntities(WrapRequest(new GetRecommendedEntitiesRequest()));
 
             Assert.Greater(response.Results.Count, 0);
