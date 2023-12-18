@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetRelatedEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetComplementaryEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetBasketRecommendationsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetRecommendedEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntityCollectionParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\EntitySortingParameter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Event.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetRelatedEntitiesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetComplementaryEntitiesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetBasketRecommendationsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetRecommendedEntitiesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\QueryResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Response.cs" />

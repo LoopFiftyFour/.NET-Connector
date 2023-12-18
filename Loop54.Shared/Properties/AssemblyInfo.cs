@@ -44,7 +44,7 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "6";
-        public const string Minor = "2";
+        public const string Minor = "3";
         public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
@@ -120,3 +120,4 @@ namespace Loop54.Properties
 // 6.0.0 Added support for calling GEBA with an array of attributes (minor breaking change)
 // 6.1.0 Added support for request alias in GEBA
 // 6.2.0 Added support for GetPopularEntities and GetRecentEntities requests, upgraded several NuGet packages, improved connection error message
+// 6.3.0 Added support for getRecommendedEntities request

@@ -244,7 +244,37 @@ namespace Loop54
         Task<GetComplementaryEntitiesResponse> GetComplementaryEntitiesAsync(RequestContainer<GetComplementaryEntitiesRequest> request);
 
         #endregion
+        #region GetRecommendedEntities
 
+        /// <summary>
+        /// Make a getRecommendedEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The recommended entities</returns>
+        GetRecommendedEntitiesResponse GetRecommendedEntities(GetRecommendedEntitiesRequest request);
+
+        /// <summary>
+        /// Make an asynchronous getRecommendedEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The recommended entities</returns>
+        Task<GetRecommendedEntitiesResponse> GetRecommendedEntitiesAsync(GetRecommendedEntitiesRequest request);
+
+        /// <summary>
+        /// Make a getRecommendedEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The recommended entities</returns>
+        GetRecommendedEntitiesResponse GetRecommendedEntities(RequestContainer<GetRecommendedEntitiesRequest> request);
+
+        /// <summary>
+        /// Make an asynchronous getRecommendedEntities call to the engine. Will return entities that are contextually close to the given product.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The recommended entities</returns>
+        Task<GetRecommendedEntitiesResponse> GetRecommendedEntitiesAsync(RequestContainer<GetRecommendedEntitiesRequest> request);
+
+        #endregion
         #region GetBasketRecommendations
 
         /// <summary>
