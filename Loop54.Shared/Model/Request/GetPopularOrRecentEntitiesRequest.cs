@@ -9,12 +9,20 @@ namespace Loop54.Model.Request
         public GetPopularEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
+
+        public GetPopularEntitiesRequest(string behaviorType, string[] entityType) : base(behaviorType, entityType, Loop54Client.CurrentUserLiteral)
+        {
+        }
     }
 
     /// <summary>Used to perform a request to get the most recent entities, either for a given user or globally.</summary>
     public class GetRecentEntitiesRequest : GetPopularOrRecentEntitiesRequest
     {
         public GetRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
+        {
+        }
+
+        public GetRecentEntitiesRequest(string behaviorType, string[] entityType) : base(behaviorType, entityType, Loop54Client.CurrentUserLiteral)
         {
         }
     }
@@ -43,8 +51,8 @@ namespace Loop54.Model.Request
         public string[] EntityType { get; set; }
 
         /// <summary>
-        /// A user ID (normally the same as the one in the User-Id header) to retrieve the most common/recent entities for that user or null to
-        /// retrieve the globally most common/recent entities.
+        /// A user ID to retrieve the most common/recent entities for that user or null to retrieve the globally most common/recent entities.
+        /// The literal "(CurrentUser)" can be specified to use the user ID from the User-Id request header.
         /// </summary>
         public string ForUserId { get; set; }
 
