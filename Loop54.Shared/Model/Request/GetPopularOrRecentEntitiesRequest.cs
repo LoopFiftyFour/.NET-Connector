@@ -9,10 +9,6 @@ namespace Loop54.Model.Request
         public GetPopularEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
-
-        public GetPopularEntitiesRequest(string behaviorType, string[] entityType) : base(behaviorType, entityType, Loop54Client.CurrentUserLiteral)
-        {
-        }
     }
 
     /// <summary>Used to perform a request to get the most recent entities, either for a given user or globally.</summary>
@@ -21,15 +17,17 @@ namespace Loop54.Model.Request
         public GetRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
-
-        public GetRecentEntitiesRequest(string behaviorType, string[] entityType) : base(behaviorType, entityType, Loop54Client.CurrentUserLiteral)
-        {
-        }
     }
 
     /// <summary>Base class for requests to get the most popular or most recent entities.</summary>
     public abstract class GetPopularOrRecentEntitiesRequest : Request
     {
+        /// <summary>
+        /// Represents a placeholder value used in `GetRecentEntitiesRequest` and `GetPopularEntitiesRequest` to indicate that the request should 
+        /// target the current user's data.
+        /// </summary>
+        public const string CurrentUserPlaceholder = "(CurrentUser)";
+
         protected GetPopularOrRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId)
         {
             if (string.IsNullOrEmpty(behaviorType))
@@ -52,7 +50,7 @@ namespace Loop54.Model.Request
 
         /// <summary>
         /// A user ID to retrieve the most common/recent entities for that user or null to retrieve the globally most common/recent entities.
-        /// The literal "(CurrentUser)" can be specified to use the user ID from the User-Id request header.
+        /// <see cref="CurrentUserPlaceholder"/> can be specified to use the user ID from the User-Id request header.
         /// </summary>
         public string ForUserId { get; set; }
 

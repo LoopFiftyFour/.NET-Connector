@@ -17,7 +17,6 @@ namespace Loop54
     /// </summary>
     public class Loop54Client : ILoop54Client
     {
-        public const string CurrentUserLiteral = "(CurrentUser)";
         private const string SearchRequestName = "search";
         private const string AutoCompleteRequestName = "autoComplete";
         private const string GetEntitiesRequestName = "getEntities";
