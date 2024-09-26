@@ -9,6 +9,10 @@ namespace Loop54.Model.Request
         public GetPopularEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
+
+        /// <summary>Creates a request to get the most popular entities for the current user.</summary>
+        public static GetPopularEntitiesRequest ForCurrentUser(string behaviorType, string[] entityType) 
+            => new GetPopularEntitiesRequest(behaviorType, entityType, CurrentUserPlaceholder);
     }
 
     /// <summary>Used to perform a request to get the most recent entities, either for a given user or globally.</summary>
@@ -17,6 +21,10 @@ namespace Loop54.Model.Request
         public GetRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
+
+        /// <summary>Creates a request to get the most recent entities for the current user.</summary>
+        public static GetRecentEntitiesRequest ForCurrentUser(string behaviorType, string[] entityType)
+            => new GetRecentEntitiesRequest(behaviorType, entityType, CurrentUserPlaceholder);
     }
 
     /// <summary>Base class for requests to get the most popular or most recent entities.</summary>
