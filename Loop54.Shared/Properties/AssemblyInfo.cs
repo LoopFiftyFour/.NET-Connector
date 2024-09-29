@@ -9,7 +9,7 @@ using Loop54.Properties;
 [assembly: AssemblyTitle("Loop54")]
 [assembly: AssemblyCompany("The Loop54 Group AB")]
 [assembly: AssemblyProduct("Loop54")]
-[assembly: AssemblyCopyright("Copyright © 2023")]
+[assembly: AssemblyCopyright("Copyright © 2024")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -45,7 +45,7 @@ namespace Loop54.Properties
     {
         public const string Major = "6";
         public const string Minor = "3";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -121,3 +121,4 @@ namespace Loop54.Properties
 // 6.1.0 Added support for request alias in GEBA
 // 6.2.0 Added support for GetPopularEntities and GetRecentEntities requests, upgraded several NuGet packages, improved connection error message
 // 6.3.0 Added support for getRecommendedEntities request
+// 6.3.1 Added support for CurrentUser placeholder in GetRecentEntities and GetPopularEntities requests
