@@ -9,6 +9,10 @@ namespace Loop54.Model.Request
         public GetPopularEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
+
+        /// <summary>Creates a request to get the most popular entities for the current user.</summary>
+        public static GetPopularEntitiesRequest ForCurrentUser(string behaviorType, string[] entityType) 
+            => new GetPopularEntitiesRequest(behaviorType, entityType, CurrentUserPlaceholder);
     }
 
     /// <summary>Used to perform a request to get the most recent entities, either for a given user or globally.</summary>
@@ -17,11 +21,21 @@ namespace Loop54.Model.Request
         public GetRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId) : base(behaviorType, entityType, forUserId)
         {
         }
+
+        /// <summary>Creates a request to get the most recent entities for the current user.</summary>
+        public static GetRecentEntitiesRequest ForCurrentUser(string behaviorType, string[] entityType)
+            => new GetRecentEntitiesRequest(behaviorType, entityType, CurrentUserPlaceholder);
     }
 
     /// <summary>Base class for requests to get the most popular or most recent entities.</summary>
     public abstract class GetPopularOrRecentEntitiesRequest : Request
     {
+        /// <summary>
+        /// Represents a placeholder value used in `GetRecentEntitiesRequest` and `GetPopularEntitiesRequest` to indicate that the request should 
+        /// target the current user's data.
+        /// </summary>
+        public const string CurrentUserPlaceholder = "(CurrentUser)";
+
         protected GetPopularOrRecentEntitiesRequest(string behaviorType, string[] entityType, string forUserId)
         {
             if (string.IsNullOrEmpty(behaviorType))
@@ -43,8 +57,8 @@ namespace Loop54.Model.Request
         public string[] EntityType { get; set; }
 
         /// <summary>
-        /// A user ID (normally the same as the one in the User-Id header) to retrieve the most common/recent entities for that user or null to
-        /// retrieve the globally most common/recent entities.
+        /// A user ID to retrieve the most common/recent entities for that user or null to retrieve the globally most common/recent entities.
+        /// <see cref="CurrentUserPlaceholder"/> can be specified to use the user ID from the User-Id request header.
         /// </summary>
         public string ForUserId { get; set; }
 
