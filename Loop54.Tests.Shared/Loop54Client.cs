@@ -154,5 +154,9 @@ namespace Loop54.Tests
             Assert.Throws<ArgumentNullException>(() => client.CustomCall(null, request));
             Assert.Throws<ArgumentException>(() => client.CustomCall("", request));
         }
+        
+        [Test]
+        public void SuggestWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.Suggest(r), new SuggestRequest("pork bel"), "suggest");
     }
 }
