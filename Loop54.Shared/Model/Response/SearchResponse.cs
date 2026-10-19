@@ -3,7 +3,7 @@ namespace Loop54.Model.Response
     /// <summary>
     /// The result of a search operation.
     /// </summary>
-    public class SearchResponse : Response
+    public class SearchResponse : ContentResponse
     {
         /// <summary>
         /// Whether or not the engine understood the search query.

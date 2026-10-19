@@ -78,6 +78,30 @@ namespace Loop54.Tests.Model
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<EntityCollection>("complexData"));
         }
 
+        private const string SearchResponseWithContent =
+            "{ \"makesSense\": true, \"results\": { \"count\": 0, \"facets\": [], \"items\": [] }, " +
+            "\"contentSearchResults\": [ { \"entityType\": \"Brand\", \"results\": { \"count\": 1, \"facets\": [], " +
+            "\"items\": [ { \"id\": \"b-1\", \"type\": \"Brand\" } ] } } ] }";
+
+        [Test]
+        public void SearchResponseDeserializesContentSearchResults()
+        {
+            var response = Serializer.DeserializeBytes<SearchResponse>(Encoding.UTF8.GetBytes(SearchResponseWithContent));
+            Assert.AreEqual(1, response.ContentSearchResults.Count);
+            var brands = response.GetContentSearchResults("Brand");
+            Assert.AreEqual(1, brands.Count);
+            Assert.AreEqual("b-1", brands.Items[0].Id);
+            Assert.IsNull(response.GetContentSearchResults("Article"));
+        }
+
+        [Test]
+        public void SearchResponseWithoutContentSearchResults()
+        {
+            var response = Serializer.DeserializeBytes<SearchResponse>(Encoding.UTF8.GetBytes("{ \"makesSense\": true }"));
+            Assert.IsNull(response.ContentSearchResults);
+            Assert.IsNull(response.GetContentSearchResults("Brand"));
+        }
+
         private static Loop54.Model.Response.Response GetResponse(string responseJson)
         {
             return Serializer.DeserializeBytes<Loop54.Model.Response.Response>(Encoding.UTF8.GetBytes(responseJson));

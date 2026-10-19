@@ -1,6 +1,7 @@
 using Loop54.Model.Request.Parameters;
 using Loop54.Model.Response;
 using Loop54.Serialization;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,36 @@ namespace Loop54.Tests.Model
 
             Assert.AreEqual(stringValue, request.CustomData["stringKey"]);
             Assert.AreEqual(stringValue2, request.CustomData["STRINGKey"]);
+        }
+
+        [Test]
+        public void SearchRequestSerializesContentResultsOptions()
+        {
+            var request = new Loop54.Model.Request.SearchRequest("shoes");
+            request.AddContentResultsOptions("Brand").Take = 3;
+            request.AddContentResultsOptions("Article").Skip = 5;
+
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(request)));
+            var options = (JArray)json["contentResultsOptions"];
+            Assert.AreEqual(2, options.Count);
+            Assert.AreEqual("Brand", (string)options[0]["entityType"]);
+            Assert.AreEqual(3, (int)options[0]["take"]);
+            Assert.AreEqual("Article", (string)options[1]["entityType"]);
+            Assert.AreEqual(5, (int)options[1]["skip"]);
+        }
+
+        [Test]
+        public void SearchRequestWithoutContentOptionsOmitsField()
+        {
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(new Loop54.Model.Request.SearchRequest("shoes"))));
+            Assert.IsNull(json["contentResultsOptions"]);
+        }
+
+        [Test]
+        public void TypedEntityCollectionParametersRequiresEntityType()
+        {
+            Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(null));
+            Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(" "));
         }
     }
 }

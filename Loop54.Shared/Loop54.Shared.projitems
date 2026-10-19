@@ -12,10 +12,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)ILoop54ClientProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54ClientProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Loop54SettingsCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\ContentRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributeValuesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetPopularOrRecentEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\TypedEntityCollectionParameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ContentResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ContentSearchResultItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributeValuesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
