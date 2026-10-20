@@ -5,7 +5,7 @@ namespace Loop54.Model.Request
     /// <summary>
     /// This class is used to configure a search request to the Loop54 e-commerce search engine. 
     /// </summary>
-    public class SearchRequest : Request
+    public class SearchRequest : ContentRequest
     {
         /// <summary>
         /// Constructor.
