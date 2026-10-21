@@ -78,5 +78,31 @@ namespace Loop54.Tests.Model
             Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(null));
             Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(" "));
         }
+
+        [Test]
+        public void AddContentResultsOptionsTwiceReturnsSameEntry()
+        {
+            var request = new Loop54.Model.Request.SearchRequest("summit");
+            request.AddContentResultsOptions("Brand").Take = 2;
+            request.AddContentResultsOptions("Brand").Skip = 1;
+            request.AddContentResultsOptions("Article");
+
+            Assert.AreEqual(2, request.ContentResultsOptions.Count, "Brand should not be added twice");
+            Assert.AreEqual("Brand", request.ContentResultsOptions[0].EntityType);
+            Assert.AreEqual(2, request.ContentResultsOptions[0].Take);
+            Assert.AreEqual(1, request.ContentResultsOptions[0].Skip);
+            Assert.AreEqual("Article", request.ContentResultsOptions[1].EntityType);
+        }
+
+        [Test]
+        public void AddContentResultsOptionsRequiresEntityType()
+        {
+            var request = new Loop54.Model.Request.SearchRequest("summit");
+            var options = request.AddContentResultsOptions("Brand");
+            options.EntityType = null;
+
+            Assert.Throws<ArgumentException>(() => request.AddContentResultsOptions(null));
+            Assert.Throws<ArgumentException>(() => request.AddContentResultsOptions(" "));
+        }
     }
 }
