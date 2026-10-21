@@ -45,7 +45,7 @@ namespace Loop54.Properties
     {
         public const string Major = "6";
         public const string Minor = "4";
-        public const string Patch = "0";
+        public const string Patch = "1";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -124,3 +124,4 @@ namespace Loop54.Properties
 // 6.3.1 Added support for CurrentUser placeholder in GetRecentEntities and GetPopularEntities requests
 // 6.3.2 Changed target framework for examples and tests from .NET Core 3.1 to .NET 6.0
 // 6.4.0 Added support for Content Search in Search requests
+// 6.4.1 AddContentResultsOptions returns the existing options for an already added entity type instead of adding a duplicate
