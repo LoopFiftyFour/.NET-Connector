@@ -16,12 +16,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributeValuesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetPopularOrRecentEntitiesRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\SuggestRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\TypedEntityCollectionParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ContentResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ContentSearchResultItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributeValuesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\SuggestResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />

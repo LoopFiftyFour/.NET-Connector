@@ -306,6 +306,38 @@ namespace Loop54
         Task<GetBasketRecommendationsResponse> GetBasketRecommendationsAsync(RequestContainer<GetBasketRecommendationsRequest> request);
 
         #endregion
+        
+        #region Suggest
+
+        /// <summary>
+        /// Make a suggest call to the engine
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The result of the suggest query</returns>
+        SuggestResponse Suggest(SuggestRequest request);
+
+        /// <summary>
+        /// Make an asynchronous suggest call to the engine
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The result of the asynchronous suggest query</returns>
+        Task<SuggestResponse> SuggestAsync(SuggestRequest request);
+
+        /// <summary>
+        /// Make an suggest call to the engine
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        /// <returns>The result of the suggest query</returns>
+        SuggestResponse Suggest(RequestContainer<SuggestRequest> request);
+
+        /// <summary>
+        /// Make an asynchronous suggest call to the engine
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer with optional user data overrides.</param>
+        /// <returns>The result of the asynchronous suggest query</returns>
+        Task<SuggestResponse> SuggestAsync(RequestContainer<SuggestRequest> request);
+
+        #endregion
 
         #region Search
 

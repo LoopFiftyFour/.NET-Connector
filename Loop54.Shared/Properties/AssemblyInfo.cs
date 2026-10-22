@@ -9,7 +9,7 @@ using Loop54.Properties;
 [assembly: AssemblyTitle("Loop54")]
 [assembly: AssemblyCompany("The Loop54 Group AB")]
 [assembly: AssemblyProduct("Loop54")]
-[assembly: AssemblyCopyright("Copyright © 2024")]
+[assembly: AssemblyCopyright("Copyright © 2026")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -45,7 +45,7 @@ namespace Loop54.Properties
     {
         public const string Major = "6";
         public const string Minor = "4";
-        public const string Patch = "1";
+        public const string Patch = "2";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -125,3 +125,4 @@ namespace Loop54.Properties
 // 6.3.2 Changed target framework for examples and tests from .NET Core 3.1 to .NET 6.0
 // 6.4.0 Added support for Content Search in Search requests
 // 6.4.1 AddContentResultsOptions returns the existing options for an already added entity type instead of adding a duplicate
+// 6.4.1 Added support for the Suggest endpoint, including examples
