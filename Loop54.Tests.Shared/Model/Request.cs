@@ -1,11 +1,10 @@
+using Loop54.Model.Request;
 using Loop54.Model.Request.Parameters;
-using Loop54.Model.Response;
 using Loop54.Serialization;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Loop54.Tests.Model
 {
@@ -79,10 +78,18 @@ namespace Loop54.Tests.Model
             Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(" "));
         }
 
-        [Test]
-        public void AddContentResultsOptionsTwiceReturnsSameEntry()
+        private static IEnumerable<TestCaseData> ContentRequestFactories()
         {
-            var request = new Loop54.Model.Request.SearchRequest("summit");
+            yield return new TestCaseData((Func<string, ContentRequest>)(query => new SearchRequest(query)))
+                .SetArgDisplayNames(nameof(SearchRequest));
+            yield return new TestCaseData((Func<string, ContentRequest>)(query => new SuggestRequest(query)))
+                .SetArgDisplayNames(nameof(SuggestRequest));
+        }
+
+        [TestCaseSource(nameof(ContentRequestFactories))]
+        public void AddContentResultsOptionsTwiceReturnsSameEntry(Func<string, ContentRequest> createRequest)
+        {
+            var request = createRequest("summit");
             request.AddContentResultsOptions("Brand").Take = 2;
             request.AddContentResultsOptions("Brand").Skip = 1;
             request.AddContentResultsOptions("Article");

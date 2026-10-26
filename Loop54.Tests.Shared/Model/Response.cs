@@ -78,15 +78,23 @@ namespace Loop54.Tests.Model
             Assert.Throws<CustomDataException>(() => responseObject.GetCustomDataOrThrow<EntityCollection>("complexData"));
         }
 
-        private const string SearchResponseWithContent =
+        private const string ResponseWithContent =
             "{ \"makesSense\": true, \"results\": { \"count\": 0, \"facets\": [], \"items\": [] }, " +
             "\"contentSearchResults\": [ { \"entityType\": \"Brand\", \"results\": { \"count\": 1, \"facets\": [], " +
             "\"items\": [ { \"id\": \"b-1\", \"type\": \"Brand\" } ] } } ] }";
 
-        [Test]
-        public void SearchResponseDeserializesContentSearchResults()
+        private static IEnumerable<TestCaseData> ContentResponseDeserializers()
         {
-            var response = Serializer.DeserializeBytes<SearchResponse>(Encoding.UTF8.GetBytes(SearchResponseWithContent));
+            yield return new TestCaseData((Func<byte[], ContentResponse>)Serializer.DeserializeBytes<SearchResponse>)
+                .SetArgDisplayNames(nameof(SearchResponse));
+            yield return new TestCaseData((Func<byte[], ContentResponse>)Serializer.DeserializeBytes<SuggestResponse>)
+                .SetArgDisplayNames(nameof(SuggestResponse));
+        }
+
+        [TestCaseSource(nameof(ContentResponseDeserializers))]
+        public void ContentResponseDeserializesContentSearchResults(Func<byte[], ContentResponse> deserialize)
+        {
+            var response = deserialize(Encoding.UTF8.GetBytes(ResponseWithContent));
             Assert.AreEqual(1, response.ContentSearchResults.Count);
             var brands = response.GetContentSearchResults("Brand");
             Assert.AreEqual(1, brands.Count);
@@ -94,10 +102,10 @@ namespace Loop54.Tests.Model
             Assert.IsNull(response.GetContentSearchResults("Article"));
         }
 
-        [Test]
-        public void SearchResponseWithoutContentSearchResults()
+        [TestCaseSource(nameof(ContentResponseDeserializers))]
+        public void ContentResponseWithoutContentSearchResults(Func<byte[], ContentResponse> deserialize)
         {
-            var response = Serializer.DeserializeBytes<SearchResponse>(Encoding.UTF8.GetBytes("{ \"makesSense\": true }"));
+            var response = deserialize(Encoding.UTF8.GetBytes("{ \"makesSense\": true }"));
             Assert.IsNull(response.ContentSearchResults);
             Assert.IsNull(response.GetContentSearchResults("Brand"));
         }
