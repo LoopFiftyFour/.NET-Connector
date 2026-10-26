@@ -19,6 +19,7 @@ namespace Loop54
     {
         private const string SearchRequestName = "search";
         private const string AutoCompleteRequestName = "autoComplete";
+        private const string SuggestRequestName = "suggest";
         private const string GetEntitiesRequestName = "getEntities";
         private const string GetEntitiesByAttributeRequestName = "getEntitiesByAttribute";
         private const string GetPopularEntitiesRequestName = "getPopularEntities";
@@ -64,6 +65,13 @@ namespace Loop54
         public async Task<AutoCompleteResponse> AutoCompleteAsync(AutoCompleteRequest request) => await AutoCompleteAsync(request.Wrap());
         public async Task<AutoCompleteResponse> AutoCompleteAsync(RequestContainer<AutoCompleteRequest> request) 
             => await CallEngineWithinClientContextAsync<AutoCompleteRequest, AutoCompleteResponse>(AutoCompleteRequestName, request);
+
+        public SuggestResponse Suggest(SuggestRequest request) => Suggest(request.Wrap());
+        public SuggestResponse Suggest(RequestContainer<SuggestRequest> request)
+            => CallEngineWithinClientContext<SuggestRequest, SuggestResponse>(SuggestRequestName, request);
+        public async Task<SuggestResponse> SuggestAsync(SuggestRequest request) => await SuggestAsync(request.Wrap());
+        public async Task<SuggestResponse> SuggestAsync(RequestContainer<SuggestRequest> request) 
+            => await CallEngineWithinClientContextAsync<SuggestRequest, SuggestResponse>(SuggestRequestName, request);
 
         public GetEntitiesResponse GetEntities(GetEntitiesRequest request) => GetEntities(request.Wrap());
         public GetEntitiesResponse GetEntities(RequestContainer<GetEntitiesRequest> request) 
