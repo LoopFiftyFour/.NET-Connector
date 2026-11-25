@@ -49,6 +49,25 @@ namespace Loop54.Model
         private Dictionary<string, EntityAttribute> _internalAttributeMapping;
 
         /// <summary>
+        /// Adds an attribute with the specified name and values to the entity, replacing any existing attribute with the same name.
+        /// The attribute type sent to the engine is determined from <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">Type of the attribute values, for instance string, int, double, bool or DateTime.</typeparam>
+        /// <param name="name">Name of the attribute.</param>
+        /// <param name="values">The attribute values. May be empty, for instance when removing the attribute in a SyncDeltaPush request.</param>
+        /// <returns>This entity, to allow chaining.</returns>
+        public Entity SetAttribute<T>(string name, params T[] values)
+        {
+            var attribute = EntityAttribute.Create(name, values);
+
+            if (_internalAttributeMapping == null)
+                _internalAttributeMapping = new Dictionary<string, EntityAttribute>(EntityAttribute.NameComparer);
+
+            _internalAttributeMapping[name] = attribute;
+            return this;
+        }
+
+        /// <summary>
         /// Gets the attribute value with the desired name and type.
         /// </summary>
         /// <typeparam name="T">Type of the attribute. This needs to match what the library has deserialized or an exception will be thrown.</typeparam>

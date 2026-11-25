@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Loop54.Tests.Model
 {
@@ -69,6 +70,52 @@ namespace Loop54.Tests.Model
         {
             var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(new Loop54.Model.Request.SearchRequest("shoes"))));
             Assert.IsNull(json["contentResultsOptions"]);
+        }
+
+        [Test]
+        public void SyncDeltaPushRequestSerializesEntitiesWithAttributes()
+        {
+            var request = new SyncDeltaPushRequest
+            {
+                ToAddOrUpdate = { new Loop54.Model.Entity("Product", "1").SetAttribute("Price", 13.37).SetAttribute("Category", "Meat", "Pork") },
+                ToReplaceOrAdd = { new Loop54.Model.Entity("Product", "2").SetAttribute("InStock", true).SetAttribute("Stock", 5) },
+                ToDelete = { new Loop54.Model.Entity("Product", "3") },
+                ToRemoveAttributesFrom = { new Loop54.Model.Entity("Product", "4").SetAttribute<string>("Color") },
+            };
+
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(request)));
+
+            var updated = (JObject)json["toAddOrUpdate"].Single();
+            Assert.AreEqual("Product", (string)updated["type"]);
+            Assert.AreEqual("1", (string)updated["id"]);
+            var updatedAttributes = (JArray)updated["attributes"];
+            Assert.AreEqual(2, updatedAttributes.Count);
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"name\": \"Price\", \"type\": \"number\", \"values\": [13.37]}"), updatedAttributes[0]));
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"name\": \"Category\", \"type\": \"string\", \"values\": [\"Meat\", \"Pork\"]}"),
+                updatedAttributes[1]));
+
+            var replacedAttributes = (JArray)json["toReplaceOrAdd"].Single()["attributes"];
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"name\": \"InStock\", \"type\": \"boolean\", \"values\": [true]}"), replacedAttributes[0]));
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"name\": \"Stock\", \"type\": \"integer\", \"values\": [5]}"), replacedAttributes[1]));
+
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"type\": \"Product\", \"id\": \"3\"}"), json["toDelete"].Single()));
+
+            var removed = json["toRemoveAttributesFrom"].Single();
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"name\": \"Color\", \"type\": \"string\", \"values\": []}"), removed["attributes"].Single()));
+        }
+
+        [Test]
+        public void SyncDeltaPushRequestSerializesEmptyAndNullCollections()
+        {
+            var request = new SyncDeltaPushRequest { ToReplaceOrAdd = null };
+            request.ToDelete.Add(new Loop54.Model.Entity("Product", "1"));
+
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(request)));
+
+            Assert.AreEqual(0, ((JArray)json["toAddOrUpdate"]).Count);
+            Assert.IsNull(json["toReplaceOrAdd"]);
+            Assert.AreEqual(1, ((JArray)json["toDelete"]).Count);
+            Assert.AreEqual(0, ((JArray)json["toRemoveAttributesFrom"]).Count);
         }
 
         [Test]

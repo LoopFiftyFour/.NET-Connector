@@ -30,6 +30,8 @@ namespace Loop54
         private const string GetBasketRecommendationsRequestName = "getBasketRecommendations";
         private const string CreateEventsRequestName = "createEvents";
         private const string SyncRequestName = "sync";
+        private const string SyncDeltaPushRequestName = "syncDeltaPush";
+        private const string GetSyncStateRequestName = "getSyncState";
         private const string GetIndexedAttributesRequestName = "getIndexedAttributes";
         private const string GetIndexedAttributeValuesRequestName = "getIndexedAttributeValues";
 
@@ -142,6 +144,20 @@ namespace Loop54
         public async Task<Response> SyncAsync(Request request = null) => await SyncAsync(request.Wrap());
         public async Task<Response> SyncAsync(RequestContainer<Request> request)
             => await CallEngineWithinClientContextAsync<Request, Response>(SyncRequestName, request, true);
+
+        public Response SyncDeltaPush(SyncDeltaPushRequest request) => SyncDeltaPush(request.Wrap());
+        public Response SyncDeltaPush(RequestContainer<SyncDeltaPushRequest> request)
+            => CallEngineWithinClientContext<SyncDeltaPushRequest, Response>(SyncDeltaPushRequestName, request);
+        public async Task<Response> SyncDeltaPushAsync(SyncDeltaPushRequest request) => await SyncDeltaPushAsync(request.Wrap());
+        public async Task<Response> SyncDeltaPushAsync(RequestContainer<SyncDeltaPushRequest> request)
+            => await CallEngineWithinClientContextAsync<SyncDeltaPushRequest, Response>(SyncDeltaPushRequestName, request);
+
+        public GetSyncStateResponse GetSyncState(Request request = null) => GetSyncState(request.Wrap());
+        public GetSyncStateResponse GetSyncState(RequestContainer<Request> request)
+            => CallEngineWithinClientContext<Request, GetSyncStateResponse>(GetSyncStateRequestName, request, true);
+        public async Task<GetSyncStateResponse> GetSyncStateAsync(Request request = null) => await GetSyncStateAsync(request.Wrap());
+        public async Task<GetSyncStateResponse> GetSyncStateAsync(RequestContainer<Request> request)
+            => await CallEngineWithinClientContextAsync<Request, GetSyncStateResponse>(GetSyncStateRequestName, request, true);
 
         public GetIndexedAttributesResponse GetIndexedAttributes(GetIndexedAttributesRequest request)
             => GetIndexedAttributes(request.Wrap());

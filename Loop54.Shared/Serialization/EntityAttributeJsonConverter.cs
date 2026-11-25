@@ -15,7 +15,7 @@ namespace Loop54.Serialization
         private ConcurrentDictionary<Type, Type> _cachedGenerics = new ConcurrentDictionary<Type, Type>();
 
         public override bool CanRead => true;
-        public override bool CanWrite => false;
+        public override bool CanWrite => true;
 
         public override bool CanConvert(Type objectType)
         {
@@ -36,7 +36,23 @@ namespace Loop54.Serialization
         
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var attribute = (EntityAttribute)value;
+
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("name");
+            writer.WriteValue(attribute.Name);
+
+            writer.WritePropertyName("type");
+            serializer.Serialize(writer, attribute.Type);
+
+            writer.WritePropertyName("values");
+            writer.WriteStartArray();
+            foreach (var v in attribute.ValuesInternal ?? new JToken[0])
+                v.WriteTo(writer);
+            writer.WriteEndArray();
+
+            writer.WriteEndObject();
         }
     }
 }

@@ -49,6 +49,41 @@ namespace Loop54.Tests.Serialization
         }
 
         [Test]
+        public void SerializeEntityAttributeRoundTrips()
+        {
+            var attribute = EntityAttribute.Create("Price", 12d, 13.37d);
+
+            string json = JsonConvert.SerializeObject(attribute, new Loop54.Serialization.EntityAttributeJsonConverter(),
+                new Newtonsoft.Json.Converters.StringEnumConverter(new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()));
+            Assert.AreEqual("{\"name\":\"Price\",\"type\":\"number\",\"values\":[12.0,13.37]}", json);
+
+            var deserialized = JsonConvert.DeserializeObject<EntityAttribute>(json, new Loop54.Serialization.EntityAttributeJsonConverter());
+            Assert.AreEqual("Price", deserialized.Name);
+            Assert.AreEqual(EntityAttributeType.Number, deserialized.Type);
+            CollectionAssert.AreEqual(new[] { 12d, 13.37d }, deserialized.GetValues<double>());
+        }
+
+        [Test]
+        public void SetValuesInfersAttributeType()
+        {
+            Assert.AreEqual(EntityAttributeType.String, EntityAttribute.Create("a", "x").Type);
+            Assert.AreEqual(EntityAttributeType.String, EntityAttribute.Create<string>("a").Type);
+            Assert.AreEqual(EntityAttributeType.Boolean, EntityAttribute.Create("a", true).Type);
+            Assert.AreEqual(EntityAttributeType.Integer, EntityAttribute.Create("a", 1).Type);
+            Assert.AreEqual(EntityAttributeType.Integer, EntityAttribute.Create("a", 1L).Type);
+            Assert.AreEqual(EntityAttributeType.Integer, EntityAttribute.Create<int?>("a", 1).Type);
+            Assert.AreEqual(EntityAttributeType.Number, EntityAttribute.Create("a", 1.5).Type);
+            Assert.AreEqual(EntityAttributeType.Number, EntityAttribute.Create("a", 1.5m).Type);
+            Assert.AreEqual(EntityAttributeType.Date, EntityAttribute.Create("a", DateTime.UtcNow).Type);
+            Assert.AreEqual(EntityAttributeType.Integer, EntityAttribute.Create<object>("a", 7).Type);
+
+            var attribute = EntityAttribute.Create("a", "x");
+            attribute.SetValue(2.5);
+            Assert.AreEqual(EntityAttributeType.Number, attribute.Type);
+            Assert.AreEqual(2.5, attribute.GetValue<double>());
+        }
+
+        [Test]
         public void DeserializeEntityAttributeMissingRequired()
         {
             string entityAttributeString = "{\"type\": \"number\", \"values\": [12, 13.37]}";

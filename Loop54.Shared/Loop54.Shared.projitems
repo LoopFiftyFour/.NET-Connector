@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetIndexedAttributesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\GetPopularOrRecentEntitiesRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\SuggestRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Request\SyncDeltaPushRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\Filters\FilterComparisonMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Request\Parameters\TypedEntityCollectionParameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\ContentResponse.cs" />
@@ -24,6 +25,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributeValuesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetIndexedAttributesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Response\SuggestResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\GetSyncStateResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Sync\SyncCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Sync\SyncFailure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Sync\SyncInProgress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Sync\SyncStateByCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Response\Sync\SyncSuccess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NullClientInfoProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RequestContainer.cs" />
@@ -83,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\CamelCaseExceptDictionaryResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\EntityAttributeJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FacetJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\LenientStringEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\SerializationExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\Serializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)User\UserMetaData.cs" />
