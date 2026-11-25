@@ -51,16 +51,34 @@ namespace Loop54.Tests.Serialization
         [Test]
         public void SerializeEntityAttributeRoundTrips()
         {
-            var attribute = EntityAttribute.Create("Price", 12d, 13.37d);
+            var request = new Loop54.Model.Request.SyncDeltaPushRequest
+            {
+                ToAddOrUpdate = { new Entity("Product", "1").SetAttribute("Price", 12d, 13.37d) }
+            };
 
-            string json = JsonConvert.SerializeObject(attribute, new Loop54.Serialization.EntityAttributeJsonConverter(),
-                new Newtonsoft.Json.Converters.StringEnumConverter(new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy()));
-            Assert.AreEqual("{\"name\":\"Price\",\"type\":\"number\",\"values\":[12.0,13.37]}", json);
+            var json = Newtonsoft.Json.Linq.JObject.Parse(Loop54.Serialization.Serializer.BytesToString(Loop54.Serialization.Serializer.SerializeToBytes(request)));
+            string attributeJson = json["toAddOrUpdate"][0]["attributes"][0].ToString(Formatting.None);
+            Assert.AreEqual("{\"name\":\"Price\",\"type\":\"number\",\"values\":[12.0,13.37]}", attributeJson);
 
-            var deserialized = JsonConvert.DeserializeObject<EntityAttribute>(json, new Loop54.Serialization.EntityAttributeJsonConverter());
+            var deserialized = JsonConvert.DeserializeObject<EntityAttribute>(attributeJson, new Loop54.Serialization.EntityAttributeJsonConverter());
             Assert.AreEqual("Price", deserialized.Name);
             Assert.AreEqual(EntityAttributeType.Number, deserialized.Type);
             CollectionAssert.AreEqual(new[] { 12d, 13.37d }, deserialized.GetValues<double>());
+        }
+
+        [Test]
+        public void SetValuesKeepsDefaultConversion()
+        {
+            var attribute = new EntityAttribute { Name = "a" };
+            attribute.SetValue(new TestPoco { FooBar = 1, Kind = TestKind.SecondKind });
+            Assert.AreEqual("{\"FooBar\":1,\"Kind\":1}", attribute.ValuesInternal[0].ToString(Formatting.None));
+            Assert.AreEqual(1, attribute.GetValue<TestPoco>().FooBar);
+
+            Assert.Throws<ArgumentNullException>(() => attribute.SetValue<string>(null));
+
+            // Mixed types used to be accepted by SetValues, so they still are. Only sending them in a SyncDeltaPush request fails.
+            attribute.SetValues<object>(new object[] { "x", 1 });
+            Assert.IsNull(attribute.Type);
         }
 
         [Test]

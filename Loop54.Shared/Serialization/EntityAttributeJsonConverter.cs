@@ -15,7 +15,9 @@ namespace Loop54.Serialization
         private ConcurrentDictionary<Type, Type> _cachedGenerics = new ConcurrentDictionary<Type, Type>();
 
         public override bool CanRead => true;
-        public override bool CanWrite => true;
+        // Writing is off by default, so entities in events and recommendation requests are sent like before (attribute names only).
+        // Full attributes are only written for SyncDeltaPush, through SyncEntityJsonConverter.
+        public override bool CanWrite => false;
 
         public override bool CanConvert(Type objectType)
         {
@@ -36,23 +38,7 @@ namespace Loop54.Serialization
         
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var attribute = (EntityAttribute)value;
-
-            writer.WriteStartObject();
-
-            writer.WritePropertyName("name");
-            writer.WriteValue(attribute.Name);
-
-            writer.WritePropertyName("type");
-            serializer.Serialize(writer, attribute.Type);
-
-            writer.WritePropertyName("values");
-            writer.WriteStartArray();
-            foreach (var v in attribute.ValuesInternal ?? new JToken[0])
-                v.WriteTo(writer);
-            writer.WriteEndArray();
-
-            writer.WriteEndObject();
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Loop54.Serialization;
+using Newtonsoft.Json;
 
 namespace Loop54.Model.Request
 {
@@ -19,23 +21,27 @@ namespace Loop54.Model.Request
         /// If the entity exists, its attributes will be updated with data from the supplied entity, otherwise it will be added.
         /// Attributes not present on the supplied entity are left unchanged. Entities without attributes are ignored.
         /// </summary>
+        [JsonProperty(ItemConverterType = typeof(SyncEntityJsonConverter))]
         public IList<Entity> ToAddOrUpdate { get; set; } = new List<Entity>();
 
         /// <summary>
         /// If the entity exists, it will be completely replaced with the supplied entity, otherwise it will be added.
         /// Entities without attributes are ignored.
         /// </summary>
+        [JsonProperty(ItemConverterType = typeof(SyncEntityJsonConverter))]
         public IList<Entity> ToReplaceOrAdd { get; set; } = new List<Entity>();
 
         /// <summary>
         /// If the entity exists, it will be removed, otherwise nothing happens. Only the type and id of the entities are needed.
         /// </summary>
+        [JsonProperty(ItemConverterType = typeof(SyncEntityJsonConverter))]
         public IList<Entity> ToDelete { get; set; } = new List<Entity>();
 
         /// <summary>
         /// If the entity exists and has the specified attributes, these attributes will be removed from it. Only the names of the attributes
         /// are used, so they can be added without values, for instance with <c>entity.SetAttribute&lt;string&gt;("Color")</c>.
         /// </summary>
+        [JsonProperty(ItemConverterType = typeof(SyncEntityJsonConverter))]
         public IList<Entity> ToRemoveAttributesFrom { get; set; } = new List<Entity>();
     }
 }

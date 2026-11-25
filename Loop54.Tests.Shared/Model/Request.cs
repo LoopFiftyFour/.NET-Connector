@@ -119,6 +119,31 @@ namespace Loop54.Tests.Model
         }
 
         [Test]
+        public void SyncDeltaPushRequestThrowsForAttributeWithMixedValueTypes()
+        {
+            var attribute = new Loop54.Model.EntityAttribute { Name = "Mixed" };
+            attribute.SetValues<object>(new object[] { "x", 1 });
+            var entity = new Loop54.Model.Entity("Product", "1") { Attributes = new List<Loop54.Model.EntityAttribute> { attribute } };
+
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { entity } };
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("Mixed", exception.InnerException.Message);
+        }
+
+        [Test]
+        public void EntitiesOutsideSyncDeltaPushAreSentWithAttributeNamesOnly()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("Price", 13.37);
+            var request = new GetRelatedEntitiesRequest(entity);
+
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(request)));
+
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{\"id\": \"1\", \"type\": \"Product\", \"attributes\": [{\"name\": \"Price\"}]}"),
+                json["entity"]));
+        }
+
+        [Test]
         public void TypedEntityCollectionParametersRequiresEntityType()
         {
             Assert.Throws<ArgumentException>(() => new TypedEntityCollectionParameters(null));

@@ -32,7 +32,16 @@ namespace Loop54.Model
         public static EntityAttribute Create<T>(string name, params T[] values)
         {
             var attribute = new EntityAttribute { Name = name ?? throw new ArgumentNullException(nameof(name)) };
-            attribute.SetValues<T>(values ?? new T[0]);
+
+            // Convert with the same serializer as the rest of the request, so complex values get camelCased property names and enums
+            // are written as strings. The public SetValue(s) methods keep their original conversion, to not change existing callers' data.
+            JToken[] tokens = (values ?? new T[0])
+                .Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v, Serializer.JsonSerializer))
+                .ToArray();
+            attribute.Type = GetAttributeType(typeof(T), tokens) ?? throw new ArgumentException(
+                "All values of an attribute must have the same type, but got values of types " +
+                string.Join(", ", GetValueTypes(tokens)) + ".", nameof(values));
+            attribute.ValuesInternal = tokens;
             return attribute;
         }
 
@@ -41,7 +50,8 @@ namespace Loop54.Model
         /// </summary>
         public string Name { get; set; }
         
-        internal EntityAttributeType Type { get; set; }
+        /// <summary>The attribute type sent to the engine. Null if it could not be determined, for instance when the values have mixed types.</summary>
+        internal EntityAttributeType? Type { get; set; }
 
         internal JToken[] ValuesInternal { get; set; } = new JToken[0];
 
@@ -70,20 +80,24 @@ namespace Loop54.Model
         /// </summary>
         public void SetValues<T>(IList<T> values)
         {
-            if (values == null)
-                throw new ArgumentNullException(nameof(values));
+            ValuesInternal = values.Select(v => JToken.FromObject(v)).ToArray();
 
-            // Convert with the same serializer as the rest of the request, so complex values get camelCased property names and enums
-            // are written as strings.
-            JToken[] tokens = values.Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v, Serializer.JsonSerializer)).ToArray();
-            Type = GetAttributeType(typeof(T), tokens);
-            ValuesInternal = tokens;
+            // Only needed if the attribute is sent in a SyncDeltaPush request, so failing to infer it must not break existing callers.
+            try
+            {
+                Type = GetAttributeType(typeof(T), ValuesInternal);
+            }
+            catch (ArgumentException)
+            {
+                Type = null;
+            }
         }
 
-        private static EntityAttributeType GetAttributeType(Type type, JToken[] tokens)
+        // Returns null if the values have more than one type (other than a mix of integers and numbers).
+        private static EntityAttributeType? GetAttributeType(Type type, JToken[] tokens)
         {
             // The values decide the type when there are any, since T may be object, an interface or a base type.
-            var types = tokens.Where(t => t.Type != JTokenType.Null).Select(GetAttributeType).Distinct().ToList();
+            var types = GetValueTypes(tokens);
 
             if (types.Count == 0)
                 return GetAttributeType(type);
@@ -92,8 +106,11 @@ namespace Loop54.Model
             if (types.Count == 2 && types.Contains(EntityAttributeType.Integer) && types.Contains(EntityAttributeType.Number))
                 return EntityAttributeType.Number;
 
-            throw new ArgumentException($"All values of an attribute must have the same type, but got values of types {string.Join(", ", types)}.");
+            return null;
         }
+
+        private static List<EntityAttributeType> GetValueTypes(JToken[] tokens) =>
+            tokens.Where(t => t.Type != JTokenType.Null).Select(GetAttributeType).Distinct().ToList();
 
         private static EntityAttributeType GetAttributeType(JToken token)
         {

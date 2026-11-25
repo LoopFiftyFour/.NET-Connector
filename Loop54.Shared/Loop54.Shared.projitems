@@ -93,6 +93,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\LenientStringEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\SerializationExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\Serializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\SyncEntityJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)User\UserMetaData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Entity.cs" />
