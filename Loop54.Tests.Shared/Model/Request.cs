@@ -132,6 +132,67 @@ namespace Loop54.Tests.Model
         }
 
         [Test]
+        public void SyncDeltaPushRequestThrowsForNullEntity()
+        {
+            var request = new SyncDeltaPushRequest();
+            request.ToDelete.Add(null);
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("toDelete", exception.InnerException.Message);
+        }
+
+        [TestCase(double.NaN)]
+        [TestCase(double.PositiveInfinity)]
+        [TestCase(double.NegativeInfinity)]
+        public void SyncDeltaPushRequestThrowsForNonFiniteNumber(double value)
+        {
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { new Loop54.Model.Entity("Product", "1").SetAttribute("Price", value) } };
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("Price", exception.InnerException.Message);
+        }
+
+        [Test]
+        public void AttributesAddedToEntityAttributesListAreSent()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("a", 1);
+            entity.Attributes.Add(Loop54.Model.EntityAttribute.Create("b", 2));
+
+            Assert.AreEqual(2, entity.Attributes.Count);
+            Assert.AreEqual(2, entity.GetAttributeValueOrDefault<int>("B"));
+
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { entity } };
+            var json = JObject.Parse(Serializer.BytesToString(Serializer.SerializeToBytes(request)));
+            CollectionAssert.AreEqual(new[] { "a", "b" }, json["toAddOrUpdate"][0]["attributes"].Select(a => (string)a["name"]));
+        }
+
+        [Test]
+        public void SetAttributeReplacesExistingAttributeInPlace()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("a", 1).SetAttribute("b", 2).SetAttribute("A", 3);
+
+            Assert.AreEqual(2, entity.Attributes.Count);
+            Assert.AreEqual("A", entity.Attributes[0].Name);
+            Assert.AreEqual(3, entity.GetAttributeValueOrDefault<int>("a"));
+        }
+
+        [Test]
+        public void SettingAttributesWithDuplicateNamesThrows()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1");
+            Assert.Throws<ArgumentException>(() => entity.Attributes = new List<Loop54.Model.EntityAttribute>
+            {
+                Loop54.Model.EntityAttribute.Create("a", 1), Loop54.Model.EntityAttribute.Create("A", 2)
+            });
+        }
+
+        [Test]
+        public void GetAttributeValueOnEntityWithoutAttributesReturnsDefault()
+        {
+            Assert.IsNull(new Loop54.Model.Entity("Product", "1").GetAttributeValueOrDefault<string>("Title"));
+        }
+
+        [Test]
         public void EntitiesOutsideSyncDeltaPushAreSentWithAttributeNamesOnly()
         {
             var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("Price", 13.37);

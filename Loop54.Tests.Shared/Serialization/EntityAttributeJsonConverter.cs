@@ -2,6 +2,7 @@ using Loop54.Model;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -67,14 +68,12 @@ namespace Loop54.Tests.Serialization
         }
 
         [Test]
-        public void SetValuesKeepsDefaultConversion()
+        public void SetValuesAcceptsNullAndMixedTypes()
         {
             var attribute = new EntityAttribute { Name = "a" };
-            attribute.SetValue(new TestPoco { FooBar = 1, Kind = TestKind.SecondKind });
-            Assert.AreEqual("{\"FooBar\":1,\"Kind\":1}", attribute.ValuesInternal[0].ToString(Formatting.None));
-            Assert.AreEqual(1, attribute.GetValue<TestPoco>().FooBar);
-
-            Assert.Throws<ArgumentNullException>(() => attribute.SetValue<string>(null));
+            attribute.SetValue<string>(null);
+            Assert.AreEqual(EntityAttributeType.String, attribute.Type);
+            Assert.IsNull(attribute.GetValue<string>());
 
             // Mixed types used to be accepted by SetValues, so they still are. Only sending them in a SyncDeltaPush request fails.
             attribute.SetValues<object>(new object[] { "x", 1 });
@@ -138,6 +137,46 @@ namespace Loop54.Tests.Serialization
         {
             FirstKind,
             SecondKind
+        }
+
+        [Test]
+        public void SetValueAndCreateConvertValuesTheSameWay()
+        {
+            var attribute = new EntityAttribute { Name = "a" };
+            attribute.SetValue(TestKind.SecondKind);
+            Assert.AreEqual(EntityAttributeType.String, attribute.Type);
+            Assert.AreEqual("secondKind", attribute.GetValue<string>());
+            Assert.AreEqual(TestKind.SecondKind, attribute.GetValue<TestKind>());
+
+            attribute.SetValue(new TestPoco { FooBar = 1, Kind = TestKind.SecondKind });
+            Assert.AreEqual("{\"fooBar\":1,\"kind\":\"secondKind\"}", attribute.ValuesInternal[0].ToString(Formatting.None));
+            Assert.AreEqual(1, attribute.GetValue<TestPoco>().FooBar);
+        }
+
+        [Test]
+        public void DeserializedDateLikeStringIsSentBackUnchanged()
+        {
+            string json = "{\"type\": \"Product\", \"id\": \"1\", \"attributes\": [" +
+                          "{\"name\": \"Code\", \"type\": \"string\", \"values\": [\"2020-01-01T10:00:00.000Z\", \"2020-01-01T10:00:00+02:00\"]}]}";
+            var entity = Loop54.Serialization.Serializer.DeserializeString<Entity>(json);
+
+            Assert.AreEqual("2020-01-01T10:00:00.000Z", entity.GetAttributeValueOrDefault<string>("Code"));
+
+            var request = new Loop54.Model.Request.SyncDeltaPushRequest { ToReplaceOrAdd = { entity } };
+            string sent = Loop54.Serialization.Serializer.BytesToString(Loop54.Serialization.Serializer.SerializeToBytes(request));
+            StringAssert.Contains("\"values\":[\"2020-01-01T10:00:00.000Z\",\"2020-01-01T10:00:00+02:00\"]", sent);
+        }
+
+        [Test]
+        public void DeserializedDateAttributeKeepsStringAndConvertsToUtcDateTime()
+        {
+            string json = "{\"name\": \"Launch\", \"type\": \"date\", \"values\": [\"2020-01-01T10:00:00Z\"]}";
+            var attribute = Loop54.Serialization.Serializer.DeserializeString<EntityAttribute>(json);
+
+            Assert.AreEqual("2020-01-01T10:00:00Z", attribute.GetValue<string>());
+            var value = attribute.GetValue<DateTime>();
+            Assert.AreEqual(DateTimeKind.Utc, value.Kind);
+            Assert.AreEqual(new DateTime(2020, 1, 1, 10, 0, 0, DateTimeKind.Utc), value);
         }
 
         [Test]

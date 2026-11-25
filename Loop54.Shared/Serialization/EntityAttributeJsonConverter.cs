@@ -26,6 +26,7 @@ namespace Loop54.Serialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            // Date values stay strings (the serializer uses DateParseHandling.None), so they are sent back unchanged in a SyncDeltaPush request.
             JObject jo = JObject.Load(reader);
 
             return new EntityAttribute

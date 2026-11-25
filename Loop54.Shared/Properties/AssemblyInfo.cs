@@ -44,8 +44,8 @@ namespace Loop54.Properties
     internal static class PackageSemanticVersion
     {
         public const string Major = "6";
-        public const string Minor = "4";
-        public const string Patch = "3";
+        public const string Minor = "5";
+        public const string Patch = "0";
 
         public const string Full = Major + "." + Minor + "." + Patch;
     }
@@ -126,4 +126,4 @@ namespace Loop54.Properties
 // 6.4.0 Added support for Content Search in Search requests
 // 6.4.1 AddContentResultsOptions returns the existing options for an already added entity type instead of adding a duplicate
 // 6.4.2 Added support for the Suggest endpoint, including examples
-// 6.4.3 Added support for the SyncDeltaPush and GetSyncState endpoints. Entity attributes can now be created and are serialized with their values.
+// 6.5.0 Added support for the SyncDeltaPush and GetSyncState endpoints (new ILoop54Client members). Implemented writing entities with attributes.

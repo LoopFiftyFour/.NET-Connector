@@ -33,11 +33,7 @@ namespace Loop54.Model
         {
             var attribute = new EntityAttribute { Name = name ?? throw new ArgumentNullException(nameof(name)) };
 
-            // Convert with the same serializer as the rest of the request, so complex values get camelCased property names and enums
-            // are written as strings. The public SetValue(s) methods keep their original conversion, to not change existing callers' data.
-            JToken[] tokens = (values ?? new T[0])
-                .Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v, Serializer.JsonSerializer))
-                .ToArray();
+            JToken[] tokens = ToTokens(values ?? new T[0]);
             attribute.Type = GetAttributeType(typeof(T), tokens) ?? throw new ArgumentException(
                 "All values of an attribute must have the same type, but got values of types " +
                 string.Join(", ", GetValueTypes(tokens)) + ".", nameof(values));
@@ -67,7 +63,7 @@ namespace Loop54.Model
         /// <returns>All values with the desired type as a list.</returns>
         public IList<T> GetValues<T>()
         {
-            return ValuesInternal.Select(v => v.ToObject<T>()).ToList();
+            return ValuesInternal.Select(Serializer.ConvertValue<T>).ToList();
         }
 
         /// <summary>
@@ -80,7 +76,7 @@ namespace Loop54.Model
         /// </summary>
         public void SetValues<T>(IList<T> values)
         {
-            ValuesInternal = values.Select(v => JToken.FromObject(v)).ToArray();
+            ValuesInternal = ToTokens(values ?? throw new ArgumentNullException(nameof(values)));
 
             // Only needed if the attribute is sent in a SyncDeltaPush request, so failing to infer it must not break existing callers.
             try
@@ -92,6 +88,11 @@ namespace Loop54.Model
                 Type = null;
             }
         }
+
+        // Converts with the same serializer as the rest of the request, so values are sent the same way whichever method set them:
+        // complex values get camelCased property names and enums are written as strings.
+        private static JToken[] ToTokens<T>(IEnumerable<T> values) =>
+            values.Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v, Serializer.JsonSerializer)).ToArray();
 
         // Returns null if the values have more than one type (other than a mix of integers and numbers).
         private static EntityAttributeType? GetAttributeType(Type type, JToken[] tokens)

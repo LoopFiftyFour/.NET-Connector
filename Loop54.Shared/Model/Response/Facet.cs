@@ -43,7 +43,7 @@ namespace Loop54.Model.Response
             if (token == null)
                 return default;
 
-            return token.ToObject<T>();
+            return Serializer.ConvertValue<T>(token);
         }
     }
 

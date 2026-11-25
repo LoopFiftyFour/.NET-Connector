@@ -38,6 +38,22 @@ namespace Loop54.Tests.Model
         }
         
         [Test]
+        public void GetCustomDataDateKeepsStringAndConvertsToUtcDateTime()
+        {
+            var responseObject = GetResponse("{ \"customData\": { \"date\": \"2020-01-01T10:00:00Z\", " +
+                                             "\"dates\": [\"2020-01-01T10:00:00Z\"] } }");
+
+            Assert.AreEqual("2020-01-01T10:00:00Z", responseObject.GetCustomDataOrDefault<string>("date"));
+            var date = responseObject.GetCustomDataOrDefault<DateTime>("date");
+            Assert.AreEqual(DateTimeKind.Utc, date.Kind);
+            Assert.AreEqual(new DateTime(2020, 1, 1, 10, 0, 0, DateTimeKind.Utc), date);
+            Assert.AreEqual(new DateTimeOffset(2020, 1, 1, 10, 0, 0, TimeSpan.Zero), responseObject.GetCustomDataOrDefault<DateTimeOffset?>("date"));
+
+            var dates = responseObject.GetCustomDataOrDefault<List<DateTime>>("dates");
+            Assert.AreEqual(DateTimeKind.Utc, dates[0].Kind);
+        }
+
+        [Test]
         public void GetCustomDataOrDefaultNoCustomData()
         {
             var responseObject = GetResponse(ResponseJsonWithoutCustomData);

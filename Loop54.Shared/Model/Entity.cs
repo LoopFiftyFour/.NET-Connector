@@ -33,20 +33,28 @@ namespace Loop54.Model
 
         /// <summary>
         /// All attributes available on the entity. When sending an Entity with a CreateEvent call these are not necessary to be set.
+        /// This is the entity's own list, so changes to it (for instance adding an attribute) apply to the entity. Null if no attributes have been set.
         /// </summary>
+        /// <exception cref="ArgumentException">When setting a list with more than one attribute with the same name.</exception>
         public List<EntityAttribute> Attributes
         {
             get
             {
-                return _internalAttributeMapping?.Select(kv => kv.Value).ToList();
+                return _attributes;
             }
             set
             {
-                _internalAttributeMapping = value?.ToDictionary(k => k.Name, v => v, EntityAttribute.NameComparer);
+                if (value != null && value.Where(a => a != null).GroupBy(a => a.Name, EntityAttribute.NameComparer).Any(g => g.Count() > 1))
+                    throw new ArgumentException("An entity cannot have more than one attribute with the same name.", nameof(value));
+
+                _attributes = value;
             }
         }
 
-        private Dictionary<string, EntityAttribute> _internalAttributeMapping;
+        private List<EntityAttribute> _attributes;
+
+        private int IndexOfAttribute(string name) =>
+            _attributes?.FindIndex(a => a != null && EntityAttribute.NameComparer.Equals(a.Name, name)) ?? -1;
 
         /// <summary>
         /// Adds an attribute with the specified name and values to the entity, replacing any existing attribute with the same name.
@@ -60,10 +68,14 @@ namespace Loop54.Model
         {
             var attribute = EntityAttribute.Create(name, values);
 
-            if (_internalAttributeMapping == null)
-                _internalAttributeMapping = new Dictionary<string, EntityAttribute>(EntityAttribute.NameComparer);
+            if (_attributes == null)
+                _attributes = new List<EntityAttribute>();
 
-            _internalAttributeMapping[name] = attribute;
+            int index = IndexOfAttribute(name);
+            if (index >= 0)
+                _attributes[index] = attribute;
+            else
+                _attributes.Add(attribute);
             return this;
         }
 
@@ -94,10 +106,8 @@ namespace Loop54.Model
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            if (_internalAttributeMapping.TryGetValue(name, out EntityAttribute attribute))
-                return attribute.GetValues<T>();
-
-            return null;
+            int index = IndexOfAttribute(name);
+            return index >= 0 ? _attributes[index].GetValues<T>() : null;
         }
     }
 }

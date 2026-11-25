@@ -80,6 +80,18 @@ namespace Loop54.Tests.Serialization
         }
 
         [Test]
+        public void DeserializeDateRangeFacet()
+        {
+            string facetString = "{\"name\": \"launch\", \"type\": \"range\", \"min\": \"2020-01-01T10:00:00Z\", \"max\": \"2021-01-01T10:00:00Z\" }";
+            var rangeFacet = Loop54.Serialization.Serializer.DeserializeString<Facet>(facetString).AsRange();
+
+            Assert.AreEqual("2020-01-01T10:00:00Z", rangeFacet.GetMin<string>());
+            Assert.AreEqual(DateTimeKind.Utc, rangeFacet.GetMin<DateTime>().Kind);
+            Assert.AreEqual(new DateTime(2021, 1, 1, 10, 0, 0, DateTimeKind.Utc), rangeFacet.GetMax<DateTime>());
+            Assert.IsNull(rangeFacet.GetSelectedMin<DateTime?>());
+        }
+
+        [Test]
         public void DeserializeRangeFacet()
         {
             string facetString = "{\"name\": \"price\", \"type\": \"range\", \"min\": 3, \"max\": 246 }";
