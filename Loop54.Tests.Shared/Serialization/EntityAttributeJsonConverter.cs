@@ -84,6 +84,45 @@ namespace Loop54.Tests.Serialization
         }
 
         [Test]
+        public void SetValuesInfersAttributeTypeFromValues()
+        {
+            var dictionary = EntityAttribute.Create("a", new Dictionary<string, string> { { "Key", "value" } });
+            Assert.AreEqual(EntityAttributeType.Object, dictionary.Type);
+            Assert.AreEqual(EntityAttributeType.Object, EntityAttribute.Create<Dictionary<string, string>>("a").Type);
+            Assert.AreEqual(EntityAttributeType.Array, EntityAttribute.Create("a", new List<int> { 1, 2 }).Type);
+
+            Assert.AreEqual(EntityAttributeType.Number, EntityAttribute.Create<object>("a", 12, 13.5).Type);
+            Assert.AreEqual(EntityAttributeType.Integer, EntityAttribute.Create<IConvertible>("a", 1, 2L).Type);
+            Assert.AreEqual(EntityAttributeType.String, EntityAttribute.Create<object>("a", null, "x").Type);
+            Assert.AreEqual(EntityAttributeType.String, EntityAttribute.Create<object>("a").Type);
+            Assert.Throws<ArgumentException>(() => EntityAttribute.Create<object>("a", "x", 1));
+        }
+
+        [Test]
+        public void SetValuesUsesConnectorSerializerSettings()
+        {
+            var poco = EntityAttribute.Create("a", new TestPoco { FooBar = 1, Kind = TestKind.SecondKind });
+            Assert.AreEqual(EntityAttributeType.Object, poco.Type);
+            Assert.AreEqual("{\"fooBar\":1,\"kind\":\"secondKind\"}", poco.ValuesInternal[0].ToString(Formatting.None));
+
+            var enumAttribute = EntityAttribute.Create("a", TestKind.SecondKind);
+            Assert.AreEqual(EntityAttributeType.String, enumAttribute.Type);
+            Assert.AreEqual("secondKind", enumAttribute.GetValue<string>());
+        }
+
+        private class TestPoco
+        {
+            public int FooBar { get; set; }
+            public TestKind Kind { get; set; }
+        }
+
+        private enum TestKind
+        {
+            FirstKind,
+            SecondKind
+        }
+
+        [Test]
         public void DeserializeEntityAttributeMissingRequired()
         {
             string entityAttributeString = "{\"type\": \"number\", \"values\": [12, 13.37]}";

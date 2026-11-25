@@ -30,6 +30,9 @@ namespace Loop54.Serialization
             }
         };
 
+        /// <summary>The serializer used for all engine requests and responses, so values converted ahead of time are written the same way.</summary>
+        internal static JsonSerializer JsonSerializer => _jsonSerializer;
+
         internal static string BytesToString(byte[] serializedBytes) => _encoding.GetString(serializedBytes);
 
         internal static byte[] SerializeToBytes(object data)

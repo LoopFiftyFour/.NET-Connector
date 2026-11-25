@@ -188,6 +188,15 @@ namespace Loop54.Tests.Model
             Assert.AreEqual(SyncTriggeredFrom.ExternalEndpointCustom, response.ByCategory[0].Category.TriggeredFrom);
         }
 
+        [Test]
+        public void GetSyncStateResponseNonStringEnumValuesAreRejected()
+        {
+            const string json = "{ \"inProgress\": [ { \"startedAtUtc\": \"2026-11-20T11:00:00Z\", " +
+                "\"category\": { \"triggeredFrom\": 3 }, \"state\": \"queued\" } ], \"inProgressCount\": 1, \"byCategory\": [] }";
+
+            Assert.Throws<SerializationException>(() => Serializer.DeserializeBytes<GetSyncStateResponse>(Encoding.UTF8.GetBytes(json)));
+        }
+
         private static Loop54.Model.Response.Response GetResponse(string responseJson)
         {
             return Serializer.DeserializeBytes<Loop54.Model.Response.Response>(Encoding.UTF8.GetBytes(responseJson));

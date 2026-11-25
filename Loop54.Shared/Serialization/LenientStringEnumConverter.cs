@@ -19,6 +19,10 @@ namespace Loop54.Serialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            // Only unrecognized strings are tolerated. Nulls, numbers and other tokens fail exactly like with the default converter.
+            if (reader.TokenType != JsonToken.String)
+                return base.ReadJson(reader, objectType, existingValue, serializer);
+
             try
             {
                 return base.ReadJson(reader, objectType, existingValue, serializer);

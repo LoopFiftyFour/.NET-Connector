@@ -1,3 +1,4 @@
+using Loop54.Serialization;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -72,24 +73,61 @@ namespace Loop54.Model
             if (values == null)
                 throw new ArgumentNullException(nameof(values));
 
-            Type = GetAttributeType(typeof(T), values.Cast<object>());
-            ValuesInternal = values.Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v)).ToArray();
+            // Convert with the same serializer as the rest of the request, so complex values get camelCased property names and enums
+            // are written as strings.
+            JToken[] tokens = values.Select(v => v == null ? JValue.CreateNull() : JToken.FromObject(v, Serializer.JsonSerializer)).ToArray();
+            Type = GetAttributeType(typeof(T), tokens);
+            ValuesInternal = tokens;
         }
 
-        private static EntityAttributeType GetAttributeType(Type type, IEnumerable<object> values)
+        private static EntityAttributeType GetAttributeType(Type type, JToken[] tokens)
+        {
+            // The values decide the type when there are any, since T may be object, an interface or a base type.
+            var types = tokens.Where(t => t.Type != JTokenType.Null).Select(GetAttributeType).Distinct().ToList();
+
+            if (types.Count == 0)
+                return GetAttributeType(type);
+            if (types.Count == 1)
+                return types[0];
+            if (types.Count == 2 && types.Contains(EntityAttributeType.Integer) && types.Contains(EntityAttributeType.Number))
+                return EntityAttributeType.Number;
+
+            throw new ArgumentException($"All values of an attribute must have the same type, but got values of types {string.Join(", ", types)}.");
+        }
+
+        private static EntityAttributeType GetAttributeType(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.String:
+                case JTokenType.Guid:
+                case JTokenType.Uri:
+                case JTokenType.TimeSpan:
+                case JTokenType.Bytes:
+                    return EntityAttributeType.String;
+                case JTokenType.Boolean:
+                    return EntityAttributeType.Boolean;
+                case JTokenType.Integer:
+                    return EntityAttributeType.Integer;
+                case JTokenType.Float:
+                    return EntityAttributeType.Number;
+                case JTokenType.Date:
+                    return EntityAttributeType.Date;
+                case JTokenType.Array:
+                    return EntityAttributeType.Array;
+                case JTokenType.Object:
+                    return EntityAttributeType.Object;
+                default:
+                    throw new ArgumentException($"Attribute values of JSON type {token.Type} are not supported.");
+            }
+        }
+
+        // Used when there are no non-null values to look at, for instance when removing an attribute in a SyncDeltaPush request.
+        private static EntityAttributeType GetAttributeType(Type type)
         {
             type = Nullable.GetUnderlyingType(type) ?? type;
 
-            if (type == typeof(object))
-            {
-                // The static type tells us nothing, use the runtime type of the first non-null value instead.
-                object first = values.FirstOrDefault(v => v != null);
-                if (first == null)
-                    return EntityAttributeType.String;
-                type = first.GetType();
-            }
-
-            if (type == typeof(string) || type == typeof(char) || type == typeof(Guid))
+            if (type == typeof(string) || type == typeof(char) || type == typeof(Guid) || type.IsEnum)
                 return EntityAttributeType.String;
             if (type == typeof(bool))
                 return EntityAttributeType.Boolean;
@@ -100,6 +138,10 @@ namespace Loop54.Model
                 return EntityAttributeType.Number;
             if (type == typeof(DateTime) || type == typeof(DateTimeOffset))
                 return EntityAttributeType.Date;
+            if (type == typeof(object))
+                return EntityAttributeType.String;
+            if (typeof(IDictionary).IsAssignableFrom(type) || typeof(JObject).IsAssignableFrom(type))
+                return EntityAttributeType.Object;
             if (typeof(IEnumerable).IsAssignableFrom(type))
                 return EntityAttributeType.Array;
 
