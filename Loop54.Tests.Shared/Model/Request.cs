@@ -187,6 +187,18 @@ namespace Loop54.Tests.Model
         }
 
         [Test]
+        public void SyncDeltaPushRequestThrowsForDuplicateAttributeAddedToList()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("a", 1);
+            entity.Attributes.Add(Loop54.Model.EntityAttribute.Create("A", 2));
+
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { entity } };
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("more than one attribute named \"a\"", exception.InnerException.Message);
+        }
+
+        [Test]
         public void GetAttributeValueOnEntityWithoutAttributesReturnsDefault()
         {
             Assert.IsNull(new Loop54.Model.Entity("Product", "1").GetAttributeValueOrDefault<string>("Title"));

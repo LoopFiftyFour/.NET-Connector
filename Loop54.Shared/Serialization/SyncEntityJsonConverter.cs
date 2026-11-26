@@ -40,6 +40,15 @@ namespace Loop54.Serialization
             var attributes = entity.Attributes;
             if (attributes != null)
             {
+                // The Attributes setter rejects duplicates, but the list can still be modified directly (e.g. Attributes.Add),
+                // so check again before sending, as the engine would reject the request anyway.
+                var duplicate = attributes
+                    .Where(a => a != null)
+                    .GroupBy(a => a.Name, EntityAttribute.NameComparer)
+                    .FirstOrDefault(g => g.Count() > 1);
+                if (duplicate != null)
+                    throw new InvalidOperationException($"Entity \"{entity.Type}\" \"{entity.Id}\" has more than one attribute named \"{duplicate.Key}\".");
+
                 writer.WritePropertyName("attributes");
                 writer.WriteStartArray();
                 foreach (var attribute in attributes)
