@@ -403,6 +403,78 @@ namespace Loop54
 
         #endregion
 
+        #region SyncDeltaPush
+
+        /// <summary>
+        /// Make a syncDeltaPush call to the engine, pushing a partial catalog update: entities to add, update, replace or delete, and
+        /// attributes to remove. The update is queued and applied asynchronously, use <see cref="GetSyncState(Request)"/> to follow its progress.
+        /// </summary>
+        /// <param name="request">Contains the entities to add, update, replace or delete, and the attributes to remove.</param>
+        /// <returns>The results of a syncDeltaPush request.</returns>
+        Response SyncDeltaPush(SyncDeltaPushRequest request);
+
+        /// <summary>
+        /// Make an asynchronous syncDeltaPush call to the engine, pushing a partial catalog update: entities to add, update, replace or delete, and
+        /// attributes to remove. The update is queued and applied asynchronously, use <see cref="GetSyncStateAsync(Request)"/> to follow its progress.
+        /// </summary>
+        /// <param name="request">Contains the entities to add, update, replace or delete, and the attributes to remove.</param>
+        /// <returns>The results of a syncDeltaPush request.</returns>
+        Task<Response> SyncDeltaPushAsync(SyncDeltaPushRequest request);
+
+        /// <summary>
+        /// Make a syncDeltaPush call to the engine, pushing a partial catalog update: entities to add, update, replace or delete, and
+        /// attributes to remove. The update is queued and applied asynchronously, use <see cref="GetSyncState(Request)"/> to follow its progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The results of a syncDeltaPush request.</returns>
+        Response SyncDeltaPush(RequestContainer<SyncDeltaPushRequest> request);
+
+        /// <summary>
+        /// Make an asynchronous syncDeltaPush call to the engine, pushing a partial catalog update: entities to add, update, replace or delete, and
+        /// attributes to remove. The update is queued and applied asynchronously, use <see cref="GetSyncStateAsync(Request)"/> to follow its progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The results of a syncDeltaPush request.</returns>
+        Task<Response> SyncDeltaPushAsync(RequestContainer<SyncDeltaPushRequest> request);
+
+        #endregion
+
+        #region GetSyncState
+
+        /// <summary>
+        /// Make a getSyncState call to the engine. Will return the current catalog sync state, including the most recently applied and failed
+        /// catalog updates and the ones still in progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The current catalog sync state.</returns>
+        GetSyncStateResponse GetSyncState(Request request = null);
+
+        /// <summary>
+        /// Make an asynchronous getSyncState call to the engine. Will return the current catalog sync state, including the most recently applied
+        /// and failed catalog updates and the ones still in progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine.</param>
+        /// <returns>The current catalog sync state.</returns>
+        Task<GetSyncStateResponse> GetSyncStateAsync(Request request = null);
+
+        /// <summary>
+        /// Make a getSyncState call to the engine. Will return the current catalog sync state, including the most recently applied and failed
+        /// catalog updates and the ones still in progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The current catalog sync state.</returns>
+        GetSyncStateResponse GetSyncState(RequestContainer<Request> request);
+
+        /// <summary>
+        /// Make an asynchronous getSyncState call to the engine. Will return the current catalog sync state, including the most recently applied
+        /// and failed catalog updates and the ones still in progress.
+        /// </summary>
+        /// <param name="request">Contains the request data to send to the engine. Wrapped in a RequestContainer for user data overrides.</param>
+        /// <returns>The current catalog sync state.</returns>
+        Task<GetSyncStateResponse> GetSyncStateAsync(RequestContainer<Request> request);
+
+        #endregion
+
         #region GetIndexedAttributes
 
         /// <summary>Make a getIndexedAttributes call to the engine. Will return information about attributes, indexed and non-indexed.</summary>

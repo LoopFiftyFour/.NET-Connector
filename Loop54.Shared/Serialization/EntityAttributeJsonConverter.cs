@@ -15,6 +15,8 @@ namespace Loop54.Serialization
         private ConcurrentDictionary<Type, Type> _cachedGenerics = new ConcurrentDictionary<Type, Type>();
 
         public override bool CanRead => true;
+        // Writing is off by default, so entities in events and recommendation requests are sent like before (attribute names only).
+        // Full attributes are only written for SyncDeltaPush, through SyncEntityJsonConverter.
         public override bool CanWrite => false;
 
         public override bool CanConvert(Type objectType)
@@ -24,6 +26,7 @@ namespace Loop54.Serialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            // Date values stay strings (the serializer uses DateParseHandling.None), so they are sent back unchanged in a SyncDeltaPush request.
             JObject jo = JObject.Load(reader);
 
             return new EntityAttribute

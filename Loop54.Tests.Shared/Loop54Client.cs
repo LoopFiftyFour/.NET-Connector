@@ -158,5 +158,35 @@ namespace Loop54.Tests
         [Test]
         public void SuggestWithMetaDataAndClientInfoOverrides() =>
             CallWithOverrides((c, r) => c.Suggest(r), new SuggestRequest("pork bel"), "suggest");
+
+        [Test]
+        public void SyncDeltaPushWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.SyncDeltaPush(r), new SyncDeltaPushRequest { ToDelete = { new Entity("Product", "1") } }, "syncDeltaPush");
+
+        [Test]
+        public void GetSyncStateWithMetaDataAndClientInfoOverrides() =>
+            CallWithOverrides((c, r) => c.GetSyncState(r), new Request(), "getSyncState");
+
+        [Test]
+        public void SyncDeltaPushNullRequestThrows()
+        {
+            var client = new Loop54.Loop54Client(new TestRequestManager(), new NullClientInfoProvider());
+
+            Assert.Throws<ArgumentNullException>(() => client.SyncDeltaPush((SyncDeltaPushRequest)null));
+        }
+
+        [Test]
+        public async Task GetSyncStateWithoutRequest()
+        {
+            TestRequestManager requestManager = new TestRequestManager();
+            var client = new Loop54.Loop54Client(requestManager, new NullClientInfoProvider());
+
+            client.GetSyncState();
+            Assert.AreEqual("getSyncState", requestManager.CalledAction);
+            Assert.IsNotNull(requestManager.CalledRequestData);
+
+            await client.GetSyncStateAsync();
+            Assert.AreEqual("getSyncState", requestManager.CalledAction);
+        }
     }
 }

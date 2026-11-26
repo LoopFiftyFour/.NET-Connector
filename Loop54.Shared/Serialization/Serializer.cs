@@ -17,6 +17,7 @@ namespace Loop54.Serialization
         {
             ContractResolver = new CamelCaseExceptDictionaryKeysResolver(),
             NullValueHandling = NullValueHandling.Ignore,
+            DateParseHandling =  DateParseHandling.None,
 
             Formatting = Formatting.None,
             Converters = {
@@ -29,6 +30,26 @@ namespace Loop54.Serialization
                 new FacetJsonConverter()
             }
         };
+
+        /// <summary>The serializer used for all engine requests and responses, so values converted ahead of time are written the same way.</summary>
+        internal static JsonSerializer JsonSerializer => _jsonSerializer;
+
+        // Default settings, used only to convert date strings below.
+        private static readonly JsonSerializer _valueSerializer = new JsonSerializer();
+
+        /// <summary>
+        /// Converts a value token to <typeparamref name="T"/>. Dates are kept as strings when deserializing (DateParseHandling.None), and
+        /// <see cref="JToken.ToObject{T}()"/> would parse them with DateTime.Parse, turning UTC times into local ones. So date strings are parsed
+        /// like a DateTime property would be instead, keeping the time zone as sent (for instance DateTimeKind.Utc for "Z").
+        /// </summary>
+        internal static T ConvertValue<T>(JToken token) =>
+            token.Type == JTokenType.String && IsDateType(typeof(T)) ? token.ToObject<T>(_valueSerializer) : token.ToObject<T>();
+
+        internal static bool IsDateType(Type type)
+        {
+            type = Nullable.GetUnderlyingType(type) ?? type;
+            return type == typeof(DateTime) || type == typeof(DateTimeOffset);
+        }
 
         internal static string BytesToString(byte[] serializedBytes) => _encoding.GetString(serializedBytes);
 

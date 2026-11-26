@@ -65,6 +65,19 @@ namespace Loop54.Model.Response
                 if (data is T tData)
                     return (true, tData);
 
+                // Dates are kept as strings when deserializing, since the serializer uses DateParseHandling.None.
+                if (Serializer.IsDateType(typeof(T)) && data is string dateString)
+                {
+                    try
+                    {
+                        return (true, Serializer.ConvertValue<T>(new JValue(dateString)));
+                    }
+                    catch (Exception e)
+                    {
+                        throw new CustomDataException($"The data with key '{key}' couldn't be converted from string '{dateString}' to '{typeof(T)}'", e, data);
+                    }
+                }
+
                 // Enums get deserialized as strings, since the JSON.NET deserializer has no idea what type they're supposed to be.
                 if (typeof(T).IsEnum && data is string stringData)
                 {
