@@ -67,6 +67,11 @@ namespace Loop54.Serialization
             if (attribute.Type == null)
                 throw new InvalidOperationException($"Could not determine the type of attribute \"{attribute.Name}\". " +
                                                     "All values of an attribute must have the same type.");
+            // The engine only accepts scalar attribute types in a SyncDeltaPush request and would reject the whole request otherwise.
+            if (attribute.Type == EntityAttributeType.Object || attribute.Type == EntityAttributeType.Array)
+                throw new InvalidOperationException($"Attribute \"{attribute.Name}\" has {attribute.Type.Value.ToString().ToLowerInvariant()} values, " +
+                                                    "which the engine does not accept in a SyncDeltaPush request. " +
+                                                    "Use string, boolean, integer, number or date values, with one value per array element.");
 
             writer.WriteStartObject();
 
@@ -80,7 +85,7 @@ namespace Loop54.Serialization
             writer.WriteStartArray();
             foreach (var v in attribute.ValuesInternal ?? new JToken[0])
             {
-                if (IsNonFiniteNumber(v) || (v is JContainer container && container.Descendants().Any(IsNonFiniteNumber)))
+                if (IsNonFiniteNumber(v))
                     throw new InvalidOperationException($"Attribute \"{attribute.Name}\" has a NaN or infinite value, which the engine does not accept.");
                 v.WriteTo(writer);
             }

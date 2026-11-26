@@ -187,6 +187,28 @@ namespace Loop54.Tests.Model
         }
 
         [Test]
+        public void SyncDeltaPushRequestThrowsForObjectAttribute()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("Meta", new Dictionary<string, string> { { "Key", "value" } });
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { entity } };
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("Meta", exception.InnerException.Message);
+            StringAssert.Contains("object", exception.InnerException.Message);
+        }
+
+        [Test]
+        public void SyncDeltaPushRequestThrowsForArrayAttribute()
+        {
+            var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("Sizes", new List<int> { 1, 2 });
+            var request = new SyncDeltaPushRequest { ToAddOrUpdate = { entity } };
+
+            var exception = Assert.Throws<SerializationException>(() => Serializer.SerializeToBytes(request));
+            StringAssert.Contains("Sizes", exception.InnerException.Message);
+            StringAssert.Contains("array", exception.InnerException.Message);
+        }
+
+        [Test]
         public void SyncDeltaPushRequestThrowsForDuplicateAttributeAddedToList()
         {
             var entity = new Loop54.Model.Entity("Product", "1").SetAttribute("a", 1);
